@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import { AuthContext } from '../Context/AuthContext';
 
 
 export default function Home({navigation}) {
+  const {logout} = useContext(AuthContext);
 
   const entrar = () =>{
     navigation.navigate("Ecra2")
   }
+
   return (
     <View style={styles.container}>
      <View style={styles.button}>
       <Button title='Orçamentos' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Orçamentos")}/>
+      
+      <Button title='Logout' color='#d0933f' onPress={()=> {logout()}}/>
       </View> 
       
     </View>
