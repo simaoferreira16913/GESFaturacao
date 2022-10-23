@@ -1,6 +1,8 @@
 import React from 'react';
-import { Button, StyleSheet, Text, Touchable, TouchableNativeFeedback, View } from 'react-native';
-
+import { useState, useEffect } from 'react';
+import { Button, StyleSheet, Text,Touchable, TouchableNativeFeedback, View } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
+import { TestScheduler } from 'jest';
 
 
 export default function MainOrcamento({navigation}) {
@@ -8,6 +10,10 @@ export default function MainOrcamento({navigation}) {
   const entrar = () =>{
     navigation.navigate("Ecra2")
   }
+
+
+  const [selectedLanguage, setSelectedLanguage] = useState();
+
   return (
     <View style={styles.container}>
         
@@ -35,6 +41,16 @@ export default function MainOrcamento({navigation}) {
           </View>
         </TouchableNativeFeedback>
       </View> 
+      <Picker style={styles.pickerComponent} 
+              selectedValue={selectedLanguage}
+              onValueChange={(itemValue, itemIndex) =>
+              setSelectedLanguage(itemValue)}>
+      
+        <Picker.Item label="Java" value="java" />
+        <Picker.Item label="JavaScript" value="js" />
+      </Picker>
+      
+
     </View>
   );
 }
@@ -69,5 +85,14 @@ const styles = StyleSheet.create({
       fontSize: 25,
       fontWeight: "bold",
       color:'#ffffff',
+    },
+    pickerComponent: {
+      width: 350
+    },
+    textSelect: {
+      fontSize: 20,
+      padding: 10,
+      fontWeight: 'bold'
     }
+
   });

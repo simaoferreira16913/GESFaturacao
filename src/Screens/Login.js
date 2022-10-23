@@ -33,7 +33,7 @@ const Login = ({navigation}) => {
         />
 
         <Button
-          title="Iniciar Sessão" 
+          title="Iniciar Sessão" color='#d0933f'
           onPress={() => {login(username, password)}}
         />
 
