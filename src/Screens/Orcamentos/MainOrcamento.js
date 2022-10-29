@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 import { Button, StyleSheet, Text,Touchable, TouchableNativeFeedback, View } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
+import { BASE_URL } from '../../config';
+import { Pairs } from 'matter';
+import axios from 'axios';
 
 
 export default function MainOrcamento({navigation}) {
@@ -11,6 +14,21 @@ export default function MainOrcamento({navigation}) {
     navigation.navigate("Ecra2")
   }
 
+    const [client, setClient] = useState([]);
+
+
+  
+
+  const handleClient = async() =>{
+    const res = axios.post(`${BASE_URL}/api/tabelas/clientes`)
+    //const res = await BASE_URL.get('/api/tabelas/clientes')
+    setClient((await res).data)
+    console.log((await res).data)
+  }
+
+  useEffect(()=>{
+    handleClient()
+  },[])
 
   const [selectedLanguage, setSelectedLanguage] = useState();
 
@@ -45,7 +63,9 @@ export default function MainOrcamento({navigation}) {
               selectedValue={selectedLanguage}
               onValueChange={(itemValue, itemIndex) =>
               setSelectedLanguage(itemValue)}>
-      
+          {client.map((item,key)=>{
+            return <Picker.Item label={item} value={item} key={key}/>
+          })}
         <Picker.Item label="Java" value="java" />
         <Picker.Item label="JavaScript" value="js" />
       </Picker>
