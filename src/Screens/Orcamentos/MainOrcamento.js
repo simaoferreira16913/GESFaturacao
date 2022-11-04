@@ -1,15 +1,29 @@
 import React from 'react';
 import { useState, useEffect,useContext } from 'react';
-import { Button, StyleSheet, Text,Touchable, TouchableNativeFeedback, View } from 'react-native';
+import { Button, StyleSheet, Text,Touchable, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
 import { Pairs } from 'matter';
 import axios from 'axios';
 import { AuthContext, AuthProvider } from '../../Context/AuthContext';
+import DatePicker from 'react-native-date-picker'
+import { Renderer } from 'phaser';
+import moment from 'moment/moment';
 
 export default function MainOrcamento({navigation}) {
 
+
+  Date.prototype.toDateString = function dtoString() {
+    return `${this.getDay}`;
+  }
+
+
+  const [dataAux, setDateAux] = useState(new Date())
+  const [datei, setDatei] = useState(null)
+  const [datef, setDatef] = useState(null)
+  const [open, setOpen] = useState(false)
+  const [openf, setOpenf] = useState(false)
  
   const opcao = 0;
   const [search, setSearch] = useState(null)
@@ -23,6 +37,7 @@ export default function MainOrcamento({navigation}) {
 
 
   
+     
 
   /*const handleClient = async() =>{
     const res = axios.get(`${BASE_URL}/api/tabelas/clientes`,{
@@ -45,6 +60,9 @@ export default function MainOrcamento({navigation}) {
 
   const [selectedLanguage, setSelectedLanguage] = useState();
 
+
+  
+   
   return (
     <View style={styles.container}>
         
@@ -81,6 +99,7 @@ export default function MainOrcamento({navigation}) {
               onValueChange={(itemValue, itemIndex) =>
               setSelectedLanguage(itemValue)}>
           
+          <Picker.Item label="Selecione um cliente" />
           <Picker.Item label="Java" value="java" />
           <Picker.Item label="JavaScript" value="js" />
         </Picker>
@@ -94,6 +113,7 @@ export default function MainOrcamento({navigation}) {
               onValueChange={(itemValue, itemIndex) =>
               setSelectedLanguage(itemValue)}>
           
+          <Picker.Item label="Selecione um Estado"  />
           <Picker.Item label="Rascunho" value="java" />
           <Picker.Item label="Aberto" value="Aberto" />
           <Picker.Item label="Aprovado" value="Aprovado" />
@@ -102,9 +122,64 @@ export default function MainOrcamento({navigation}) {
         </View>
       </View>
       
+      <View> 
+        <Text style={styles.titleSelect}>Data de Início</Text>
+        <View style={styles.borderMargin}>
+        <TouchableOpacity  onPress={() => setOpen(true)} style={styles.touchableO}>
+        <DatePicker
+        modal
+        mode="date"
+        
+        open={open}
+        date={new Date()}
+        onConfirm={(datei) => {
+          setOpen(false)
+          
+          setDatei(datei)
+        }}
+        onCancel={() => {
+          setOpen(false)
+        }}
+      />
+      
+      <Text style={styles.textDate}> {todaiDate = moment(datei).format("DD/MM/YYYY") }</Text>
+         
+      </TouchableOpacity>
+      
+        </View>
+      </View>
+      <View> 
+        <Text style={styles.titleSelect}>Data de Fim</Text>
+        <View style={styles.borderMargin}>
+        <TouchableOpacity  onPress={() => setOpenf(true)} style={styles.touchableO}>
+        <DatePicker
+        modal
+        mode="date"
+        open={openf}
+        date={new Date()}
+        onConfirm={(datef) => {
+          setOpenf(false)
+          
+          setDatef(datef)
+        }}
+        onCancel={() => {
+          setOpenf(false)
+        }}
+      />
+      
+      <Text style={styles.textDate}> {todafDate = moment(datef).format("DD/MM/YYYY") }</Text>
+         
+      </TouchableOpacity>
+      
+        </View>
+      </View>
+
+      
 
     </View>
+    
   );
+
 }
 
 
@@ -157,6 +232,19 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderColor: 'grey',
       
+    },
+    dateComponent: {
+        width: 350
+    },
+    touchableO: {
+      width: 350,
+      height: 55
+    },
+    textDate: {
+      marginLeft:15,
+      marginTop:15,
+      fontSize: 16,
+      color:"#000000"
     }
 
   });
