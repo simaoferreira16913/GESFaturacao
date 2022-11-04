@@ -24,7 +24,7 @@ export default function MainOrcamento({navigation}) {
 
   
 
-  const handleClient = async() =>{
+  /*const handleClient = async() =>{
     const res = axios.get(`${BASE_URL}/api/tabelas/clientes`,{
         _token,
         opcao,
@@ -41,7 +41,7 @@ export default function MainOrcamento({navigation}) {
 
   useEffect(()=>{
     handleClient()
-  },[])
+  },[])*/
 
   const [selectedLanguage, setSelectedLanguage] = useState();
 
@@ -72,14 +72,35 @@ export default function MainOrcamento({navigation}) {
           </View>
         </TouchableNativeFeedback>
       </View> 
-      <Picker style={styles.pickerComponent} 
+
+      <View> 
+        <Text style={styles.titleSelect}>Cliente</Text>
+        <View style={styles.borderMargin}>
+        <Picker style={styles.pickerComponent} 
               
               onValueChange={(itemValue, itemIndex) =>
               setSelectedLanguage(itemValue)}>
           
-        <Picker.Item label="Java" value="java" />
-        <Picker.Item label="JavaScript" value="js" />
-      </Picker>
+          <Picker.Item label="Java" value="java" />
+          <Picker.Item label="JavaScript" value="js" />
+        </Picker>
+        </View>
+      </View>
+      <View> 
+        <Text style={styles.titleSelect}>Estado</Text>
+        <View style={styles.borderMargin}>
+        <Picker style={styles.pickerComponent} 
+              
+              onValueChange={(itemValue, itemIndex) =>
+              setSelectedLanguage(itemValue)}>
+          
+          <Picker.Item label="Rascunho" value="java" />
+          <Picker.Item label="Aberto" value="Aberto" />
+          <Picker.Item label="Aprovado" value="Aprovado" />
+          <Picker.Item label="Rejeitado" value="Rejeitado" />
+        </Picker>
+        </View>
+      </View>
       
 
     </View>
@@ -118,12 +139,24 @@ const styles = StyleSheet.create({
       color:'#ffffff',
     },
     pickerComponent: {
-      width: 350
+      width: 350,
+      
     },
     textSelect: {
       fontSize: 20,
       padding: 10,
       fontWeight: 'bold'
+    },
+    titleSelect: {
+      fontSize: 20,
+      margin: 10,
+      fontWeight: "bold",
+      color: "#5F5D5C"
+    },
+    borderMargin: {
+      borderWidth: 1,
+      borderColor: 'grey',
+      
     }
 
   });
