@@ -173,7 +173,15 @@ export default function MainOrcamento({navigation}) {
       
         </View>
       </View>
-
+      
+      <View > 
+        <TouchableNativeFeedback>
+          <View style={styles.button}>
+          
+            <Text style={styles.textfont}>   Pesquisar</Text>
+          </View>
+        </TouchableNativeFeedback>
+      </View> 
       
 
     </View>
