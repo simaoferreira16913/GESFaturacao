@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //substituir pelo authstack e appstack
 import Home from '../Screens/Home';
 import MainOrcamento from '../Screens/Orcamentos/MainOrcamento';
+import CriarOrcamento from '../Screens/Orcamentos/CriarOrcamento';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,6 +14,7 @@ const AppStack = () => {
       <Stack.Navigator>
         <Stack.Screen name="GesFaturação" component={Home} />
         <Stack.Screen name="GesFaturação-Orçamentos" component={MainOrcamento} />
+        <Stack.Screen name='GesFaturação-Criar Orçamento' component={CriarOrcamento}/>
       </Stack.Navigator>
     );
 };

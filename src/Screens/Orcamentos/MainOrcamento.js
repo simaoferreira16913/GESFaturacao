@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
@@ -18,7 +18,7 @@ export default function MainOrcamento({navigation}) {
     return `${this.getDay}`;
   }
 
-
+  
   const [dataAux, setDateAux] = useState(new Date())
   const [datei, setDatei] = useState(null)
   const [datef, setDatef] = useState(null)
@@ -26,7 +26,7 @@ export default function MainOrcamento({navigation}) {
   const [openf, setOpenf] = useState(false)
  
   const opcao = 0;
-  const [search, setSearch] = useState(null)
+  const [search, setSearch] = useState("c")
   const numRows = 10;
   const pag = 10;
   const entrar = () =>{
@@ -58,16 +58,18 @@ export default function MainOrcamento({navigation}) {
     handleClient()
   },[])*/
 
-  const [selectedLanguage, setSelectedLanguage] = useState();
-
-
+  const [selectedClient, setSelectedClient] = useState();
+  const [selectedEst, setSelectedEst] = useState();
+  
   
    
+  const {getOrcamentos} = useContext(AuthContext);
+  
   return (
     <View style={styles.container}>
-        
+      <Text>{getOrcamentos}</Text>
      <View > 
-        <TouchableNativeFeedback>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Orçamento")}>
           <View style={styles.button}>
           
             <Text style={styles.textfont}>   Novo Orçamento</Text>
@@ -95,9 +97,9 @@ export default function MainOrcamento({navigation}) {
         <Text style={styles.titleSelect}>Cliente</Text>
         <View style={styles.borderMargin}>
         <Picker style={styles.pickerComponent} 
-              
+              selectedValue={selectedClient}
               onValueChange={(itemValue, itemIndex) =>
-              setSelectedLanguage(itemValue)}>
+              setSelectedClient(itemValue)}>
           
           <Picker.Item label="Selecione um cliente" />
           <Picker.Item label="Java" value="java" />
@@ -109,9 +111,9 @@ export default function MainOrcamento({navigation}) {
         <Text style={styles.titleSelect}>Estado</Text>
         <View style={styles.borderMargin}>
         <Picker style={styles.pickerComponent} 
-              
+              selectedValue={selectedEst}
               onValueChange={(itemValue, itemIndex) =>
-              setSelectedLanguage(itemValue)}>
+              setSelectedEst(itemValue)}>
           
           <Picker.Item label="Selecione um Estado"  />
           <Picker.Item label="Rascunho" value="java" />
@@ -174,10 +176,10 @@ export default function MainOrcamento({navigation}) {
         </View>
       </View>
       
-      <View > 
-        <TouchableNativeFeedback>
+      <View  > 
+        <TouchableNativeFeedback onPress={()=> getOrcamentos(search,numRows,pag)}>
           <View style={styles.button}>
-          
+
             <Text style={styles.textfont}>   Pesquisar</Text>
           </View>
         </TouchableNativeFeedback>

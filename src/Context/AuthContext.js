@@ -59,12 +59,41 @@ export const AuthProvider = ({children}) => {
         }
     }
 
+
+    const getOrcamentos = async (search,numRows, pag) => {
+       
+            setIsLoading(true);
+            let _token = userToken;
+            let opcao = 0;
+            //console.log(userToken);
+            axios.get(`${BASE_URL}/api/orcamentos/orcamentos`, {
+                _token,
+                opcao,
+                search,
+                numRows,
+                pag
+            })
+            .then(async res => {
+                console.log(res.data)
+                return res.data
+            }).catch(e =>{
+                console.log(`Erro: ${e}`);
+                setIsLoading(false)
+            });
+            
+        console.log("Token:  "+_token)
+        console.log(opcao);
+        console.log(search);
+        console.log(numRows);
+        console.log(pag);
+    }
+
     useEffect(() => {
         isLoggedIn();
     }, []);
 
     return(
-        <AuthContext.Provider value={{login, logout, isLoading, userToken}}>
+        <AuthContext.Provider value={{login, logout, getOrcamentos,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
     );
