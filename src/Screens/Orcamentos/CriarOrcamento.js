@@ -8,13 +8,14 @@ export default function CriarOrcamento({navigation}) {
     const {addOrcamentos} = useContext(AuthContext);
     const {addCliente} = useContext(AuthContext);
 
+
     return (
       <View style={styles.container}>
-                <TouchableOpacity onPress={() => addCliente()}><Text>Marega
-                    
-                    </Text></TouchableOpacity>
+             <TouchableOpacity onPress={()=>addCliente()}>
+              <Text>Click</Text>
+              </TouchableOpacity>   
          
-       
+        
         
   
       </View>

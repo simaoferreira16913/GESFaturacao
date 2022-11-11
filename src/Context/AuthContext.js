@@ -90,30 +90,30 @@ export const AuthProvider = ({children}) => {
 
     const addCliente = async () => {
         console.log("Entrei")
-        nome_cliente = ""
+        nome_cliente = "Joao"
         nif_cliente = 190031107
-        pais_cliente = "Portugal"
-        endereco_cliente = ""
-        codigopostal_cliente
-        regiao_cliente 
-        cidade_cliente
-        email_cliente 
-        website_cliente 
-        tlm_cliente
-        tlf_cliente
-        fax_cliente 
-        preferencial_nome_cliente
-        preferencial_email_cliente
-        preferencial_tlm_cliente 
-        preferencial_tlf_cliente 
-        pagamento_cliente 
-        vencimento_cliente 
-        desconto_cliente 
-        flagContaGeral 
-        codigo_interno_cliente 
+        pais_cliente = "PT"
+        endereco_cliente = "Morada do Cliente"
+        codigopostal_cliente = 4935-124
+        regiao_cliente =0
+        cidade_cliente =0
+        email_cliente ="postman@teste.pt"
+        website_cliente ="https://teste.pt"
+        tlm_cliente = 960000000
+        tlf_cliente = 252000000
+        fax_cliente = 252000001
+        preferencial_nome_cliente ="Nome de Contacto"
+        preferencial_email_cliente="email@gmail.com"
+        preferencial_tlm_cliente =930000000
+        preferencial_tlf_cliente = 258000000
+        pagamento_cliente = 1
+        vencimento_cliente = 0
+        desconto_cliente = 0
+        flagContaGeral = 1
+        codigo_interno_cliente = "A001"
         let _token = userToken;
         let opcao = 2;
-        axios.post(`${BASE_URL}/api/tabelas/clientes`, {
+        axios.get(`${BASE_URL}/api/tabelas/clientes`, {
             _token,
             opcao,
             nome_cliente,
@@ -200,7 +200,7 @@ export const AuthProvider = ({children}) => {
             })
             .then(async res => {
                 console.log(res.data)
-                return res.data
+                //return res.data
             }).catch(e =>{
                 console.log(`Erro: ${e}`);
                 setIsLoading(false)
