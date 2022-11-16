@@ -8,6 +8,8 @@ const App = () => {
       {/* Rest of your app code */}
       <AppNav />
     </AuthProvider>
+
+    
   );
 };
 

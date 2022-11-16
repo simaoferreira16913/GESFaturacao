@@ -1,13 +1,19 @@
 import React from "react";
 import { useState, useEffect,useContext } from 'react';
-import { Button, StyleSheet, Text,Touchable, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
+import { Button, StyleSheet, Text,TextInput,Touchable, Alert, 
+  TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
 import { AuthContext } from "../../Context/AuthContext";
 
 export default function CriarCliente({navigation}) {
    
+
+    
+      this.textInput = React.createRef();
+    
     const {addOrcamentos} = useContext(AuthContext);
     const {addCliente} = useContext(AuthContext);
 
+    const [textNif,setTextNif] = useState()
     const [nif, setNif] = useState(null)
     const [nome, setNome] = useState(null)
     const [codInterno, setCodInterno] = useState(null)
@@ -30,48 +36,64 @@ export default function CriarCliente({navigation}) {
     const [vencimento, setVencimento] = useState(null)
     const [desconto, setDesconto] = useState(null)
     const [flagContaGeral, setFlagContaGeral] = useState(null)
-    const [codigo_interno, setCodigoInterno] = useState(null)
+    const [codigo_interno, setCodigoInterno] = useState(null);
+
+    function onChanged(text) {
+      let newText='';
+      let numbers = '0123456789';
+
+      for (var i=0; i< text.lenght; i++){
+        if(numbers.indexOf(text[i]) > -1){
+          newText = newText + text[i];
+          console.log(newText)
+        }
+        else {
+          Alert.alert("Digite apenas números")
+          
+        }
+      }
+      console.log(newText)
+      setNif(newText)
+      
+    }
 
 
+   function validateInputs(text, type) {
+      let numreg = /^[0-9]+$/;
+      console.log("e")
+        if (type == 'nif') {
+          if (numreg.test(text)) {
+            //test ok
+            console.log("entrei")
+            console.log(text)
+            setTextNif(text)
+          } else {
+            //test not ok
+            text = null
+            Alert.alert("Digite Apenas numeros")
+            setTextNif('')
+          } 
+        
+        }
+    }
     return (
       <View style={styles.container}>
-                
-         
-        <View style={styles.wrapper}>
+          <View style={styles.wrapper}>
+            <Text>Nif</Text>
           <TextInput
             style={styles.input}
-            value={nif}
-            onChangeText={text => this.setNif(text)}
+            value={textNif}
+            onChangeText={(text) => validateInputs(text, 'nif')}
             placeholder="NIF"
             keyboardType = 'numeric'
           />
-
-<TextInput 
-  style={styles.textInput}
-  keyboardType = 'numeric'
-  onChangeText = {(text)=> this.onChanged(text)}
-  value = {this.state.myNumber}
-/> 
-
-onTextChanged(text) {
-  // code to remove non-numeric characters from text
-  this.setState({myNumber: text})
-}
-
-        <TextInput
-          style={styles.input}
-          value={password}
-          onChangeText={text => setPassword(text)}
-          placeholder="Password"
-          
-        />
 
         <Button
           title="Criar Cliente" color='#d0933f'
           onPress={() => {addCliente()}}
         />
-
-      </View>
+        </View>
+      
         
   
       </View>
@@ -79,6 +101,7 @@ onTextChanged(text) {
     );
   
   }
+
 
 
   const styles = StyleSheet.create({

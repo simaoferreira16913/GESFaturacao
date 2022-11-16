@@ -53,7 +53,6 @@ export default function MainOrcamento({navigation}) {
     console.log(res.data)})
     
   }
-
   useEffect(()=>{
     handleClient()
   },[])*/

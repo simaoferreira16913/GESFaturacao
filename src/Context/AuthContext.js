@@ -2,6 +2,7 @@ import React, {createContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { BASE_URL } from '../config';
+import qs from 'qs';
 
 //Possibilita passar qualquer valor para qualquer ecrã da app
 
@@ -88,63 +89,22 @@ export const AuthProvider = ({children}) => {
         console.log(pag);
     }
 
-    const addCliente = async () => {
-        console.log("Entrei")
-        nome_cliente = "Joao"
-        nif_cliente = 190031107
-        pais_cliente = "PT"
-        endereco_cliente = "Morada do Cliente"
-        codigopostal_cliente = 4935-124
-        regiao_cliente =0
-        cidade_cliente =0
-        email_cliente ="postman@teste.pt"
-        website_cliente ="https://teste.pt"
-        tlm_cliente = 960000000
-        tlf_cliente = 252000000
-        fax_cliente = 252000001
-        preferencial_nome_cliente ="Nome de Contacto"
-        preferencial_email_cliente="email@gmail.com"
-        preferencial_tlm_cliente =930000000
-        preferencial_tlf_cliente = 258000000
-        pagamento_cliente = 1
-        vencimento_cliente = 0
-        desconto_cliente = 0
-        flagContaGeral = 1
-        codigo_interno_cliente = "A001"
-        let _token = userToken;
-        let opcao = 2;
-        axios.get(`${BASE_URL}/api/tabelas/clientes`, {
-            _token,
-            opcao,
-            nome_cliente,
-        nif_cliente,
-        pais_cliente,
-        endereco_cliente,
-        codigopostal_cliente,
-        regiao_cliente,
-        cidade_cliente,
-        email_cliente,
-        website_cliente,
-        tlm_cliente,
-        tlf_cliente,
-        fax_cliente,
-        preferencial_nome_cliente,
-        preferencial_email_cliente,
-        preferencial_tlm_cliente,
-        preferencial_tlf_cliente,
-        pagamento_cliente,
-        vencimento_cliente,
-        desconto_cliente,
-        flagContaGeral,
-        codigo_interno_cliente,
+    const insertCliente = async(nome_cliente, nif_cliente)=> {
+        console.log("nome" + nome_cliente, "nif" + nif_cliente)
+        var token = userToken;
+        console.log(userToken)
+        return axios({
+            url: 'https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/tabelas/clientes',
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '2',
+                _token: token,
+                nome_cliente: nome_cliente,
+                nif_cliente: nif_cliente,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
         })
-        .then(async res => {
-            console.log(res.data)
-            return res.data
-        }).catch(e =>{
-            console.log(`Erro: ${e}`);
-            setIsLoading(false)
-        });
     }
 
     const addOrcamentos = async () => {
@@ -213,7 +173,7 @@ export const AuthProvider = ({children}) => {
     }, []);
 
     return(
-        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,addCliente,isLoading, userToken}}>
+        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,insertCliente,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
     );

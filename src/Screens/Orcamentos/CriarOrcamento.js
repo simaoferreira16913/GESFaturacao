@@ -6,12 +6,14 @@ import { AuthContext } from "../../Context/AuthContext";
 export default function CriarOrcamento({navigation}) {
    
     const {addOrcamentos} = useContext(AuthContext);
-    const {addCliente} = useContext(AuthContext);
+    const {insertCliente} = useContext(AuthContext);
 
+    var nome_cliente = "Joao"
+    var nif_cliente = 156213789
 
     return (
       <View style={styles.container}>
-             <TouchableOpacity onPress={()=>addCliente()}>
+             <TouchableOpacity onPress={()=>insertCliente(nome_cliente,nif_cliente)}>
               <Text>Click</Text>
               </TouchableOpacity>   
          
