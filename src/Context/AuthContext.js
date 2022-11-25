@@ -89,22 +89,55 @@ export const AuthProvider = ({children}) => {
         console.log(pag);
     }
 
-    const insertCliente = async(nome_cliente, nif_cliente)=> {
-        console.log("nome" + nome_cliente, "nif" + nif_cliente)
-        var token = userToken;
-        console.log(userToken)
+    getToken = async () => AsyncStorage.getItem('@userToken');
+    const deletecliente = async (id) =>{
+        var token = await this.getToken();
         return axios({
             url: 'https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/tabelas/clientes',
-            method: 'POST',
+            method: 'DELETE',
             timeout: 5000,
             data: qs.stringify({
-                opcao: '2',
+                opcao: '4',
                 _token: token,
-                nome_cliente: nome_cliente,
-                nif_cliente: nif_cliente,
+                idCliente: id
             }),
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
-        })
+        });
+    }
+   
+   
+    const insertCliente = async () =>{
+        //console.log(dadosCli);
+        //console.log(dadosCli.Nome)
+        var token = await this.getToken();
+        console.log(token)
+        return axios({
+            url: `https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/tabelas/clientes`,
+            method: 'POST',
+            timeout: 5000,
+            data : {
+                opcao: '2',
+                _token: token,
+                nome_cliente: "dadosCli.Nome ",
+                nif_cliente: 192047663,
+                pais_cliente: "PT",
+                endereco_cliente: "dadosCli",
+                codigopostal_cliente: "4755-261",
+                regiao_cliente: 0,
+                cidade_cliente: 0,
+                email_cliente: "dadosCli@Email.pt",
+                website_cliente: "dadosCli.Website.pt",
+                tlm_cliente: 960000000,
+                tlf_cliente: 252000000,
+                fax_cliente: 252000001,
+                vencimento_cliente: 0,
+                desconto_cliente: 0,
+        },
+        headers: {
+            Accept: 'application/json',
+        }
+        });
+        console.log("Marega")
     }
 
     const addOrcamentos = async () => {
@@ -173,7 +206,7 @@ export const AuthProvider = ({children}) => {
     }, []);
 
     return(
-        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,insertCliente,isLoading, userToken}}>
+        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,insertCliente,deletecliente,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
     );
