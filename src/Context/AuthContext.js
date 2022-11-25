@@ -137,7 +137,7 @@ export const AuthProvider = ({children}) => {
             Accept: 'application/json',
         }
         });
-        console.log("Marega")
+       
     }
 
     const addOrcamentos = async () => {
