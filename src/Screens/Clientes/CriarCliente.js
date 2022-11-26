@@ -65,12 +65,10 @@ export default function CriarCliente({navigation}) {
       console.log("e")
         if (type == 'nif') {
           if (numreg.test(text)) {
-            //test ok
-            console.log("entrei")
-            console.log(text)
+            //ok
             setTextNif(text)
           } else {
-            //test not ok
+            //nao ok
             text = null
             Alert.alert("Digite Apenas numeros")
             setTextNif('')
@@ -89,6 +87,7 @@ export default function CriarCliente({navigation}) {
             placeholder="NIF"
             keyboardType = 'numeric'
           />
+          
 
         <Button
           title="Criar Cliente" color='#d0933f'

@@ -218,7 +218,7 @@ export const AuthProvider = ({children}) => {
         console.log(dadosArt);
         var token = await this.getToken();
         return axios({
-            url: 'https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/tabelas/artigos',
+            url: `${BASE_URL}/api/tabelas/artigos`,
             method: 'POST',
             timeout: 5000,
             data : {
@@ -251,7 +251,7 @@ export const AuthProvider = ({children}) => {
     }, []);
 
     return(
-        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,insertCliente,deletecliente,isLoading, userToken}}>
+        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,insertCliente,deletecliente,addArtigo,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
     );
