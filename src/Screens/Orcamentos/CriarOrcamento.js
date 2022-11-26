@@ -8,7 +8,7 @@ export default function CriarOrcamento({navigation}) {
     const {addOrcamentos} = useContext(AuthContext);
     const {insertCliente} = useContext(AuthContext);
     const {deletecliente} = useContext(AuthContext);
-
+    const {criarClinete} = useContext(AuthContext);
     //var nome_cliente = "Joao"
     //var nif_cliente = 156213789
     /*opcao: '2',
@@ -33,7 +33,7 @@ export default function CriarOrcamento({navigation}) {
     id = 4;
     return (
       <View style={styles.container}>
-             <TouchableOpacity onPress={()=>deletecliente(id)}>
+             <TouchableOpacity onPress={()=>criarClinete()}>
               <Text>Click</Text>
               </TouchableOpacity>   
          

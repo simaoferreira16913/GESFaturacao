@@ -105,7 +105,28 @@ export const AuthProvider = ({children}) => {
         });
     }
    
-   
+   const criarClinete = async () =>{
+    var token = await this.getToken();
+    console.log(token)
+    axios.post(`https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/tabelas/clientes`, {
+    opcao: '2',
+                _token: token,
+                nome_cliente: "dadosCli.Nome ",
+                nif_cliente: 192047663,
+                pais_cliente: "PT",
+                endereco_cliente: "dadosCli",
+                codigopostal_cliente: "4755-261",
+                regiao_cliente: 0,
+                cidade_cliente: 0,
+                email_cliente: "dadosCli@Email.pt",
+                website_cliente: "dadosCli.Website.pt",
+                tlm_cliente: 960000000,
+                tlf_cliente: 252000000,
+                fax_cliente: 252000001,
+                vencimento_cliente: 0,
+                desconto_cliente: 0,
+
+    }, {headers: { Accept: 'application/json',}})}
     const insertCliente = async () =>{
         //console.log(dadosCli);
         //console.log(dadosCli.Nome)
@@ -206,7 +227,7 @@ export const AuthProvider = ({children}) => {
     }, []);
 
     return(
-        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,insertCliente,deletecliente,isLoading, userToken}}>
+        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarClinete,insertCliente,deletecliente,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
     );
