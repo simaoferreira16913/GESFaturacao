@@ -93,7 +93,7 @@ export const AuthProvider = ({children}) => {
     const deletecliente = async (id) =>{
         var token = await this.getToken();
         return axios({
-            url: 'https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/tabelas/clientes',
+            url: `${BASE_URL}/api/tabelas/clientes`,
             method: 'DELETE',
             timeout: 5000,
             data: qs.stringify({
@@ -188,7 +188,7 @@ export const AuthProvider = ({children}) => {
             let _token = userToken;
             let opcao = 2;
             //console.log(userToken);
-            axios.post(`https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos`, {
+            axios.post(`${BASE_URL}/api/orcamentos/orcamentos`, {
                 _token: _token,
                 opcao: "2",
                 cliente: 1,
