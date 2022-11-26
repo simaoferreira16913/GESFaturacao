@@ -105,26 +105,26 @@ export const AuthProvider = ({children}) => {
         });
     }
    
-   const criarClinete = async () =>{
+   const criarCliente = async (dadosCli) =>{
     var token = await this.getToken();
     console.log(token)
-    axios.post(`https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/tabelas/clientes`, {
+    axios.post(`${BASE_URL}/api/tabelas/clientes`, {
     opcao: '2',
                 _token: token,
-                nome_cliente: "dadosCli.Nome ",
-                nif_cliente: 192047663,
-                pais_cliente: "PT",
-                endereco_cliente: "dadosCli",
-                codigopostal_cliente: "4755-261",
-                regiao_cliente: 0,
-                cidade_cliente: 0,
-                email_cliente: "dadosCli@Email.pt",
-                website_cliente: "dadosCli.Website.pt",
-                tlm_cliente: 960000000,
-                tlf_cliente: 252000000,
-                fax_cliente: 252000001,
-                vencimento_cliente: 0,
-                desconto_cliente: 0,
+                nome_cliente: dadosCli.Nome,
+                nif_cliente: dadosCli.Nif,
+                pais_cliente: dadosCli.Pais,
+                endereco_cliente: dadosCli.Endereco,
+                codigopostal_cliente: dadosCli.CodigoPostal,
+                regiao_cliente: dadosCli.Regiao,
+                cidade_cliente: dadosCli.Cidade,
+                email_cliente: dadosCli.Email,
+                website_cliente: dadosCli.Website,
+                tlm_cliente: dadosCli.Telemovel,
+                tlf_cliente: dadosCli.Telefone,
+                fax_cliente: dadosCli.Fax,
+                vencimento_cliente: dadosCli.Vencimento,
+                desconto_cliente: dadosCli.Desconto,
 
     }, {headers: { Accept: 'application/json',}})}
     const insertCliente = async () =>{
@@ -168,12 +168,12 @@ export const AuthProvider = ({children}) => {
             numero = 3;
             data= "05/11/2022";
             validade = "12/12/2022";
-            referencia = "132165";
+            referencia = "Ref. Documento";
             vencimento = 1000;
             moeda = 1;
             desconto = 0;
-            observacoes = "";
-            artigo= 3;
+            observacoes = "Observacoes";
+            artigo= 4;
             descricao="gota"; 
             qtd=1; 
             preco=1,626; 
@@ -188,30 +188,22 @@ export const AuthProvider = ({children}) => {
             let _token = userToken;
             let opcao = 2;
             //console.log(userToken);
-            axios.post(`${BASE_URL}/api/orcamentos/orcamentos`, {
-                _token,
-                opcao,
-                cliente,
-                serie,
-                numero,
-                data,
-                validade,
-                referencia,
-                vencimento,
-                moeda,
-                desconto,
-                observacoes,
-                artigo,
-                descricao, 
-                qtd, 
-                preco, 
-                imposto, 
-                motivo, 
-                desconto,
-                retencao,
-                Linhas,
-                finalizarDocumento,
-            })
+            axios.post(`https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos`, {
+                _token: _token,
+                opcao: "2",
+                cliente: 1,
+                serie: 3,
+                numero: 0,
+                data: data,
+                validade: validade,
+                referencia: referencia,
+                vencimento: 0,
+                moeda: 1,
+                desconto: 0,
+                observacoes: observacoes,
+                Linhas: Linhas,
+                finalizarDocumento: 0,
+            },{headers: { 'content-type': 'application/x-www-form-urlencoded' },})
             .then(async res => {
                 console.log(res.data)
                 //return res.data
@@ -222,12 +214,44 @@ export const AuthProvider = ({children}) => {
 
     }
 
+    const addArtigo = async (dadosArt) =>{
+        console.log(dadosArt);
+        var token = await this.getToken();
+        return axios({
+            url: 'https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/tabelas/artigos',
+            method: 'POST',
+            timeout: 5000,
+            data : {
+                opcao: '2',
+                _token: token,
+                codigo_artigo:dadosArt.Codigo,
+                nome_artigo: dadosArt.Nome,
+                categoria_artigo: dadosArt.Categoria,
+                tipo_artigo: dadosArt.Tipo,
+                stock_artigo: dadosArt.Stock,
+                unidade_artigo: dadosArt.Unidade,
+                precoPVP_artigo: dadosArt.PrecoPVP,
+                imposto_artigo: dadosArt.IVA , 
+                preco_artigo: dadosArt.Preco ,
+                codigobarras_artigo: dadosArt.CodigoBarras,
+                numeroserie_artigo: dadosArt.SerialNumber,
+                retencao_valor_artigo: dadosArt.RetencaoValor,
+                retencao_percenteagem_artigo: dadosArt.RetencaoPercentagem,
+                observacoes_artigo: dadosArt.DescricaoLonga
+        },
+        headers: {
+            Accept: 'application/json',
+        }
+        });
+    }
+
+
     useEffect(() => {
         isLoggedIn();
     }, []);
 
     return(
-        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarClinete,insertCliente,deletecliente,isLoading, userToken}}>
+        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,insertCliente,deletecliente,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
     );

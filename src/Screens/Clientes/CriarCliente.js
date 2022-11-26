@@ -38,6 +38,8 @@ export default function CriarCliente({navigation}) {
     const [flagContaGeral, setFlagContaGeral] = useState(null)
     const [codigo_interno, setCodigoInterno] = useState(null);
 
+    const {criarCliente} = useContext(AuthContext);
+
     function onChanged(text) {
       let newText='';
       let numbers = '0123456789';

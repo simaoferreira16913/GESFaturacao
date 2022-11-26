@@ -8,36 +8,29 @@ export default function CriarOrcamento({navigation}) {
     const {addOrcamentos} = useContext(AuthContext);
     const {insertCliente} = useContext(AuthContext);
     const {deletecliente} = useContext(AuthContext);
-    const {criarClinete} = useContext(AuthContext);
-    //var nome_cliente = "Joao"
-    //var nif_cliente = 156213789
-    /*opcao: '2',
-    _token: token,
-    nome_cliente: dadosCli.Nome ,
-    nif_cliente: dadosCli.Nif,
-    pais_cliente: dadosCli.Pais,
-    endereco_cliente: dadosCli.Endereco,
-    codigopostal_cliente: dadosCli.CodigoPostal,
-    regiao_cliente: dadosCli.Regiao,
-    cidade_cliente: dadosCli.Cidade,
-    email_cliente: dadosCli.Email,
-    website_cliente: dadosCli.Website,
-    tlm_cliente: dadosCli.Telemovel,
-    tlf_cliente: dadosCli.Telefone,
-    fax_cliente: dadosCli.Fax,
-    vencimento_cliente: dadosCli.Vencimento,
-    desconto_cliente: dadosCli.Desconto,*/
+    const {criarCliente} = useContext(AuthContext);
+  
     const dadosCli={Nome:"Joao", Nif:192047663, Pais:"PT",Endereco:"Morada",CodigoPostal:4755-123,
                 Regiao:0, Cidade:0,Email:"teste@teste.com",Website:"www.oi.pt",Telemovel:968000000,Telefone:252123123
                 ,Fax:252123124, Vencimento:0, Desconto:0};
-    id = 4;
+    id = 6;
     return (
       <View style={styles.container}>
-             <TouchableOpacity onPress={()=>criarClinete()}>
+             <TouchableOpacity onPress={()=>criarClinete(dadosCli)}>
               <Text>Click</Text>
+              </TouchableOpacity> 
+              <TouchableOpacity onPress={()=>deletecliente(id)}>
+              <Text>Click Delete</Text>
               </TouchableOpacity>   
          
-        
+              <View > 
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Cliente")}>
+          <View style={styles.button}>
+          
+            <Text style={styles.textfont}>   Novo Cliente</Text>
+          </View>
+        </TouchableNativeFeedback>
+      </View> 
         
   
       </View>
@@ -54,6 +47,13 @@ export default function CriarOrcamento({navigation}) {
       alignItems: 'center',
       justifyContent: 'flex-start',
       
+    },
+    button: {
+      alignItems:'center',
+      backgroundColor:'#d0933f',
+      marginTop:16,
+      width: 300,
+      padding: 10,
     },
 });
 
