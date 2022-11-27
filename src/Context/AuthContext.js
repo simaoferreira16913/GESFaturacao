@@ -52,24 +52,6 @@ export const AuthProvider = ({children}) => {
     }
 
 
-    const isLoggedIn = async () => {
-        try{
-            setIsLoading(true);
-            let userInfo = await AsyncStorage.getItem('@userInfo');
-            let userToken = await AsyncStorage.getItem('@userToken');
-            userInfo = JSON.parse(userInfo);
-
-            if ( userInfo ){
-                setUserToken(userToken);
-                setUserInfo(userInfo);
-            }
-            setIsLoading(false);
-        } catch(e) {
-            console.log(`isLoggedIn error ${e}`);
-        }
-    }
-
-
     const getOrcamentos = async (search,numRows, pag) => {
        
             setIsLoading(true);
@@ -255,9 +237,7 @@ export const AuthProvider = ({children}) => {
     }
 
 
-    useEffect(() => {
-        isLoggedIn();
-    }, []);
+    
 
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,insertCliente,deletecliente,addArtigo,isLoading, userToken}}>

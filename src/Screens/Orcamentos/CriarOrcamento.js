@@ -16,7 +16,7 @@ export default function CriarOrcamento({navigation}) {
     id = 6;
     return (
       <View style={styles.container}>
-             <TouchableOpacity onPress={()=>criarClinete(dadosCli)}>
+             <TouchableOpacity onPress={()=>criarCliente(dadosCli)}>
               <Text>Click</Text>
               </TouchableOpacity> 
               <TouchableOpacity onPress={()=>deletecliente(id)}>
