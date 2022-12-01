@@ -99,6 +99,7 @@ export const AuthProvider = ({children}) => {
    const criarCliente = async (dadosCli) =>{
     var token = await this.getToken();
     console.log(token)
+    console.log(dadosCli)
     axios.post(`${BASE_URL}/api/tabelas/clientes`, {
     opcao: '2',
                 _token: token,
