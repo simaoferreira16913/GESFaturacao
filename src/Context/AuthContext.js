@@ -118,39 +118,7 @@ export const AuthProvider = ({children}) => {
                 desconto_cliente: dadosCli.Desconto,
 
     }, {headers: { Accept: 'application/json',}})}
-    const insertCliente = async () =>{
-        //console.log(dadosCli);
-        //console.log(dadosCli.Nome)
-        var token = await this.getToken();
-        console.log(token)
-        return axios({
-            url: `https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/tabelas/clientes`,
-            method: 'POST',
-            timeout: 5000,
-            data : {
-                opcao: '2',
-                _token: token,
-                nome_cliente: "dadosCli.Nome ",
-                nif_cliente: 192047663,
-                pais_cliente: "PT",
-                endereco_cliente: "dadosCli",
-                codigopostal_cliente: "4755-261",
-                regiao_cliente: 0,
-                cidade_cliente: 0,
-                email_cliente: "dadosCli@Email.pt",
-                website_cliente: "dadosCli.Website.pt",
-                tlm_cliente: 960000000,
-                tlf_cliente: 252000000,
-                fax_cliente: 252000001,
-                vencimento_cliente: 0,
-                desconto_cliente: 0,
-        },
-        headers: {
-            Accept: 'application/json',
-        }
-        });
-       
-    }
+    
 
     const addOrcamentos = async () => {
             console.log("Entrei");
@@ -240,7 +208,7 @@ export const AuthProvider = ({children}) => {
     
 
     return(
-        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,insertCliente,deletecliente,addArtigo,isLoading, userToken}}>
+        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,addArtigo,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
     );

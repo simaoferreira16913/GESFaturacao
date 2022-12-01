@@ -13,9 +13,12 @@ export default function Home({navigation}) {
   return (
     <View style={styles.container}>
      <View style={styles.button}>
+      
       <Button title='Orçamentos' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Orçamentos")}/>
       
+      
       <Button title='Logout' color='#d0933f' onPress={()=> {logout()}}/>
+      
       </View> 
       
     </View>
@@ -37,5 +40,8 @@ const styles = StyleSheet.create({
   },
   button: {
       marginTop:50,
+  },
+  marginButton:{
+    marginTop:5,
   }
 });

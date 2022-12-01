@@ -1,6 +1,6 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
-import { Button, StyleSheet, Text,Touchable, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
+import { Button, StyleSheet, Text,Touchable, TouchableNativeFeedback, TouchableOpacity, View, ScrollView } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -65,7 +65,9 @@ export default function MainOrcamento({navigation}) {
   const {getOrcamentos} = useContext(AuthContext);
   
   return (
+    <ScrollView>
     <View style={styles.container}>
+      
       <Text>{getOrcamentos}</Text>
      <View > 
         <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Orçamento")}>
@@ -184,9 +186,9 @@ export default function MainOrcamento({navigation}) {
         </TouchableNativeFeedback>
       </View> 
       
-
+      
     </View>
-    
+    </ScrollView>
   );
 
 }
@@ -210,6 +212,7 @@ const styles = StyleSheet.create({
       alignItems:'center',
       backgroundColor:'#d0933f',
       marginTop:16,
+      marginBottom:5,
       width: 300,
       padding: 10,
     },

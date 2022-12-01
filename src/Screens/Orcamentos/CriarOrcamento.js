@@ -10,7 +10,7 @@ export default function CriarOrcamento({navigation}) {
     const {deletecliente} = useContext(AuthContext);
     const {criarCliente} = useContext(AuthContext);
   
-    const dadosCli={Nome:"Joao", Nif:192047663, Pais:"PT",Endereco:"Morada",CodigoPostal:4755-123,
+    const dadosCli={Nome:"Nelson", Nif:"193047663", Pais:"China",Endereco:"Morada",CodigoPostal:4755-123,
                 Regiao:0, Cidade:0,Email:"teste@teste.com",Website:"www.oi.pt",Telemovel:968000000,Telefone:252123123
                 ,Fax:252123124, Vencimento:0, Desconto:0};
     id = 6;
