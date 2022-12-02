@@ -7,6 +7,8 @@ import Home from '../Screens/Home';
 import MainOrcamento from '../Screens/Orcamentos/MainOrcamento';
 import CriarOrcamento from '../Screens/Orcamentos/CriarOrcamento';
 import CriarCliente from '../Screens/Clientes/CriarCliente';
+import CriarArtigo from '../Screens/Artigos/CriarArtigo';
+import MainArtigo from '../Screens/Artigos/MainArtigo';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +19,8 @@ const AppStack = () => {
         <Stack.Screen name="GesFaturação-Orçamentos" component={MainOrcamento} />
         <Stack.Screen name='GesFaturação-Criar Orçamento' component={CriarOrcamento}/>
         <Stack.Screen name='GesFaturação-Criar Cliente' component={CriarCliente}/>
+        <Stack.Screen name='GesFaturação-Artigos' component={MainArtigo}/>
+        <Stack.Screen name='GesFaturação-Criar Artigo' component={CriarArtigo}/>
       </Stack.Navigator>
     );
 };

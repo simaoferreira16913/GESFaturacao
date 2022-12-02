@@ -52,32 +52,25 @@ export const AuthProvider = ({children}) => {
     }
 
 
-    const getOrcamentos = async (search,numRows, pag) => {
-       
-            setIsLoading(true);
-            let _token = userToken;
-            let opcao = 0;
-            //console.log(userToken);
-            axios.get(`${BASE_URL}/api/orcamentos/orcamentos`, {
-                _token,
-                opcao,
-                search,
-                numRows,
-                pag
-            })
-            .then(async res => {
-                console.log(res.data)
-                return res.data
-            }).catch(e =>{
-                console.log(`Erro: ${e}`);
-                setIsLoading(false)
-            });
-            
-        console.log("Token:  "+_token)
-        console.log(opcao);
-        console.log(search);
-        console.log(numRows);
-        console.log(pag);
+    const getOrcamentos = async ()=> {
+        var token = await this.getToken();
+
+        return axios({
+            url: 'https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos',
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                _token: token,
+                pag: '0',
+                numRows: '25',
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        }).then(async res =>{console.log(res)});
+
+        
     }
 
     getToken = async () => AsyncStorage.getItem('@userToken');
@@ -174,7 +167,7 @@ export const AuthProvider = ({children}) => {
 
     }
 
-    const addArtigo = async (dadosArt) =>{
+    const CriarArtigo = async (dadosArt) =>{
         console.log(dadosArt);
         var token = await this.getToken();
         return axios({
@@ -209,7 +202,7 @@ export const AuthProvider = ({children}) => {
     
 
     return(
-        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,addArtigo,isLoading, userToken}}>
+        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,CriarArtigo,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
     );
