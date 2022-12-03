@@ -4,7 +4,8 @@ import { Button, StyleSheet, Text,TextInput,Touchable, Alert,
   TouchableNativeFeedback, TouchableOpacity, View , ScrollView} from 'react-native';
 import { AuthContext } from "../../Context/AuthContext";
 import { useForm, Controller } from "react-hook-form";
-
+import {yupResolver} from '@hookform/resolvers/yup'
+import * as yup from yup;
 
 export default function CriarArtigo({navigation}) {
   
@@ -34,160 +35,149 @@ export default function CriarArtigo({navigation}) {
           />
           <Controller 
           control={control}
-          name="Nif"
+          name="Codigo"
           render={({field: {onChange, onBlur, value}})=>(
               <TextInput 
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                placeholder="Nif"
+                placeholder="Codigo"
               />
           )}
           />
           <Controller 
           control={control}
-          name="Pais"
+          name="Categoria"
           render={({field: {onChange, onBlur, value}})=>(
               <TextInput 
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                placeholder="País"
+                placeholder="Categoria"
               />
           )}
           />
           <Controller 
           control={control}
-          name="Endereco"
+          name="Tipo"
           render={({field: {onChange, onBlur, value}})=>(
               <TextInput 
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                placeholder="Endereço"
+                placeholder="Tipo"
               />
           )}
           />
           <Controller 
           control={control}
-          name="CodigoPostal"
+          name="Stock"
           render={({field: {onChange, onBlur, value}})=>(
               <TextInput 
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                placeholder="Código Postal"
+                placeholder="Stock"
               />
           )}
           />
           <Controller 
           control={control}
-          name="Regiao"
+          name="Unidade"
           render={({field: {onChange, onBlur, value}})=>(
               <TextInput 
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                placeholder="Região"
+                placeholder="Unidade"
               />
           )}
           />
           <Controller 
           control={control}
-          name="Cidade"
+          name="PrecoPVP"
           render={({field: {onChange, onBlur, value}})=>(
               <TextInput 
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                placeholder="Cidade"
+                placeholder="PrecoPVP"
               />
           )}
           />
           <Controller 
           control={control}
-          name="Email"
+          name="IVA"
           render={({field: {onChange, onBlur, value}})=>(
               <TextInput 
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                placeholder="Email"
+                placeholder="IVA"
               />
           )}
           />
           <Controller 
           control={control}
-          name="Website"
+          name="Preco"
           render={({field: {onChange, onBlur, value}})=>(
               <TextInput 
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                placeholder="Website"
+                placeholder="Preco"
               />
           )}
           />
           <Controller 
           control={control}
-          name="Telemovel"
+          name="CodigoBarras"
           render={({field: {onChange, onBlur, value}})=>(
               <TextInput 
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                placeholder="Telemovel"
+                placeholder="CodigoBarras"
               />
           )}
           />
           <Controller 
           control={control}
-          name="Telefone"
+          name="SerialNumber"
           render={({field: {onChange, onBlur, value}})=>(
               <TextInput 
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                placeholder="Telefone"
+                placeholder="SerialNumber"
               />
           )}
           />
           <Controller 
           control={control}
-          name="Fax"
+          name="RetencaoValor"
           render={({field: {onChange, onBlur, value}})=>(
               <TextInput 
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                placeholder="Fax"
+                placeholder="RetencaoValor"
               />
           )}
           />
           <Controller 
           control={control}
-          name="Vencimento"
+          name="DescricaoLonga"
           render={({field: {onChange, onBlur, value}})=>(
               <TextInput 
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                placeholder="Vencimento"
+                placeholder="DescricaoLonga"
               />
           )}
           />
-          <Controller 
-          control={control}
-          name="Desconto"
-          render={({field: {onChange, onBlur, value}})=>(
-              <TextInput 
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                placeholder="Desconto"
-              />
-          )}
-          />
+          
           <Button
           title="Criar Cliente" color='#d0933f'
           onPress={handleSubmit(submitcliente)}
