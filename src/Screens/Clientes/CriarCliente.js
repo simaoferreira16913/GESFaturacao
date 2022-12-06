@@ -4,11 +4,22 @@ import { Button, StyleSheet, Text,TextInput,Touchable, Alert,
   TouchableNativeFeedback, TouchableOpacity, View , ScrollView} from 'react-native';
 import { AuthContext } from "../../Context/AuthContext";
 import { useForm, Controller } from "react-hook-form";
+import {yupResolver} from '@hookform/resolvers/yup'
+import * as yup from 'yup';
 
+const schema = yup.object({
+  Nome: yup.string().required("Digite o nome do Cliente"),
+  Nif: yup.number("Digite apenas numeros").required("Digite o numero do cliente").positive().integer().min(9,"O nif deve ter pelo menos nove digitos"),
+  CodigoPostal: yup.number().positive().integer().min(4),
+  Email: yup.string().email(),
+
+})
 
 export default function CriarCliente({navigation}) {
   
-  const { control,register, handleSubmit, watch, formState: { errors } } = useForm();
+  const { control,register, handleSubmit, watch, formState: { errors } } = useForm({
+    resolver:yupResolver()
+  });
   
   const {criarCliente} = useContext(AuthContext);
   function submitcliente(data){

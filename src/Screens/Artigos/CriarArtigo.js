@@ -5,11 +5,17 @@ import { Button, StyleSheet, Text,TextInput,Touchable, Alert,
 import { AuthContext } from "../../Context/AuthContext";
 import { useForm, Controller } from "react-hook-form";
 import {yupResolver} from '@hookform/resolvers/yup'
-import * as yup from yup;
+import * as yup from 'yup';
+
+const schema = yup.object({
+
+})
 
 export default function CriarArtigo({navigation}) {
   
-  const { control,register, handleSubmit, watch, formState: { errors } } = useForm();
+  const { control,register, handleSubmit, watch, formState: { errors } } = useForm({
+    resolver: yupResolver()
+  });
   
   const {CriarArtigo} = useContext(AuthContext);
   function submitcliente(data){
