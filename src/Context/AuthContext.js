@@ -56,7 +56,7 @@ export const AuthProvider = ({children}) => {
         var token = await this.getToken();
 
         return axios({
-            url: 'https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos',
+            url: `${BASE_URL}/api/orcamentos/orcamentos`,
             method: 'GET',
             timeout: 5000,
             params: {
@@ -68,11 +68,31 @@ export const AuthProvider = ({children}) => {
             headers: {
                 Accept: 'application/json',
             }
-        }).then(async res =>{console.log(res)});
-
+        }).then(async res =>{console.log(res.data)}); 
+    }
+    const getClientes = async ()=> {
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/tabelas/clientes`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                _token: token,
+                pag: '0',
+                numRows: '25',
+                table_usage: '1',
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        }).then(async res =>{return res.data.aaData}).
+        catch(e => {
+            console.log(`Error ${e}`);
+        }); 
         
     }
-
+   
     getToken = async () => AsyncStorage.getItem('@userToken');
     const deletecliente = async (id) =>{
         var token = await this.getToken();
@@ -88,7 +108,7 @@ export const AuthProvider = ({children}) => {
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
         });
     }
-   
+    
    const criarCliente = async (dadosCli) =>{
     var token = await this.getToken();
     console.log(token)
@@ -202,7 +222,7 @@ export const AuthProvider = ({children}) => {
     
 
     return(
-        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,CriarArtigo,isLoading, userToken}}>
+        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,CriarArtigo,getClientes,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
     );
