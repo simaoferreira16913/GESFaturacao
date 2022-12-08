@@ -72,6 +72,7 @@ export const AuthProvider = ({children}) => {
     }
     const getClientes = async ()=> {
         var token = await this.getToken();
+
         return axios({
             url: `${BASE_URL}/api/tabelas/clientes`,
             method: 'GET',
@@ -81,16 +82,12 @@ export const AuthProvider = ({children}) => {
                 _token: token,
                 pag: '0',
                 numRows: '25',
-                table_usage: '1',
+                table_usage: '1'
             },
             headers: {
                 Accept: 'application/json',
             }
-        }).then(async res =>{return res.data.aaData}).
-        catch(e => {
-            console.log(`Error ${e}`);
         }); 
-        
     }
    
     getToken = async () => AsyncStorage.getItem('@userToken');

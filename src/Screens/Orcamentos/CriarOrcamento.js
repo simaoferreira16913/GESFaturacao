@@ -3,6 +3,9 @@ import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
 import { AuthContext } from "../../Context/AuthContext";
 import {Picker} from '@react-native-picker/picker';
+import { BASE_URL } from '../../config';
+
+
 
 export default function CriarOrcamento({navigation}){
     const {addOrcamentos} = useContext(AuthContext);
@@ -11,15 +14,33 @@ export default function CriarOrcamento({navigation}){
     const {criarCliente} = useContext(AuthContext);
     const {getOrcamentos} = useContext(AuthContext);
     const {getClientes} = useContext(AuthContext);
-    
-    const dadosCli={Nome:"Nelson", Nif:"193047663", Pais:"China",Endereco:"Morada",CodigoPostal:4755-123,
-                Regiao:0, Cidade:0,Email:"teste@teste.com",Website:"www.oi.pt",Telemovel:968000000,Telefone:252123123
-                ,Fax:252123124, Vencimento:0, Desconto:0};
-    id = 6;
-    
-    var DadosClientes= [];
-    DadosClientes= getClientes()
-    
+    var dadosClientes = [];
+    var coisa;
+    /*const getClientes = async ()=> {
+      var token = await this.getToken();
+      params= {
+          opcao: '0',
+          _token: token,
+          pag: '0',
+          numRows: '25',
+          table_usage: '1',
+      }
+      console.log(`${BASE_URL}/api/tabelas/clientes`+`?`+new URLSearchParams(params))
+      const dados = await fetch(`${BASE_URL}/api/tabelas/clientes`+`?`+new URLSearchParams(params),{
+          method: 'GET',
+          headers: {
+              Accept: 'application/json',
+          }
+      });
+      const aux = await dados.json();
+      console.log("OI",aux)
+      dadosClientes.push(aux)
+      coisa = aux;
+      return aux;
+  };*/
+  getClientes().then((data)=>{
+    console.log(data)
+  })
     return (
       <View style={styles.container}>
              <TouchableOpacity onPress={()=>getClientes()}>
@@ -28,12 +49,8 @@ export default function CriarOrcamento({navigation}){
               <TouchableOpacity onPress={()=>deletecliente(id)}>
               <Text>Click Delete</Text>
               </TouchableOpacity>   
-         
-            <Picker placeholder="Selecione um Cliente">
-              {DadosClientes.map(function(object, i){
-                return <Picker.Item label={object[2]} value={object[0]} key={i}/>
-              })}
-            </Picker>
+              
+              
               <View > 
         <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Cliente")}>
           <View style={styles.button}>
