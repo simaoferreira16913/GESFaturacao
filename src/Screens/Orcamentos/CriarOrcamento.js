@@ -38,9 +38,13 @@ export default function CriarOrcamento({navigation}){
       coisa = aux;
       return aux;
   };*/
-  getClientes().then((data)=>{
-    console.log(data)
+  dadosClientes = [];
+  getClientes().then((res)=>{
+    console.log(res.data)
+    dadosClientes.push(res.data.aaData)
+    console.log(dadosClientes)
   })
+  
     return (
       <View style={styles.container}>
              <TouchableOpacity onPress={()=>getClientes()}>
@@ -58,6 +62,11 @@ export default function CriarOrcamento({navigation}){
             <Text style={styles.textfont}>   Novo Cliente</Text>
           </View>
         </TouchableNativeFeedback>
+        <Picker placeholder="Selecione um cliente" onValueChange={itemValue=>this.getClienteID(itemValue)}>
+          {dadosClientes.map(function(object,i){
+            return <Picker.Item label={object[2]} value={object[0]} key={i}/>;
+          })}
+        </Picker>
       </View> 
         
   
