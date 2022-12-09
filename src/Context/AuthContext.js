@@ -70,13 +70,14 @@ export const AuthProvider = ({children}) => {
             }
         }).then(async res =>{console.log(res.data)}); 
     }
-    const getClientes = async ()=> {
+    const getClientes = async (dados)=> {
+        
         var token = await this.getToken();
 
         return axios({
             url: `${BASE_URL}/api/tabelas/clientes`,
             method: 'GET',
-            timeout: 5000,
+            //timeout: 5000,
             params: {
                 opcao: '0',
                 _token: token,
@@ -87,7 +88,25 @@ export const AuthProvider = ({children}) => {
             headers: {
                 Accept: 'application/json',
             }
-        }); 
+        })
+
+        
+    }
+    const getclienteID = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/tabelas/clientes`,
+            method: 'GET',
+            //timeout: 5000,
+            params: {
+                opcao: '1',
+                idCliente: id,
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
     }
    
     getToken = async () => AsyncStorage.getItem('@userToken');
@@ -219,7 +238,7 @@ export const AuthProvider = ({children}) => {
     
 
     return(
-        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,CriarArtigo,getClientes,isLoading, userToken}}>
+        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,CriarArtigo,getClientes,getclienteID,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
     );

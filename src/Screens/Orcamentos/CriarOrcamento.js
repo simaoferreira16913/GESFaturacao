@@ -1,10 +1,10 @@
 import React from "react";
 import { useState, useEffect,useContext } from 'react';
-import { Button, StyleSheet, Text,Touchable, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
+import { Button, StyleSheet, Text,Touchable, TouchableNativeFeedback, TouchableOpacity, View,FlatList } from 'react-native';
 import { AuthContext } from "../../Context/AuthContext";
 import {Picker} from '@react-native-picker/picker';
 import { BASE_URL } from '../../config';
-
+import PickerClientes from "./PickerClientes";
 
 
 export default function CriarOrcamento({navigation}){
@@ -14,7 +14,7 @@ export default function CriarOrcamento({navigation}){
     const {criarCliente} = useContext(AuthContext);
     const {getOrcamentos} = useContext(AuthContext);
     const {getClientes} = useContext(AuthContext);
-    var dadosClientes = [];
+    const {getclienteID} = useContext(AuthContext)
     var coisa;
     /*const getClientes = async ()=> {
       var token = await this.getToken();
@@ -38,16 +38,22 @@ export default function CriarOrcamento({navigation}){
       coisa = aux;
       return aux;
   };*/
-  dadosClientes = [];
-  getClientes().then((res)=>{
-    console.log(res.data)
-    dadosClientes.push(res.data.aaData)
-    console.log(dadosClientes)
+  const [dadosClientes,setDadosClientes] = useState([]);
+  getClientes(dadosClientes)
+ getClientes(dadosClientes).then((res)=>{
+    //console.log(res.data)
+    setDadosClientes(res.data.aaData)
+    //console.log(dadosClientes)
+    //return res.data.aaData
   })
+  console.log(dadosClientes)
+  const [selectedId, setSelectedId] = useState(null);
+ 
+  
   
     return (
       <View style={styles.container}>
-             <TouchableOpacity onPress={()=>getClientes()}>
+             <TouchableOpacity onPress={()=>getClientes(dadosClientes)}>
               <Text>Click</Text>
               </TouchableOpacity> 
               <TouchableOpacity onPress={()=>deletecliente(id)}>
@@ -62,13 +68,15 @@ export default function CriarOrcamento({navigation}){
             <Text style={styles.textfont}>   Novo Cliente</Text>
           </View>
         </TouchableNativeFeedback>
-        <Picker placeholder="Selecione um cliente" onValueChange={itemValue=>this.getClienteID(itemValue)}>
+        <Picker placeholder="Selecione um cliente" onValueChange={itemValue=>getclienteID(itemValue)}>
           {dadosClientes.map(function(object,i){
-            return <Picker.Item label={object[2]} value={object[0]} key={i}/>;
-          })}
+      return <Picker.Item label={object[2]} value={object[0]} key={i}/>;
+    })}
+        <Picker.Item label="Selecione um Estado"  />
+          <Picker.Item label="Rascunho" value="java" />
         </Picker>
       </View> 
-        
+     
   
       </View>
       
