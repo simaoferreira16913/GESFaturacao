@@ -68,9 +68,9 @@ export const AuthProvider = ({children}) => {
             headers: {
                 Accept: 'application/json',
             }
-        }).then(async res =>{console.log(res.data)}); 
+        }); 
     }
-    const getClientes = async (dados)=> {
+    const getClientes = async ()=> {
         
         var token = await this.getToken();
 
@@ -108,7 +108,26 @@ export const AuthProvider = ({children}) => {
             },
         });
     }
-   
+    
+    const getArtigos = async () =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/tabelas/artigos`,
+            method: 'GET',
+            params: {
+                opcao: '0',
+                pag: '0',
+                numRows: '25',
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+
+
     getToken = async () => AsyncStorage.getItem('@userToken');
     const deletecliente = async (id) =>{
         var token = await this.getToken();
@@ -238,7 +257,8 @@ export const AuthProvider = ({children}) => {
     
 
     return(
-        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,CriarArtigo,getClientes,getclienteID,isLoading, userToken}}>
+        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,CriarArtigo,getClientes,getclienteID,getArtigos
+        ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
     );

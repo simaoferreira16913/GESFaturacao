@@ -1,18 +1,20 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
-import { Button, StyleSheet, Text,Touchable, TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList } from 'react-native';
+import { Button, StyleSheet, Text,Touchable,
+  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
 import { Pairs } from 'matter';
 import axios from 'axios';
-import { AuthContext, AuthProvider } from '../../Context/AuthContext';
+import { AuthContext} from '../../Context/AuthContext';
 import DatePicker from 'react-native-date-picker'
 import { Renderer } from 'phaser';
 import moment from 'moment/moment';
 
 export default function MainOrcamento({navigation}) {
-
+  
+  const {getOrcamentos} = useContext(AuthContext);
 
   Date.prototype.toDateString = function dtoString() {
     return `${this.getDay}`;
@@ -24,7 +26,7 @@ export default function MainOrcamento({navigation}) {
   const [datef, setDatef] = useState(null)
   const [open, setOpen] = useState(false)
   const [openf, setOpenf] = useState(false)
- 
+  const [orca, setorca] = useState([]);
   const opcao = 0;
   const [search, setSearch] = useState("c")
   const numRows = 10;
@@ -36,39 +38,38 @@ export default function MainOrcamento({navigation}) {
     const [client, setClient] = useState([]);
 
 
-  
-     
-
-  /*const handleClient = async() =>{
-    const res = axios.get(`${BASE_URL}/api/tabelas/clientes`,{
-        _token,
-        opcao,
-        search,
-        numRows,
-        pag
-    })
-    //const res = await BASE_URL.get('/api/tabelas/clientes')
-    .then(res => {
-    setClient(res.data)
-    console.log(res.data)})
-    
-  }
-  useEffect(()=>{
-    handleClient()
-  },[])*/
-
   const [selectedClient, setSelectedClient] = useState();
   const [selectedEst, setSelectedEst] = useState();
+  const Item = ({ item, onPress, backgroundColor, textColor }) => (
+    <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
+      <Text style={[styles.title, textColor]}>{item.title}</Text>
+    </TouchableOpacity>
+  );
+  const [selectedId, setSelectedId] = useState(null);
+
+  const renderItem = ({ item }) => {
+    const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
+    const color = item.id === selectedId ? 'white' : 'black';
+
+    return (
+      <Item
+        item={item}
+        onPress={() => setSelectedId(item.id)}
+        backgroundColor={{ backgroundColor }}
+        textColor={{ color }}
+      />
+    );
+  };
   
-  
-   
-  const {getOrcamentos} = useContext(AuthContext);
-  
+  /*getOrcamentos().then((res)=>{
+    setorca(res.data.aaData);
+    console.log(orca);
+  })*/
+    
   return (
-    <ScrollView>
+    
     <View style={styles.container}>
       
-      <Text>{getOrcamentos}</Text>
      <View > 
         <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Orçamento")}>
           <View style={styles.button}>
@@ -188,7 +189,7 @@ export default function MainOrcamento({navigation}) {
       
       
     </View>
-    </ScrollView>
+    
   );
 
 }
