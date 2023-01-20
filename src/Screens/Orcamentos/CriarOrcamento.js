@@ -19,6 +19,16 @@ import {useForm} from 'react-hook-form';
 });*/
 
 
+function Item({ item, onPress }) {
+  return (
+    <View>
+      <Text>Artigo: {item.artigo}  Preço: {item.preco}  QTD: {item.qtd}</Text>
+      <Button title="Remover" onPress={onPress} />
+    </View>
+  );
+}
+
+
 export default function CriarOrcamento({navigation}){
     
     //const {getOrcamentos} = useContext(AuthContext);
@@ -39,6 +49,8 @@ export default function CriarOrcamento({navigation}){
   const [artigo, setArtigo] = useState();
   const [quantidade, setQuantidade] = useState();
   const [preco, setPreco] = useState();
+  const [listKey, setListKey] = useState(0);
+
 
   const onSubmit = (data) => {
     setLinhas([...linhas, data]);
@@ -75,7 +87,9 @@ export default function CriarOrcamento({navigation}){
       console.log(dadosArtigos)
     });
   }*/
-  
+  const removeItem = (index) => {
+    setLinhas(linhas.filter((_, i) => i !== index));
+  }
   
  console.log(linhas);
   
@@ -154,11 +168,18 @@ export default function CriarOrcamento({navigation}){
           // ref={register({name:"preco"})}
           />
           {/* {errors.preco && <Text>{errors.preco.message}</Text>} */}
-           <Button title="Adicionar" onPress={()=> setLinhas([...linhas,
-              selectedIdArtigo, quantidade, preco])}
+           <Button title="Adicionar" onPress={()=> {setLinhas([...linhas,{
+              artigo:selectedIdArtigo, qtd:quantidade, preco:preco}]);
+              setListKey(listKey + 1);}}
             /> 
       </View> 
-     
+      <FlatList
+        data={linhas}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item, index }) => (
+          <Item item={item} onPress={() => removeItem(index)} />
+        )}
+      />
   
       </View>
       
