@@ -170,57 +170,76 @@ export const AuthProvider = ({children}) => {
     
 
     const addOrcamentos = async () => {
-            console.log("Entrei");
-            cliente = 1;
-            serie = 1;
-            numero = 3;
-            data= "05/11/2022";
-            validade = "12/12/2022";
-            referencia = "Ref. Documento";
-            vencimento = 1000;
-            moeda = 1;
-            desconto = 0;
-            observacoes = "Observacoes";
-            artigo= 4;
-            descricao="gota"; 
-            qtd=1; 
-            preco=1,626; 
-            imposto=1; 
-            motivo=0 
-            desconto=0
-            retencao=0
-            Linha = [artigo,descricao, qtd, preco, imposto, motivo, desconto, retencao]
-            Linhas = [Linha];
-            finalizarDocumento=1;
-            setIsLoading(true);
-            let _token = userToken;
-            let opcao = 2;
-            //console.log(userToken);
-            axios.post(`${BASE_URL}/api/orcamentos/orcamentos`, {
-                _token: _token,
-                opcao: "2",
-                cliente: 1,
-                serie: 3,
-                numero: 0,
-                data: data,
-                validade: validade,
-                referencia: referencia,
-                vencimento: 0,
-                moeda: 1,
-                desconto: 0,
-                observacoes: observacoes,
-                Linhas: Linhas,
-                finalizarDocumento: 0,
-            },{headers: { 'content-type': 'application/x-www-form-urlencoded' },})
-            .then(async res => {
-                console.log(res.data)
-                //return res.data
-            }).catch(e =>{
-                console.log(`Erro: ${e}`);
-                setIsLoading(false)
-            });
+        console.log("Entrei");
+        cliente = 1;
+        serie = 1;
+        numero = 3;
+        data= "05/11/2022";
+        validade = "12/12/2022";
+        referencia = "Ref. Documento";
+        vencimento = 1000;
+        moeda = 1;
+        desconto = 0;
+        observacoes = "Observacoes";
+        artigo= 4;
+        descricao="gota"; 
+        qtd=1; 
+        preco=1,626; 
+        imposto=1; 
+        motivo=0 
+        desconto=0
+        retencao=0
+        Linha = [artigo,descricao, qtd, preco, imposto, motivo, desconto, retencao]
+        Linhas = [Linha];
+        finalizarDocumento=1;
+        setIsLoading(true);
+        let _token = userToken;
+        let opcao = 2;
+        //console.log(userToken);
+        axios.post(`${BASE_URL}/api/orcamentos/orcamentos`, {
+            _token: _token,
+            opcao: "2",
+            cliente: 1,
+            serie: 3,
+            numero: 0,
+            data: data,
+            validade: validade,
+            referencia: referencia,
+            vencimento: 0,
+            moeda: 1,
+            desconto: 0,
+            observacoes: observacoes,
+            Linhas: Linhas,
+            finalizarDocumento: 0,
+        },{headers: { 'content-type': 'application/x-www-form-urlencoded' },})
+        .then(async res => {
+            console.log(res.data)
+            //return res.data
+        }).catch(e =>{
+            console.log(`Erro: ${e}`);
+            setIsLoading(false)
+        });
 
+}
+
+    const getArtigoID = async (id) =>{
+        var token = await this.getToken();
+        console.log(id)
+        return axios({
+            url: `${BASE_URL}/api/tabelas/artigos`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idArtigo: id,
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
     }
+
 
     const CriarArtigo = async (dadosArt) =>{
         console.log(dadosArt);
@@ -257,7 +276,8 @@ export const AuthProvider = ({children}) => {
     
 
     return(
-        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,CriarArtigo,getClientes,getclienteID,getArtigos
+        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,
+            CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
