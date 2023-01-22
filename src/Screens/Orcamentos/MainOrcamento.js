@@ -26,7 +26,7 @@ export default function MainOrcamento({navigation}) {
   const [datef, setDatef] = useState(null)
   const [open, setOpen] = useState(false)
   const [openf, setOpenf] = useState(false)
-  const [orca, setorca] = useState([]);
+  const [orcamentos, setOrcamentos] = useState([]);
   const opcao = 0;
   const [search, setSearch] = useState("c")
   const numRows = 10;
@@ -61,16 +61,27 @@ export default function MainOrcamento({navigation}) {
     );
   };
   
-  /*getOrcamentos().then((res)=>{
-    setorca(res.data.aaData);
-    console.log(orca);
-  })*/
-    
+  if(!orcamentos.length){
+    getOrcamentos().then((res)=>{
+      setOrcamentos(res.data.aaData);
+      console.log(res.data.aaData);
+    });
+  }  
   return (
     
     <View style={styles.container}>
       
      <View > 
+     <FlatList 
+        data={orcamentos}
+        keyExtractor={(item) => item[1]}
+        renderItem={({ item }) => (
+          <View>
+            <Text>{item}</Text>
+          </View>
+        )}
+        style={{ width: '100%', height: '100%', backgroundColor: '#f2f2f2' }}
+      />
         <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Orçamento")}>
           <View style={styles.button}>
           
