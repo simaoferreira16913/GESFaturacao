@@ -11,6 +11,7 @@ import { AuthContext} from '../../Context/AuthContext';
 import DatePicker from 'react-native-date-picker'
 import { Renderer } from 'phaser';
 import moment from 'moment/moment';
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
 export default function MainOrcamento({navigation}) {
   
@@ -66,29 +67,25 @@ export default function MainOrcamento({navigation}) {
       setOrcamentos(res.data.aaData);
       console.log(res.data.aaData);
     });
-  }  
+  } 
+  
+  const columns = ['ID', 'Nome', 'Data Inicial', 'Data Final', 'Estado', 'Cliente'];
+
+  const data = orcamentos.map(item => [item[1], item[2], item[5], item[6], item[7], item[8]]);
+
   return (
-    
+    <ScrollView>
     <View style={styles.container}>
       
      <View > 
-     <FlatList 
-        data={orcamentos}
-        keyExtractor={(item) => item[1]}
-        renderItem={({ item }) => (
-          <View>
-            <Text>{item}</Text>
-          </View>
-        )}
-        style={{ width: '100%', height: '100%', backgroundColor: '#f2f2f2' }}
-      />
         <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Orçamento")}>
           <View style={styles.button}>
           
             <Text style={styles.textfont}>   Novo Orçamento</Text>
           </View>
         </TouchableNativeFeedback>
-      </View> 
+      </View>
+      
       <View > 
         <TouchableNativeFeedback>
           <View style={styles.button}>
@@ -197,10 +194,13 @@ export default function MainOrcamento({navigation}) {
           </View>
         </TouchableNativeFeedback>
       </View> 
-      
+      <Table style={{width: '100%', height: '100%'}}>
+        <Row data={columns} style={styles.head} textStyle={styles.text}/>
+        <Rows data={orcamentos} textStyle={styles.text}/>
+      </Table>
       
     </View>
-    
+    </ScrollView>
   );
 
 }
