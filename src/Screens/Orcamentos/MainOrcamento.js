@@ -94,7 +94,7 @@ export default function MainOrcamento({navigation}) {
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Ver Detalhes', { id: value });
+    navigation.navigate('GesFaturação-Ver Detalhes',  { id: value });
   }
 
   return (

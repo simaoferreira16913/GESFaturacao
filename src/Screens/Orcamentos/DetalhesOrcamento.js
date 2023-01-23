@@ -13,217 +13,30 @@ import { Renderer } from 'phaser';
 import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
-export default function MainOrcamento({navigation}, id) {
+export default function DetalhesOrcamento({navigation, route}) {
   
   const {getOrcamentos} = useContext(AuthContext);
   const {deleteOrcamento} = useContext(AuthContext);
-  Date.prototype.toDateString = function dtoString() {
-    return `${this.getDay}`;
-  }
+  const {getOrcamentosDetalhes} = useContext(AuthContext);
+  const [orcamentoID, setOrcamentoID] = useState(null);
 
-  
-  const [dataAux, setDateAux] = useState(new Date())
-  const [datei, setDatei] = useState(null)
-  const [datef, setDatef] = useState(null)
-  const [open, setOpen] = useState(false)
-  const [openf, setOpenf] = useState(false)
-  const [orcamentos, setOrcamentos] = useState([]);
-  const opcao = 0;
-  const [search, setSearch] = useState("c")
-  const numRows = 10;
-  const pag = 10;
-  const entrar = () =>{
-    navigation.navigate("Ecra2")
-  }
-
-    const [client, setClient] = useState([]);
-
-
-  const [selectedClient, setSelectedClient] = useState();
-  const [selectedEst, setSelectedEst] = useState();
-  const Item = ({ item, onPress, backgroundColor, textColor }) => (
-    <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-      <Text style={[styles.title, textColor]}>{item.title}</Text>
-    </TouchableOpacity>
-  );
-  const [selectedId, setSelectedId] = useState(null);
-
-  const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
-    const color = item.id === selectedId ? 'white' : 'black';
-
-    return (
-      <Item
-        item={item}
-        onPress={() => setSelectedId(item.id)}
-        backgroundColor={{ backgroundColor }}
-        textColor={{ color }}
-      />
-    );
-  };
-  
-  if(!orcamentos.length){
-    getOrcamentos().then((res)=>{
-      setOrcamentos(res.data.aaData);
-      console.log(res.data.aaData);
-    }).catch(e =>{
-      console.log(`Erro: ${e}`);
-      setIsLoading(false)
-  });
-  } 
-  
-  const columns = ['Nome', 'Preço', 'Estado', , 'Ações'];
-
-  const data = orcamentos.map(item => [ item[2],parseFloat(item[6]).toFixed(2), item[7], 
-  <View style={{flexDirection: 'row'}}>
-  <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[0])}>
-    <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/></TouchableOpacity >
-  <TouchableOpacity onPress={() => mudarEcra(item[0])}>
-  <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
-  </TouchableOpacity >
-  </View>
-]);
-
-  const handleRemove = (id) => {
-    console.log(id)
-    deleteOrcamento(id).then((res)=>{
-      console.log(res);
-    });
-
-    setOrcamentos(orcamentos.filter(item => item[0] !== id));
-  }
+  const id = route.params.id;
+  console.log(id);
 
   const mudarEcra = (value) => {
-    navigation.navigate('DetalhesOrcamento.js', { id: value });
+    navigation.navigate('DetalhesOrcamento.js', value);
+  }
+
+  if(orcamentoID == null){
+    getOrcamentosDetalhes(id).then((res)=>{
+        console.log(res.data.data);
+        //setOrcamentoID(res.da)
+    });
   }
 
   return (
     <ScrollView>
-    <View style={styles.container}>
-      
-     <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Orçamento")}>
-          <View style={styles.button}>
-          
-            <Text style={styles.textfont}>   Novo Orçamento</Text>
-          </View>
-        </TouchableNativeFeedback>
-      </View>
-      
-      <View > 
-        <TouchableNativeFeedback>
-          <View style={styles.button}>
-          
-            <Text style={styles.textfont}> Integrar Orçamento</Text>
-          </View>
-        </TouchableNativeFeedback>
-      </View> 
-      <View > 
-        <TouchableNativeFeedback>
-          <View style={styles.button}>
-          
-            <Text style={styles.textfont}>   Enviar Orçamentos</Text>
-          </View>
-        </TouchableNativeFeedback>
-      </View> 
-
-      <View> 
-        <Text style={styles.titleSelect}>Cliente</Text>
-        <View style={styles.borderMargin}>
-        <Picker style={styles.pickerComponent} 
-              selectedValue={selectedClient}
-              onValueChange={(itemValue, itemIndex) =>
-              setSelectedClient(itemValue)}>
-          
-          <Picker.Item label="Selecione um cliente" />
-          <Picker.Item label="Java" value="java" />
-          <Picker.Item label="JavaScript" value="js" />
-        </Picker>
-        </View>
-      </View>
-      <View> 
-        <Text style={styles.titleSelect}>Estado</Text>
-        <View style={styles.borderMargin}>
-        <Picker style={styles.pickerComponent} 
-              selectedValue={selectedEst}
-              onValueChange={(itemValue, itemIndex) =>
-              setSelectedEst(itemValue)}>
-          
-          <Picker.Item label="Selecione um Estado"  />
-          <Picker.Item label="Rascunho" value="java" />
-          <Picker.Item label="Aberto" value="Aberto" />
-          <Picker.Item label="Aprovado" value="Aprovado" />
-          <Picker.Item label="Rejeitado" value="Rejeitado" />
-        </Picker>
-        </View>
-      </View>
-      
-      <View> 
-        <Text style={styles.titleSelect}>Data de Início</Text>
-        <View style={styles.borderMargin}>
-        <TouchableOpacity  onPress={() => setOpen(true)} style={styles.touchableO}>
-        <DatePicker
-        modal
-        mode="date"
-        
-        open={open}
-        date={new Date()}
-        onConfirm={(datei) => {
-          setOpen(false)
-          
-          setDatei(datei)
-        }}
-        onCancel={() => {
-          setOpen(false)
-        }}
-      />
-      
-      <Text style={styles.textDate}> {todaiDate = moment(datei).format("DD/MM/YYYY") }</Text>
-         
-      </TouchableOpacity>
-      
-        </View>
-      </View>
-      <View> 
-        <Text style={styles.titleSelect}>Data de Fim</Text>
-        <View style={styles.borderMargin}>
-        <TouchableOpacity  onPress={() => setOpenf(true)} style={styles.touchableO}>
-        <DatePicker
-        modal
-        mode="date"
-        open={openf}
-        date={new Date()}
-        onConfirm={(datef) => {
-          setOpenf(false)
-          
-          setDatef(datef)
-        }}
-        onCancel={() => {
-          setOpenf(false)
-        }}
-      />
-      
-      <Text style={styles.textDate}> {todafDate = moment(datef).format("DD/MM/YYYY") }</Text>
-         
-      </TouchableOpacity>
-      
-        </View>
-      </View>
-      
-      <View  > 
-        <TouchableNativeFeedback onPress={()=> getOrcamentos(search,numRows,pag)}>
-          <View style={styles.button}>
-
-            <Text style={styles.textfont}>   Pesquisar</Text>
-          </View>
-        </TouchableNativeFeedback>
-      </View> 
-      <Table style={{width: '100%', height: '100%', marginLeft:40}}>
-        <Row data={columns} style={styles.head} textStyle={styles.text}/>
-        <Rows data={data} textStyle={styles.text}/>
-      </Table>
-      
-    </View>
+        <Text>jhkj</Text>
     </ScrollView>
   );
 

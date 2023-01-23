@@ -172,7 +172,7 @@ export const AuthProvider = ({children}) => {
         var token = await this.getToken();
         console.log(token)
         return axios({
-            url: `https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos`,
+            url: `${BASE_URL}/api/tabelas/clientes`,
             method: 'DELETE',
             timeout: 5000,
             data: qs.stringify({
@@ -183,6 +183,21 @@ export const AuthProvider = ({children}) => {
             headers: {
                 'content-type': 'application/x-www-form-urlencoded',
             },
+        });
+    }
+
+    const getOrcamentosDetalhes = async (id) =>{
+        var token = await this.getToken();
+       
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/orcamentos`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idDocument: id,
+                _token: token,
+            }
         });
     }
 
@@ -294,7 +309,7 @@ export const AuthProvider = ({children}) => {
 
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,
-            CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento
+            CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
