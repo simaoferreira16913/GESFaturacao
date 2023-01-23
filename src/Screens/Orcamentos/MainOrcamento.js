@@ -76,8 +76,8 @@ export default function MainOrcamento({navigation}) {
 
   const data = orcamentos.map(item => [ item[2],parseFloat(item[6]).toFixed(2), item[7], 
   <View style={{flexDirection: 'row'}}>
-  <TouchableOpacity style={{backgroundColor: '#ff0000', marginRight:10}} onPress={() => handleRemove(item[0])}>
-    <Image source={{uri: "https://cdn-icons-png.flaticon.com/512/2891/2891491.png"}} style={{width: 25, height: 25,padding:"2%"}}/></TouchableOpacity >
+  <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[0])}>
+    <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/></TouchableOpacity >
   <TouchableOpacity >
   <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
   </TouchableOpacity >
@@ -214,7 +214,7 @@ export default function MainOrcamento({navigation}) {
           </View>
         </TouchableNativeFeedback>
       </View> 
-      <Table style={{width: '100%', height: '100%'}}>
+      <Table style={{width: '100%', height: '100%', marginLeft:40}}>
         <Row data={columns} style={styles.head} textStyle={styles.text}/>
         <Rows data={data} textStyle={styles.text}/>
       </Table>
