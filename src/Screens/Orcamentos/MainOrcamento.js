@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable,
-  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList } from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -72,9 +72,17 @@ export default function MainOrcamento({navigation}) {
   });
   } 
   
-  const columns = ['Nome', 'Preço', 'Estado', , 'Remover'];
+  const columns = ['Nome', 'Preço', 'Estado', , 'Ações'];
 
-  const data = orcamentos.map(item => [ item[2],parseFloat(item[6]).toFixed(2), item[7], <Button title="Remover" onPress={() => handleRemove(item[0])}/>]);
+  const data = orcamentos.map(item => [ item[2],parseFloat(item[6]).toFixed(2), item[7], 
+  <View style={{flexDirection: 'row'}}>
+  <TouchableOpacity style={{backgroundColor: '#ff0000', marginRight:10}} onPress={() => handleRemove(item[0])}>
+    <Image source={{uri: "https://cdn-icons-png.flaticon.com/512/2891/2891491.png"}} style={{width: 25, height: 25,padding:"2%"}}/></TouchableOpacity >
+  <TouchableOpacity >
+  <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
+  </TouchableOpacity >
+  </View>
+]);
 
   const handleRemove = (id) => {
     console.log(id)
@@ -281,6 +289,7 @@ const styles = StyleSheet.create({
       marginTop:15,
       fontSize: 16,
       color:"#000000"
-    }
+    },
+    
 
   });
