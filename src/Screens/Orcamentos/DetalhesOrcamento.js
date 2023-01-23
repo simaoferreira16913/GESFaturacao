@@ -13,7 +13,7 @@ import { Renderer } from 'phaser';
 import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
-export default function MainOrcamento({navigation}) {
+export default function MainOrcamento({navigation}, id) {
   
   const {getOrcamentos} = useContext(AuthContext);
   const {deleteOrcamento} = useContext(AuthContext);
@@ -94,7 +94,7 @@ export default function MainOrcamento({navigation}) {
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Ver Detalhes', { id: value });
+    navigation.navigate('DetalhesOrcamento.js', { id: value });
   }
 
   return (

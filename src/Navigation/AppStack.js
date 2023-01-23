@@ -9,6 +9,7 @@ import CriarOrcamento from '../Screens/Orcamentos/CriarOrcamento';
 import CriarCliente from '../Screens/Clientes/CriarCliente';
 import CriarArtigo from '../Screens/Artigos/CriarArtigo';
 import MainArtigo from '../Screens/Artigos/MainArtigo';
+import VerDetalhesOrc from '../Screens/Orcamentos/DetalhesOrcamento';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação-Criar Cliente' component={CriarCliente}/>
         <Stack.Screen name='GesFaturação-Artigos' component={MainArtigo}/>
         <Stack.Screen name='GesFaturação-Criar Artigo' component={CriarArtigo}/>
+        <Stack.Screen name='GesFaturação-Ver Detalhes' component={VerDetalhesOrc}/>
       </Stack.Navigator>
     );
 };
