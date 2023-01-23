@@ -16,7 +16,7 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-ta
 export default function MainOrcamento({navigation}) {
   
   const {getOrcamentos} = useContext(AuthContext);
-
+  const {deleteOrcamento} = useContext(AuthContext);
   Date.prototype.toDateString = function dtoString() {
     return `${this.getDay}`;
   }
@@ -66,12 +66,24 @@ export default function MainOrcamento({navigation}) {
     getOrcamentos().then((res)=>{
       setOrcamentos(res.data.aaData);
       console.log(res.data.aaData);
-    });
+    }).catch(e =>{
+      console.log(`Erro: ${e}`);
+      setIsLoading(false)
+  });
   } 
   
-  const columns = ['ID', 'Nome', 'Data Inicial', 'Data Final', 'Estado', 'Cliente'];
+  const columns = ['Nome', 'Preço', 'Estado', , 'Remover'];
 
-  const data = orcamentos.map(item => [item[1], item[2], item[5], item[6], item[7], item[8]]);
+  const data = orcamentos.map(item => [ item[2],item[6], item[7], <Button title="Remover" onPress={() => handleRemove(item[0])}/>]);
+
+  const handleRemove = (id) => {
+    console.log(id)
+    deleteOrcamento(id).then((res)=>{
+      console.log(res);
+    });
+
+    setOrcamentos(orcamentos.filter(item => item[0] !== id));
+  }
 
   return (
     <ScrollView>
@@ -196,7 +208,7 @@ export default function MainOrcamento({navigation}) {
       </View> 
       <Table style={{width: '100%', height: '100%'}}>
         <Row data={columns} style={styles.head} textStyle={styles.text}/>
-        <Rows data={orcamentos} textStyle={styles.text}/>
+        <Rows data={data} textStyle={styles.text}/>
       </Table>
       
     </View>

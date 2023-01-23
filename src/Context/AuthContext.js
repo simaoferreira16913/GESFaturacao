@@ -168,6 +168,23 @@ export const AuthProvider = ({children}) => {
 
     }, {headers: { Accept: 'application/json',}})}
     
+    const deleteOrcamento = async (id) => {
+        var token = await this.getToken();
+        console.log(token)
+        return axios({
+            url: `https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '4',
+                _token: token,
+                idOrcamento: id,
+            }),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        });
+    }
 
     const addOrcamentos = async () => {
         console.log("Entrei");
@@ -277,7 +294,7 @@ export const AuthProvider = ({children}) => {
 
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,
-            CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID
+            CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
