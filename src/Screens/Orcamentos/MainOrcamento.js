@@ -74,7 +74,7 @@ export default function MainOrcamento({navigation}) {
   
   const columns = ['Nome', 'Preço', 'Estado', , 'Remover'];
 
-  const data = orcamentos.map(item => [ item[2],item[6], item[7], <Button title="Remover" onPress={() => handleRemove(item[0])}/>]);
+  const data = orcamentos.map(item => [ item[2],parseFloat(item[6]).toFixed(2), item[7], <Button title="Remover" onPress={() => handleRemove(item[0])}/>]);
 
   const handleRemove = (id) => {
     console.log(id)
