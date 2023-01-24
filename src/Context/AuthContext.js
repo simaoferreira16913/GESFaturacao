@@ -92,6 +92,26 @@ export const AuthProvider = ({children}) => {
 
         
     }
+
+    const finalizarOrcamento = async (id) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/orcamentos`,
+            method: 'PATCH',
+            timeout: 5000,
+            params: {
+                opcao: '6',
+                idOrcamento: id,
+                _token: token,
+            },
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            }
+        })
+    }
+
+
     const getclienteID = async (id) =>{
         var token = await this.getToken();
         return axios({
@@ -309,7 +329,7 @@ export const AuthProvider = ({children}) => {
 
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,
-            CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes
+            CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

@@ -220,7 +220,7 @@ export default function MainOrcamento({navigation}) {
       </View> 
       <Table style={{width: '100%', height: '100%', marginLeft:40}}>
         <Row data={columns} style={styles.head} textStyle={styles.text}/>
-        <Rows data={data} textStyle={styles.text}/>
+        <Rows data={data} />
       </Table>
       
     </View>
@@ -294,6 +294,10 @@ const styles = StyleSheet.create({
       fontSize: 16,
       color:"#000000"
     },
+    text: {
+      fontSize: 16,
+      color:"#000000"
+    }
     
 
   });

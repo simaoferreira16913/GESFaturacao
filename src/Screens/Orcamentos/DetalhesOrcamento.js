@@ -13,30 +13,123 @@ import { Renderer } from 'phaser';
 import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
+
 export default function DetalhesOrcamento({navigation, route}) {
-  
+  const {getArtigoID} = useContext(AuthContext);
   const {getOrcamentos} = useContext(AuthContext);
   const {deleteOrcamento} = useContext(AuthContext);
+  const {finalizarOrcamento} = useContext(AuthContext);
   const {getOrcamentosDetalhes} = useContext(AuthContext);
-  const [orcamentoID, setOrcamentoID] = useState(null);
-
+  const [orcamentoID, setOrcamentoID] = useState([]);
+  const [tableData, setTableData] = useState([]);
+  const [aux, setAux] = useState();
+  const [aux2, setAux2] = useState();
   const id = route.params.id;
-  console.log(id);
+
 
   const mudarEcra = (value) => {
     navigation.navigate('DetalhesOrcamento.js', value);
   }
 
-  if(orcamentoID == null){
+  if(orcamentoID.length == 0){
     getOrcamentosDetalhes(id).then((res)=>{
         console.log(res.data.data);
-        //setOrcamentoID(res.da)
+        setOrcamentoID(res.data.data);
+        setTableData(res.data.data.linhas.map(linha => [linha.artigo, Number(linha.preco).toFixed(2), parseFloat(linha.qtd).toFixed(2),
+             linha.imposto, Number(linha.totalLinha).toFixed(2)]));
+        setAux(1);   
     });
+  
   }
+  
+    if(aux2 != 1){
+      if(aux == 1){
+        for(let i = 0; i < tableData.length; i++){
+        
+          getArtigoID(tableData[i][0]).then((res)=>{
+            if(tableData[i][0] != res.data.data.Nome){
+              console.log(res.data.data.Nome);
+              if(res.data.data.Nome != null){
+              tableData[i][0] = res.data.data.Nome;
+              console.log("Oi",tableData);
+              setTableData([...tableData]);
+              setAux2(1);
+              }
+            }
+          });
+        }
+      }
+    }
+    
+
+    function handleFinalizarOrcamento(){
+      console.log("IDORCAMENTO", id)
+      finalizarOrcamento(id).then((res)=>{
+        console.log(res);
+      })
+    }
 
   return (
     <ScrollView>
-        <Text>jhkj</Text>
+      <Text style={styles.titleSelect}>Cliente</Text>
+      <View style={styles.borderMargin}>
+        <Text style={{marginLeft: 4}}>{orcamentoID.Cliente}</Text>
+      </View>
+      <Text style={styles.titleSelect}>NIF</Text>
+      <View style={styles.borderMargin}>
+        <Text style={{marginLeft: 4}}>{orcamentoID.Nif}</Text>
+      </View>
+      <Text style={styles.titleSelect}>Endereço</Text>
+      <View style={styles.borderMargin}>
+        <Text style={{marginLeft: 4}}>{orcamentoID.EnderecoCliente}</Text>
+      </View>
+      <Text style={styles.titleSelect}>Série</Text>
+      <View style={styles.borderMargin}>
+        <Text style={{marginLeft: 4}}>{orcamentoID.Serie}</Text>
+      </View>
+      <Text style={styles.titleSelect}>Data</Text>
+      <View style={styles.borderMargin}>
+        <Text style={{marginLeft: 4}}>{orcamentoID.Data}</Text>
+      </View>
+      <Text style={styles.titleSelect}>Data Vencimento</Text>
+      <View style={styles.borderMargin}>
+        <Text style={{marginLeft: 4}}>{orcamentoID.DataValidade}</Text>
+      </View>
+      <Text style={styles.titleSelect}>Desconto</Text>
+      <View style={styles.borderMargin}>
+        <Text style={{marginLeft: 4}}>{parseFloat(orcamentoID.PercentagemDesconto).toFixed(2)}%</Text>
+      </View>
+      <Text style={styles.titleSelect}>Moeda</Text>
+      <View style={styles.borderMargin}>
+        <Text style={{marginLeft: 4}}>{orcamentoID.Moeda}</Text>
+      </View>
+      <Text style={styles.titleSelect}>Linhas</Text>
+      <Table style={{marginLeft: 10}}>
+    <Row data={["Artigo", "Preço", "QTD", "IVA", "Total"]} style={styles.header} textStyle={styles.headerText}/>
+    {tableData.map((rowData, index) => (
+        <Row
+            key={index}
+            data={rowData}
+            style={[styles.row, index%2 && {backgroundColor: '#f9f9f9'}]}
+            textStyle={styles.text}
+        />
+    ))}
+</Table>
+<View style={styles.marginTOPButton}>
+  <Button color="#d0933f"  title="Enviar Email" onPress={() => { /* código para enviar orçamento */ }} />
+</View>
+<View style={styles.marginTOPButton2}>
+
+{orcamentoID.Estado === "Rascunho" ? (
+  <Button color="#d0933f"  title="Finalizar Orçamento" onPress={() => { handleFinalizarOrcamento()}} />
+) : (
+  <View>
+    <Button color="#d0933f" title="Aceitar" onPress={() => { /* código para fechar orçamento */ }} />
+    <Button color="#d0933f" title="Rejeitar" onPress={() => { /* código para fechar orçamento */ }} />
+  </View>
+  
+)}
+</View>
     </ScrollView>
   );
 
@@ -92,7 +185,10 @@ const styles = StyleSheet.create({
     borderMargin: {
       borderWidth: 1,
       borderColor: 'grey',
-      
+      marginLeft:10,
+      marginRight:10,
+      height:50,
+      justifyContent: 'center',
     },
     dateComponent: {
         width: 350
@@ -107,6 +203,12 @@ const styles = StyleSheet.create({
       fontSize: 16,
       color:"#000000"
     },
-    
-
+    marginTOPButton: {
+      margin: 20
+    },
+    marginTOPButton2: {
+      marginLeft: 20,
+      marginRight: 20,
+      marginBottom: 7
+    }
   });
