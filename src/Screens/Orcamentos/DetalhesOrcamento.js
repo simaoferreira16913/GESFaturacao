@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable,
-  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image } from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -18,6 +18,7 @@ export default function DetalhesOrcamento({navigation, route}) {
   const {getArtigoID} = useContext(AuthContext);
   const {getOrcamentos} = useContext(AuthContext);
   const {deleteOrcamento} = useContext(AuthContext);
+  const {estadoOrcamento} = useContext(AuthContext);
   const {finalizarOrcamento} = useContext(AuthContext);
   const {getOrcamentosDetalhes} = useContext(AuthContext);
   const [orcamentoID, setOrcamentoID] = useState([]);
@@ -63,10 +64,31 @@ export default function DetalhesOrcamento({navigation, route}) {
     
 
     function handleFinalizarOrcamento(){
-      console.log("IDORCAMENTO", id)
       finalizarOrcamento(id).then((res)=>{
         console.log(res);
       })
+      .catch(e => {
+        console.log(`Login error ${e}`);
+    });
+    navigation.goBack()
+    navigation.navigate('GesFaturação',  { id: id });
+    navigation.navigate('GesFaturação-Ver Detalhes',  { id: id });
+    ToastAndroid.show("Orçamento Finalizado");
+
+    }
+
+    function handleEstadoOrcamento(estado){
+      console.log("Tou Aqui",estado)
+      estadoOrcamento(id, estado).then((res)=>{
+        console.log(res);
+      }).catch(e => {
+        console.log(`Login error ${e}`);
+    });
+    if(estado == 1){
+      ToastAndroid.show("Orçamento Aceite");
+    }else{
+      ToastAndroid.show("Orçamento Rejeitado");
+    }
     }
 
   return (
@@ -124,8 +146,8 @@ export default function DetalhesOrcamento({navigation, route}) {
   <Button color="#d0933f"  title="Finalizar Orçamento" onPress={() => { handleFinalizarOrcamento()}} />
 ) : (
   <View>
-    <Button color="#d0933f" title="Aceitar" onPress={() => { /* código para fechar orçamento */ }} />
-    <Button color="#d0933f" title="Rejeitar" onPress={() => { /* código para fechar orçamento */ }} />
+    <Button color="#d0933f" title="Aceitar" onPress={() => { handleEstadoOrcamento(1) }} />
+    <Button color="#d0933f" title="Rejeitar" onPress={() => { handleEstadoOrcamento(0) }} />
   </View>
   
 )}

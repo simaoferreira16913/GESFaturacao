@@ -95,20 +95,23 @@ export const AuthProvider = ({children}) => {
 
     const finalizarOrcamento = async (id) =>{
         var token = await this.getToken();
-
-        return axios({
-            url: `${BASE_URL}/api/orcamentos/orcamentos`,
-            method: 'PATCH',
-            timeout: 5000,
-            params: {
-                opcao: '6',
-                idOrcamento: id,
-                _token: token,
-            },
-            headers: {
-                'content-type': 'application/x-www-form-urlencoded',
-            }
+        let aux = id;
+        console.log(aux);
+        axios.patch("https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos",
+        {_token: token, opcao: '6', idOrcamento: id}).then((res)=>{
+            console.log(res)
         })
+       
+    }
+    const estadoOrcamento = async (id, estado) =>{
+        var token = await this.getToken();
+        let aux = id;
+        console.log(aux);
+        axios.patch("https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos",
+        {_token: token, opcao: '6', idDocument: id, estado: estado}).then((res)=>{
+            console.log(res)
+        })
+       
     }
 
 
@@ -328,7 +331,7 @@ export const AuthProvider = ({children}) => {
     
 
     return(
-        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente,
+        <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento
         ,isLoading, userToken}}>
             {children}
