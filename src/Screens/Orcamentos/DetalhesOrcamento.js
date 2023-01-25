@@ -127,7 +127,7 @@ export default function DetalhesOrcamento({navigation, route}) {
       </View>
       <Text style={styles.titleSelect}>Linhas</Text>
       <Table style={{marginLeft: 10}}>
-    <Row data={["Artigo", "Preço", "QTD", "IVA", "Total"]} style={styles.header} textStyle={styles.headerText}/>
+    <Row data={["Artigo", "Preço", "QTD", "IVA", "Total"]}/>
     {tableData.map((rowData, index) => (
         <Row
             key={index}

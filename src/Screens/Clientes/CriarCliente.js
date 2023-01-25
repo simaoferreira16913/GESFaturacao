@@ -18,7 +18,7 @@ const schema = yup.object({
 export default function CriarCliente({navigation}) {
   
   const { control,register, handleSubmit, watch, formState: { errors } } = useForm({
-    resolver:yupResolver()
+    resolver:yupResolver(schema)
   });
   
   const {criarCliente} = useContext(AuthContext);
