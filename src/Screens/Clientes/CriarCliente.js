@@ -35,7 +35,9 @@ export default function CriarCliente({navigation}) {
     
     return (
       <ScrollView>
-       <View style={styles.container}>
+      <View style={styles.container}>
+       <Text style={styles.titleSelect}>Nome</Text>
+       <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Nome"
@@ -48,6 +50,9 @@ export default function CriarCliente({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>NIF</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Nif"
@@ -60,6 +65,9 @@ export default function CriarCliente({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>País</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Pais"
@@ -72,6 +80,9 @@ export default function CriarCliente({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Endereço</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Endereco"
@@ -84,6 +95,9 @@ export default function CriarCliente({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Código-Postal</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="CodigoPostal"
@@ -96,6 +110,9 @@ export default function CriarCliente({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Região</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Regiao"
@@ -108,6 +125,9 @@ export default function CriarCliente({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Cidade</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Cidade"
@@ -120,6 +140,9 @@ export default function CriarCliente({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Email</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Email"
@@ -132,6 +155,9 @@ export default function CriarCliente({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Website</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Website"
@@ -144,6 +170,9 @@ export default function CriarCliente({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Telemóvel</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Telemovel"
@@ -156,6 +185,9 @@ export default function CriarCliente({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Telefone</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Telefone"
@@ -168,6 +200,9 @@ export default function CriarCliente({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Fax</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Fax"
@@ -180,6 +215,9 @@ export default function CriarCliente({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Vencimento</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Vencimento"
@@ -192,6 +230,9 @@ export default function CriarCliente({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Desconto</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Desconto"
@@ -204,10 +245,13 @@ export default function CriarCliente({navigation}) {
               />
           )}
           />
+          </View>
+          <View style={{margin: 10}}>
           <Button
           title="Criar Cliente" color='#d0933f'
           onPress={handleSubmit(submitcliente)}
         />
+        </View>
        </View>
        </ScrollView>
       
@@ -221,8 +265,69 @@ export default function CriarCliente({navigation}) {
     container: {
       flex: 1,
       backgroundColor: '#e5e9ec',
-      alignItems: 'center',
+      
       justifyContent: 'flex-start',
       
     },
+    touch: {
+        flex:1,
+        alignItems: 'center',
+        marginTop:10,
+        backgroundColor: '#d0933f',
+    },
+    button: {
+      alignItems:'center',
+      backgroundColor:'#d0933f',
+      marginTop:16,
+      marginBottom:5,
+      width: 300,
+      padding: 10,
+    },
+    icon: {
+      position:'absolute',
+      left:50,
+    },
+    textfont: {
+      fontSize: 25,
+      fontWeight: "bold",
+      color:'#ffffff',
+    },
+    pickerComponent: {
+      width: 350,
+      
+    },
+    textSelect: {
+      fontSize: 20,
+      padding: 10,
+      fontWeight: 'bold'
+    },
+    titleSelect: {
+      fontSize: 20,
+      margin: 10,
+      fontWeight: "bold",
+      color: "#5F5D5C"
+    },
+    borderMargin: {
+      borderWidth: 1,
+      borderColor: 'grey',
+      marginLeft: 10,
+      marginRight: 10
+    },
+    dateComponent: {
+        width: 350
+    },
+    touchableO: {
+      width: 350,
+      height: 55
+    },
+    textDate: {
+      marginLeft:15,
+      marginTop:15,
+      fontSize: 16,
+      color:"#000000"
+    },
+    text: {
+      fontSize: 16,
+      color:"#000000"
+    }
 });
