@@ -261,26 +261,27 @@ export const AuthProvider = ({children}) => {
         retencao=0
         //Linha = [artigo: artigo,descricao, qtd, preco, imposto, motivo, desconto, retencao]
         Linhas = [{"artigo":"1","descricao":"Artigo+Geral","qtd":"1","preco":"11.707","imposto":"1","motivo":null,"desconto":"0","retencao":"0","centro":"5","comentario":""},{"artigo":"2","descricao":"Serviço+Geral","qtd":"1","preco":"60","imposto":"1","motivo":null,"desconto":"0","retencao":"0","centro":"5","comentario":"Teste\nlinha+2"}];
+        console.log(Linhas);
         finalizarDocumento=1;
         setIsLoading(true);
-        let _token = userToken;
+        var token = await this.getToken();
         let opcao = 2;
         //console.log(userToken);
-        axios.post(`${BASE_URL}/api/orcamentos/orcamentos`, {
-            _token: _token,
+        axios.post(`https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos`, {
+            _token: token,
             opcao: "2",
-            cliente: 1,
-            serie: 3,
-            numero: 0,
-            data: data,
-            validade: validade,
-            referencia: referencia,
-            vencimento: 0,
-            moeda: 1,
-            desconto: 0,
-            observacoes: observacoes,
-            Linhas: Linhas,
-            finalizarDocumento: 0,
+            cliente: "1",
+            serie: "3",
+            numero: "0",
+            data: "12/12/2022",
+            validade: "12/12/2022",
+            referencia: "Ref. Documento",
+            vencimento: "0",
+            moeda: "1",
+            desconto: "0",
+            observacoes: "observacoes",
+            Linhas: "[{'artigo':'1','descricao':'Artigo+Geral','qtd':'1','preco':'11.707','imposto':'1','motivo':null,'desconto':'0','retencao':'0','centro':'5','comentario':''},{'artigo':'2','descricao':'Serviço+Geral','qtd':'1','preco':'60','imposto':'1','motivo':null,'desconto':'0','retencao':'0','centro':'5','comentario':'Teste\nlinha+2'}]",
+            finalizarDocumento: "0",
         },{headers: { 'content-type': 'application/x-www-form-urlencoded' },})
         .then(async res => {
             console.log(res.data)
