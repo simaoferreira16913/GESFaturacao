@@ -71,9 +71,9 @@ export default function DetalhesOrcamento({navigation, route}) {
         console.log(`Login error ${e}`);
     });
     navigation.goBack()
-    navigation.navigate('GesFaturação',  { id: id });
-    navigation.navigate('GesFaturação-Ver Detalhes',  { id: id });
-    ToastAndroid.show("Orçamento Finalizado");
+    navigation.navigate('GesFaturação');
+    //navigation.navigate('GesFaturação-Ver Detalhes',  { id: id });
+    ToastAndroid.show("Orçamento Finalizado",ToastAndroid.SHORT);
 
     }
 
@@ -84,10 +84,12 @@ export default function DetalhesOrcamento({navigation, route}) {
       }).catch(e => {
         console.log(`Login error ${e}`);
     });
+    navigation.navigate('GesFaturação');
+    //ToastAndroid.show("Orçamento Aceite");
     if(estado == 1){
-      ToastAndroid.show("Orçamento Aceite");
+      ToastAndroid.show("Orçamento Aceite ", ToastAndroid.SHORT);
     }else{
-      ToastAndroid.show("Orçamento Rejeitado");
+      ToastAndroid.show("Orçamento Rejeitado",  ToastAndroid.SHORT);
     }
     }
 

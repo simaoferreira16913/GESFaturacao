@@ -96,7 +96,7 @@ export const AuthProvider = ({children}) => {
     const finalizarOrcamento = async (id) =>{
         var token = await this.getToken();
         let aux = id;
-        console.log(aux);
+        console.log("Aqui",aux);
         axios.patch("https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos",
         {_token: token, opcao: '6', idOrcamento: id}).then((res)=>{
             console.log(res)
@@ -105,12 +105,27 @@ export const AuthProvider = ({children}) => {
     }
     const estadoOrcamento = async (id, estado) =>{
         var token = await this.getToken();
-        let aux = id;
-        console.log(aux);
+        console.log(token)
+        console.log(id);
+        console.log(estado);
         axios.patch("https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos",
-        {_token: token, opcao: '6', idDocument: id, estado: estado}).then((res)=>{
+        {_token: token, opcao: '9', idDocumento: id, estado: estado}).then((res)=>{
             console.log(res)
         })
+        /*return axios({
+            url: 'https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos',
+            method: 'PATCH',
+            //timeout: 5000,
+            params: {
+                _token: token,
+                opcao: '9',
+                idDocumento: id,
+                estado: estado
+            },
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        });*/
        
     }
 
@@ -228,7 +243,7 @@ export const AuthProvider = ({children}) => {
         console.log("Entrei");
         cliente = 1;
         serie = 1;
-        numero = 3;
+        numero = 5;
         data= "05/11/2022";
         validade = "12/12/2022";
         referencia = "Ref. Documento";
@@ -244,8 +259,8 @@ export const AuthProvider = ({children}) => {
         motivo=0 
         desconto=0
         retencao=0
-        Linha = [artigo,descricao, qtd, preco, imposto, motivo, desconto, retencao]
-        Linhas = [Linha];
+        //Linha = [artigo: artigo,descricao, qtd, preco, imposto, motivo, desconto, retencao]
+        Linhas = [{"artigo":"1","descricao":"Artigo+Geral","qtd":"1","preco":"11.707","imposto":"1","motivo":null,"desconto":"0","retencao":"0","centro":"5","comentario":""},{"artigo":"2","descricao":"Serviço+Geral","qtd":"1","preco":"60","imposto":"1","motivo":null,"desconto":"0","retencao":"0","centro":"5","comentario":"Teste\nlinha+2"}];
         finalizarDocumento=1;
         setIsLoading(true);
         let _token = userToken;

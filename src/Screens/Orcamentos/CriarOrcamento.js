@@ -96,7 +96,7 @@ export default function CriarOrcamento({ navigation }) {
       cliente:cliente,
       linhas: linhas
     }
-    addOrcamentos(dadosOrcamento).then((res)=>{
+    addOrcamentos().then((res)=>{
       console.log(res);
     })
   }
