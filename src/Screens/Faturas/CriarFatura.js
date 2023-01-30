@@ -206,7 +206,7 @@ export default function CriarOrcamento({ navigation }) {
         )}
       />
       <View style={{marginTop: 30, width: 350}}>
-      <Button  title="Criar Orçamento" color="#d0933f" onPress={handleCreateFatura} />
+      <Button  title="Criar Fatura" color="#d0933f" onPress={handleCreateFatura} />
       </View>
       </View>
     </ScrollView>
