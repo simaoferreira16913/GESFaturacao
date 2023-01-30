@@ -10,6 +10,9 @@ import CriarCliente from '../Screens/Clientes/CriarCliente';
 import CriarArtigo from '../Screens/Artigos/CriarArtigo';
 import MainArtigo from '../Screens/Artigos/MainArtigo';
 import VerDetalhesOrc from '../Screens/Orcamentos/DetalhesOrcamento';
+import MainFatura from '../Screens/Faturas/MainFatura';
+import DetalhesFatura from '../Screens/Faturas/DetalhesFatura';
+import CriarFatura from '../Screens/Faturas/CriarFatura';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +26,9 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação-Artigos' component={MainArtigo}/>
         <Stack.Screen name='GesFaturação-Criar Artigo' component={CriarArtigo}/>
         <Stack.Screen name='GesFaturação-Ver Detalhes' component={VerDetalhesOrc}/>
+        <Stack.Screen name='GesFaturação-Faturas' component={MainFatura}/>
+        <Stack.Screen name='GesFaturação-Fatura Detalhes' component={DetalhesFatura}/>
+        <Stack.Screen name='GesFaturação-Criar Fatura' component={CriarFatura}/>
       </Stack.Navigator>
     );
 };

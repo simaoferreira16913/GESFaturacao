@@ -102,7 +102,7 @@ export default function MainFatura({navigation}) {
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Ver Faturas',  { id: value });
+    navigation.navigate('GesFaturação-Fatura Detalhes',  { id: value });
   }
 
   return (

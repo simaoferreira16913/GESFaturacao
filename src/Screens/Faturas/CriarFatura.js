@@ -35,7 +35,7 @@ function Item({ item, onPress }) {
 }
 
 
-export default function CriarOrcamento({ navigation }) {
+export default function CriarFatura({ navigation }) {
 
   const { getFaturas } = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);
