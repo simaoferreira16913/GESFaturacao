@@ -66,11 +66,10 @@ export default function MainFatura({navigation}) {
   
   if(!faturas.length){
     getFaturas().then((res)=>{
-      setOrcamentos(res.data.aaData);
+      setFaturas(res.data.aaData);
       console.log(res.data.aaData);
     }).catch(e =>{
       console.log(`Erro: ${e}`);
-      setIsLoading(false)
   });
   } 
   if (!dadosClientes.length) {
