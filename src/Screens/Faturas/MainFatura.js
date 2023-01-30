@@ -13,10 +13,10 @@ import { Renderer } from 'phaser';
 import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
-export default function MainOrcamento({navigation}) {
+export default function MainFatura({navigation}) {
   
-  const {getOrcamentos} = useContext(AuthContext);
-  const {deleteOrcamento} = useContext(AuthContext);
+  const {getFaturas} = useContext(AuthContext);
+  const {deleteFatura} = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);
   Date.prototype.toDateString = function dtoString() {
     return `${this.getDay}`;
@@ -28,7 +28,7 @@ export default function MainOrcamento({navigation}) {
   const [datef, setDatef] = useState(null)
   const [open, setOpen] = useState(false)
   const [openf, setOpenf] = useState(false)
-  const [orcamentos, setOrcamentos] = useState([]);
+  const [faturas, setFaturas] = useState([]);
   const [selectedIdCliente, setSelectedIdCliente] = useState(null);
   const opcao = 0;
   const [search, setSearch] = useState("c")
@@ -64,8 +64,8 @@ export default function MainOrcamento({navigation}) {
     );
   };
   
-  if(!orcamentos.length){
-    getOrcamentos().then((res)=>{
+  if(!faturas.length){
+    getFaturas().then((res)=>{
       setOrcamentos(res.data.aaData);
       console.log(res.data.aaData);
     }).catch(e =>{
@@ -82,7 +82,7 @@ export default function MainOrcamento({navigation}) {
   }
   const columns = ['Nome', 'Preço', 'Estado', , 'Ações'];
 
-  const data = orcamentos.map(item => [ item[2],parseFloat(item[6]).toFixed(2), item[7], 
+  const data = faturas.map(item => [ item[2],parseFloat(item[6]).toFixed(2), item[7], 
   <View style={{flexDirection: 'row'}}>
   <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[0])}>
     <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/></TouchableOpacity >
@@ -94,15 +94,15 @@ export default function MainOrcamento({navigation}) {
 
   const handleRemove = (id) => {
     console.log(id)
-    deleteOrcamento(id).then((res)=>{
+    deleteFatura(id).then((res)=>{
       console.log(res);
     });
 
-    setOrcamentos(orcamentos.filter(item => item[0] !== id));
+    setFaturas(orcamentos.filter(item => item[0] !== id));
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Ver Detalhes',  { id: value });
+    navigation.navigate('GesFaturação-Ver Faturas',  { id: value });
   }
 
   return (
@@ -110,27 +110,19 @@ export default function MainOrcamento({navigation}) {
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Orçamento")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Fatura")}>
           <View style={styles.button}>
           
-            <Text style={styles.textfont}>   Novo Orçamento</Text>
+            <Text style={styles.textfont}>   Nova Fatura</Text>
           </View>
         </TouchableNativeFeedback>
       </View>
-      
+
       <View > 
         <TouchableNativeFeedback>
           <View style={styles.button}>
           
-            <Text style={styles.textfont}> Integrar Orçamento</Text>
-          </View>
-        </TouchableNativeFeedback>
-      </View> 
-      <View > 
-        <TouchableNativeFeedback>
-          <View style={styles.button}>
-          
-            <Text style={styles.textfont}>   Enviar Orçamentos</Text>
+            <Text style={styles.textfont}>   Enviar Faturas</Text>
           </View>
         </TouchableNativeFeedback>
       </View> 
@@ -215,7 +207,7 @@ export default function MainOrcamento({navigation}) {
       </View>
       
       <View  > 
-        <TouchableNativeFeedback onPress={()=> getOrcamentos(search,numRows,pag)}>
+        <TouchableNativeFeedback onPress={()=> getFaturas(search,numRows,pag)}>
           <View style={styles.button}>
 
             <Text style={styles.textfont}>   Pesquisar</Text>

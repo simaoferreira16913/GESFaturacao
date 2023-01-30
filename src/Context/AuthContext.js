@@ -344,11 +344,99 @@ export const AuthProvider = ({children}) => {
     }
 
 
-    
+    /*Faturas*/
+    const getFaturas = async () =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                pag: '0',
+                numRows: '25',
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        });
+    }
+
+    const getFaturaDetalhes= async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idDocument: id,
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        });
+    }
+    const finalizarFatura= async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idFatura: id,
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        });
+    }
+
+    const deleteFatura = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '5',
+                _token: token,
+                idFatura: id,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+
+    const CriarFatura = async (dadosFatura) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '2',
+                _token: token,
+                cliente: dadosFatura.cliente,
+                serie: dadosFatura.serie,
+                numero: dadosFatura.numero,
+                moeda: 1,
+                data: dadosFatura.data,
+                validade: dadosFatura.validade,
+                linhas: dadosFatura.linhas,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
 
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
-            CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento
+            CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
+            CriarFatura, deleteFatura, getFaturaDetalhes, getFaturas, finalizarFatura
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
