@@ -239,8 +239,58 @@ export const AuthProvider = ({children}) => {
         });
     }
 
-    const addOrcamentos = async () => {
-        console.log("Entrei");
+    const addOrcamentos = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, artigoC,descricaoC,qtdC,precoC,impostoC,motivoC,descontoCL,retencaoC,centroC,comentarioC, finalizarDocumentoC) => {
+
+        console.log(clienteC + ' Cliente');
+        console.log(serieC + ' Serie');
+        console.log(numeroC + ' num');
+        console.log(dataC + ' data');
+        console.log(validadeC + ' val');
+        console.log(referenciaC + ' ref');
+        console.log(vencimentoC + ' ven');
+        console.log(moedaC + ' moeda');
+        console.log(descontoC + ' des');
+        console.log(observacoesC + ' obs');
+        
+        console.log(JSON.stringify(LinhasC) + ' linha')
+        console.log(finalizarDocumentoC + ' fim');
+          
+        const LinhasC = [{"artigo":artigoC,"descricao":descricaoC,"qtd":qtdC,"preco":precoC,"imposto":impostoC,"motivo":motivoC,"desconto":descontoCL,"retencao":retencaoC,"centro":centroC,"comentario":comentarioC}];
+        const stringifiedLinhas = JSON.stringify(LinhasC);
+
+        return axios({
+            url: 'https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos',
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '2',
+                _token: userToken,
+                cliente: clienteC, 
+                serie: serieC, 
+                numero: numeroC, 
+                data: dataC,  
+                validade: validadeC, 
+                referencia: referenciaC, 
+                vencimento: vencimentoC, 
+                moeda: moedaC, 
+                desconto: descontoC, 
+                observacoes: observacoesC, 
+                Linhas: stringifiedLinhas, 
+                finalizarDocumento: finalizarDocumentoC
+            }),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        })
+        .then(async res => {
+            console.log(res.data + 'Deu crl')
+            //return res.data
+        }).catch(e =>{
+            console.log(`Erro: ${e}` + ' Grande Erro');
+            setIsLoading(false)
+        });
+    }
+        /*console.log("Entrei");
         cliente = 1;
         serie = 1;
         numero = 5;
@@ -289,9 +339,8 @@ export const AuthProvider = ({children}) => {
         }).catch(e =>{
             console.log(`Erro: ${e}`);
             setIsLoading(false)
-        });
+        });*/
 
-}
 
     const getArtigoID = async (id) =>{
         var token = await this.getToken();
