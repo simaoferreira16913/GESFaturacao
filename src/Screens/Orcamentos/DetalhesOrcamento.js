@@ -146,13 +146,17 @@ export default function DetalhesOrcamento({navigation, route}) {
 
 {orcamentoID.Estado === "Rascunho" ? (
   <Button color="#d0933f"  title="Finalizar Orçamento" onPress={() => { handleFinalizarOrcamento()}} />
-) : (
+) : (orcamentoID.Estado === "Aberto" ? (
   <View>
     <Button color="#d0933f" title="Aceitar" onPress={() => { handleEstadoOrcamento(1) }} />
     <Button color="#d0933f" title="Rejeitar" onPress={() => { handleEstadoOrcamento(0) }} />
   </View>
+) : (
+  <View>
+    
+  </View>
   
-)}
+))}
 </View>
     </ScrollView>
   );

@@ -100,7 +100,7 @@ export default function DetalhesFatura({navigation, route}) {
       </View>
       <Text style={styles.titleSelect}>Data Vencimento</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{faturaID.DataValidade}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.Validade}</Text>
       </View>
       <Text style={styles.titleSelect}>Desconto</Text>
       <View style={styles.borderMargin}>

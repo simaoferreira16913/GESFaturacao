@@ -97,7 +97,7 @@ export const AuthProvider = ({children}) => {
         var token = await this.getToken();
         let aux = id;
         console.log("Aqui",aux);
-        axios.patch("https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos",
+        axios.patch(`${BASE_URL}/api/orcamentos/orcamentos`,
         {_token: token, opcao: '6', idOrcamento: id}).then((res)=>{
             console.log(res)
         })
@@ -108,7 +108,7 @@ export const AuthProvider = ({children}) => {
         console.log(token)
         console.log(id);
         console.log(estado);
-        axios.patch("https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos",
+        axios.patch(`${BASE_URL}/api/orcamentos/orcamentos`,
         {_token: token, opcao: '9', idDocumento: id, estado: estado}).then((res)=>{
             console.log(res)
         })
