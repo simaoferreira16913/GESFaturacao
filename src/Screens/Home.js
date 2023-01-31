@@ -17,6 +17,7 @@ export default function Home({navigation}) {
       <Button title='Orçamentos' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Orçamentos")}/>
       <Button title='Artigos' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Artigos")}/>
       <Button title='Faturas' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Faturas")}/>
+      <Button title='Faturas Simplificadas' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Faturas Simplificadas")}/>
       <Button title='Logout' color='#d0933f' onPress={()=> {logout()}}/>
       
       </View> 

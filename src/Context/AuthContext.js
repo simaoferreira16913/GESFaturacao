@@ -403,9 +403,11 @@ export const AuthProvider = ({children}) => {
         });
     }
 
-    const CriarFatura = async (dadosFatura) =>{
+    const CriarFatura = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, artigoC,descricaoC,qtdC,precoC,impostoC,motivoC,descontoCL,retencaoC,centroC,comentarioC, finalizarDocumentoC) =>{
         var token = await this.getToken();
 
+        const LinhasC = [{"artigo":artigoC,"descricao":descricaoC,"qtd":qtdC,"preco":precoC,"imposto":impostoC,"motivo":motivoC,"desconto":descontoCL,"retencao":retencaoC,"centro":centroC,"comentario":comentarioC}];
+        const stringifiedLinhas = JSON.stringify(LinhasC);
         return axios({
             url: `${BASE_URL}/api/vendas/faturas`,
             method: 'POST',
@@ -413,22 +415,120 @@ export const AuthProvider = ({children}) => {
             data: qs.stringify({
                 opcao: '2',
                 _token: token,
-                cliente: dadosFatura.cliente,
-                serie: dadosFatura.serie,
-                numero: dadosFatura.numero,
+                cliente: clienteC,
+                serie: serieC,
+                numero: numeroC,
                 moeda: 1,
-                data: dadosFatura.data,
-                validade: dadosFatura.validade,
-                linhas: dadosFatura.linhas,
+                data: dataC,
+                validade: validadeC,
+                referencia: referenciaC,
+                vencimento: vencimentoC,
+                desconto: descontoC,
+                observacoes: observacoesC,
+                finalizarDocumento: finalizarDocumentoC,
+                pagamento: 0,
+                Linhas: stringifiedLinhas,
             }),
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
         });
     }
 
+    /*Fatura Simplificadas */
+    const getFaturasSimp = async () =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas_simplificadas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                _token: token,
+                numRows: '25',
+                pag: '0',
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        });
+    }
+
+    const getFaturaSimpDetalhes = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas_simplificadas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idDocument: id,
+                _token: token,
+            },
+            headers: {
+                Accept: 'application/json'
+            }
+        });
+    }
+
+    const criarFaturaSimp = async (dadosFatSimp) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas_simplificadas`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '2',
+                _token: token,
+                cliente: '1',
+                serie: dadosFatSimp.Serie,
+                numero: dadosFatSimp.Numero,
+                data: dadosFatSimp.Data,
+                validade: dadosFatSimp.Validade,
+                referencia: dadosFatSimp.referencia,
+                pagamento: dadosFatSimp.Pagamento,
+                banco: dadosFatSimp.Banco,
+                vencimento: dadosFatSimp.Vencimento,
+                moeda: dadosFatSimp.Moeda,
+                desconto: dadosFatSimp.Desconto,
+                observacoes: dadosFatSimp.Observacoes,
+                linhas: dadosFatSimp.Linhas,
+                finalizarDocumento: dadosFatSimp.FinalizarDocumento,
+                precisaBanco: dadosFatSimp.PrecisaBanco,
+                centrocusto: dadosFatSimp.Centocusto,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+
+    const deleteFauratSimp = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas_simplificadas`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '5',
+                _token: token,
+                idFatura: id,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+
+    const finalizarFaturaSimp= async (id) =>{
+        var token = await this.getToken();
+        
+        axios.patch(`${BASE_URL}/api/vendas/faturas_simplificadas`,
+        {_token: token, opcao: '6', idFatura: id}).then((res)=>{
+            console.log(res)
+        })
+    }
+
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
-            CriarFatura, deleteFatura, getFaturaDetalhes, getFaturas, finalizarFatura
+            CriarFatura, deleteFatura, getFaturaDetalhes, getFaturas, finalizarFatura,
+            getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

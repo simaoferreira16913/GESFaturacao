@@ -49,8 +49,8 @@ export default function CriarFatura({ navigation }) {
   });*/
   const [dadosClientes, setDadosClientes] = useState([]);
   const [dadosArtigos, setDadosArtigos] = useState([]);
-  const [cliente, setCliente] = useState();
-  const [linhas, setLinhas] = useState([]);
+  //const [cliente, setCliente] = useState();
+  const [linhas, setLinhas1] = useState([]);
   const [datei, setDatei] = useState(null)
   const [open, setOpen] = useState(false);
   const [artigo, setArtigo] = useState();
@@ -59,6 +59,32 @@ export default function CriarFatura({ navigation }) {
   const [listKey, setListKey] = useState(0);
   const [precoPVP, setPrecoPVP] = useState();
   const [iva, setIva] = useState(1);
+
+    const [clienteC, setCliente] = useState(1);
+    const [serieC, setSerie] = useState(3);
+    const [numeroC, setNumero] = useState(0);
+    const [dataC, setData] = useState("12/12/2022");
+    const [validadeC, setValidade] = useState("12/12/2022");
+    const [referenciaC, setReferencia] = useState("Ref. Documento");
+    const [vencimentoC, setVencimento] = useState(0);
+    const [moedaC, setMoeda] = useState(1);
+    const [descontoC, setDesconto] = useState(0);
+    const [observacoesC, setObservacoes] = useState("Observacoes");
+    //Linha de artigo
+    const [artigoC, setArtigoL ] = useState("1");
+    const [descricaoC, setDescricaoL ] = useState("Artigo+Geral");
+    const [qtdC, setQtdL ] = useState("1");
+    const [precoC, setPrecoL ] = useState("33.333");
+    const [impostoC, setImpostoL ] = useState("1");
+    const [motivoC, setMotivoL ] = useState(null);
+    const [descontoCL, setDescontoL ] = useState("0");
+    const [retencaoC, setRetencaoL ] = useState("0");
+    const [centroC, setCentroL ] = useState("5");
+    const [comentarioC, setComentarioL ] = useState("");
+    
+    const [LinhasC, setLinhas] = useState();
+    const [finalizarDocumentoC, setFinalizarDocumento] = useState(0);
+
 
   const onSubmit = (data) => {
     setLinhas([...linhas, data]);
@@ -86,19 +112,43 @@ export default function CriarFatura({ navigation }) {
     setLinhas(linhas.filter((_, i) => i !== index));
   }
 
-  console.log(linhas);
+  //console.log(linhas);
 
   const [selectedIdCliente, setSelectedIdCliente] = useState(null);
   const [selectedIdArtigo, setSelectedIdArtigo] = useState(null);
  
   function handleCreateFatura(){
-    const dadosFatura = {
-      cliente:cliente,
-      linhas: linhas
-    }
-    CriarFatura(dadosFatura).then((res)=>{
-      console.log(res);
-    })
+    clienteTeste = 1;
+    serieTeste = 3;
+    numeroTeste = 0;
+    dataTeste = "12/12/2022";
+    validadeTeste = "12/12/2022";
+    referenciaTeste = "Ref. Documento";
+    vencimentoTeste = 0;
+    moedaTeste = 1;
+    descontoTeste = 0;
+    observacoesTeste = "Observacoes";
+    //Linha = [artigo: artigo,descricao, qtd, preco, imposto, motivo, desconto, retencao]
+    LinhasTeste = [{"artigo":"1","descricao":"Artigo+Geral","qtd":"1","preco":"33.333","imposto":"1","motivo":null,"desconto":"0","retencao":"0","centro":"5","comentario":""}];
+    finalizarDocumentoTeste = 0;
+
+    setCliente(clienteTeste);
+    setSerie(serieTeste);
+    setNumero(numeroTeste);
+    setData(dataTeste);
+    setValidade(validadeTeste);
+    setReferencia(referenciaTeste);
+    setVencimento(vencimentoTeste);
+    setMoeda(moedaTeste);
+    setDesconto(descontoTeste);
+    setObservacoes(observacoesTeste);
+    setLinhas(LinhasTeste);
+    setFinalizarDocumento(finalizarDocumentoTeste);
+
+   
+    CriarFatura(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, artigoC,descricaoC,qtdC,precoC,impostoC,motivoC,descontoCL,retencaoC,centroC,comentarioC, finalizarDocumentoC).then(response => {
+        console.log(response + ' Resposta Criar Orçamento')
+    });
   }
   return (
     <ScrollView>

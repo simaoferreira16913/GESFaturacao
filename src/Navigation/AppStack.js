@@ -13,6 +13,8 @@ import VerDetalhesOrc from '../Screens/Orcamentos/DetalhesOrcamento';
 import MainFatura from '../Screens/Faturas/MainFatura';
 import DetalhesFatura from '../Screens/Faturas/DetalhesFatura';
 import CriarFatura from '../Screens/Faturas/CriarFatura';
+import DetalhesFaturaSimp from '../Screens/FaturasSimplificadas/DetalhesFaturaSimp';
+import MainFaturaSimp from '../Screens/FaturasSimplificadas/MainFaturaSimp';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +31,8 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação-Faturas' component={MainFatura}/>
         <Stack.Screen name='GesFaturação-Fatura Detalhes' component={DetalhesFatura}/>
         <Stack.Screen name='GesFaturação-Criar Fatura' component={CriarFatura}/>
+        <Stack.Screen name='GesFaturação-Faturas Simplificadas' component={MainFaturaSimp}/>
+        <Stack.Screen name='GesFaturação-Fatura Simplificada Detalhes' component={DetalhesFaturaSimp}/>
       </Stack.Navigator>
     );
 };
