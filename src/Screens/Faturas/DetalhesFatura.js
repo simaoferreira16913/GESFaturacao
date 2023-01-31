@@ -61,8 +61,9 @@ export default function DetalhesFatura({navigation, route}) {
     
 
     function handleFinalizarFatura(){
-      finalizarOrcamento(id).then((res)=>{
+      finalizarFatura(id).then((res)=>{
         console.log(res);
+        ToastAndroid.show("Fatura Finalizada",ToastAndroid.SHORT);
       })
       .catch(e => {
         console.log(`Login error ${e}`);
@@ -70,7 +71,7 @@ export default function DetalhesFatura({navigation, route}) {
     navigation.goBack()
     navigation.navigate('GesFaturação');
     //navigation.navigate('GesFaturação-Ver Detalhes',  { id: id });
-    ToastAndroid.show("Fatura Finalizada",ToastAndroid.SHORT);
+    
 
     }
 

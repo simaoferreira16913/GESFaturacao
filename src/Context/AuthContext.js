@@ -381,19 +381,11 @@ export const AuthProvider = ({children}) => {
     }
     const finalizarFatura= async (id) =>{
         var token = await this.getToken();
-        return axios({
-            url: `${BASE_URL}/api/vendas/faturas`,
-            method: 'GET',
-            timeout: 5000,
-            params: {
-                opcao: '1',
-                idFatura: id,
-                _token: token
-            },
-            headers: {
-                Accept: 'application/json',
-            }
-        });
+        
+        axios.patch(`${BASE_URL}/api/vendas/faturas`,
+        {_token: token, opcao: '6', idFatura: id}).then((res)=>{
+            console.log(res)
+        })
     }
 
     const deleteFatura = async (id) =>{
