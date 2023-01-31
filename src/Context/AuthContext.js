@@ -210,7 +210,7 @@ export const AuthProvider = ({children}) => {
         var token = await this.getToken();
         console.log(token)
         return axios({
-            url: `${BASE_URL}/api/tabelas/clientes`,
+            url: `${BASE_URL}/api/orcamentos/orcamentos`,
             method: 'DELETE',
             timeout: 5000,
             data: qs.stringify({
@@ -524,11 +524,100 @@ export const AuthProvider = ({children}) => {
         })
     }
 
+    /*Faturas Recibos */
+    const getFaturasReb = async () =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                pag: '0',
+                numRows: '25',
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        });
+    }
+    /*Faturas Proforma */
+    const getProforma = async ()=> {
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/proformas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                _token: token,
+                pag: '0',
+                numRows: '25',
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        }); 
+    }
+    const getProformaDetalhes = async (id) =>{
+        var token = await this.getToken();
+       
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/proformas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idDocument: id,
+                _token: token,
+            }
+        });
+    }
+    const deleteProforma = async (id) => {
+        var token = await this.getToken();
+        console.log(token)
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/proformas`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '10',
+                _token: token,
+                idProforma: id,
+            }),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        });
+    }
+    const finalizarProforma = async (id) =>{
+        var token = await this.getToken();
+        let aux = id;
+        console.log("Aqui",aux);
+        axios.patch(`${BASE_URL}/api/orcamentos/proformas`,
+        {_token: token, opcao: '6', idProforma: id}).then((res)=>{
+            console.log(res)
+        })
+       
+    }
+    const estadoProforma = async (id, estado) =>{
+        var token = await this.getToken();
+        console.log(token)
+        console.log(id);
+        console.log(estado);
+        axios.patch(`${BASE_URL}/api/orcamentos/proformas`,
+        {_token: token, opcao: '7', idDocumento: id, estado: estado}).then((res)=>{
+            console.log(res)
+        })
+    }
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
             CriarFatura, deleteFatura, getFaturaDetalhes, getFaturas, finalizarFatura,
-            getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes
+            getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes, getFaturasReb,
+            getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
