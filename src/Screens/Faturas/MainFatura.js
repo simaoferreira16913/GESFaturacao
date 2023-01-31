@@ -24,8 +24,8 @@ export default function MainFatura({navigation}) {
 
   const [dadosClientes, setDadosClientes] = useState([]);
   const [dataAux, setDateAux] = useState(new Date())
-  const [datei, setDatei] = useState(null)
-  const [datef, setDatef] = useState(null)
+  const [datei, setDatei] = useState()
+  const [datef, setDatef] = useState()
   const [open, setOpen] = useState(false)
   const [openf, setOpenf] = useState(false)
   const [faturas, setFaturas] = useState([]);
