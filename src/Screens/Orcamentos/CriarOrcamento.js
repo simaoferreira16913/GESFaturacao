@@ -1,11 +1,12 @@
 import React from "react";
 import { useState, useEffect, useContext } from 'react';
-import { Button, StyleSheet, Text, Touchable, TouchableNativeFeedback, TouchableOpacity, View, FlatList, TextInput } from 'react-native';
+import { Button, StyleSheet, Text, Touchable, TouchableNativeFeedback, TouchableOpacity, View, FlatList, TextInput,ScrollView } from 'react-native';
 import { AuthContext } from "../../Context/AuthContext";
 import { Picker } from '@react-native-picker/picker';
 import { BASE_URL } from '../../config';
 import DatePicker from 'react-native-date-picker'
 import { useForm } from 'react-hook-form';
+import moment from 'moment/moment';
 //import {yupResolver} from '@hookform/resolvers/yup'
 //import * as yup from 'yup';
 
@@ -28,7 +29,7 @@ function Item({ item, onPress }) {
   return (
     <View>
       <Text>Artigo: {nomeArtigo} Preço: {item.preco} QTD: {item.qtd} IVA: {item.iva} Total: {Number(item.preco) * Number(item.qtd)}</Text>
-      <Button title="Remover" onPress={onPress} />
+      <Button title="Remover" color="#d0933f" onPress={onPress} />
     </View>
   );
 }
@@ -48,8 +49,8 @@ export default function CriarOrcamento({ navigation }) {
   });*/
   const [dadosClientes, setDadosClientes] = useState([]);
   const [dadosArtigos, setDadosArtigos] = useState([]);
-  const [cliente, setCliente] = useState();
-  const [linhas, setLinhas] = useState([]);
+  //const [cliente, setCliente] = useState();
+  //const [linhas, setLinhas] = useState([]);
   const [datei, setDatei] = useState(null)
   const [open, setOpen] = useState(false);
   const [artigo, setArtigo] = useState();
@@ -58,6 +59,35 @@ export default function CriarOrcamento({ navigation }) {
   const [listKey, setListKey] = useState(0);
   const [precoPVP, setPrecoPVP] = useState();
   const [iva, setIva] = useState(1);
+  
+
+    //Dados para addOrçamento
+
+    const [clienteC, setCliente] = useState(1);
+    const [serieC, setSerie] = useState(3);
+    const [numeroC, setNumero] = useState(0);
+    const [dataC, setData] = useState("12/12/2022");
+    const [validadeC, setValidade] = useState("12/12/2022");
+    const [referenciaC, setReferencia] = useState("Ref. Documento");
+    const [vencimentoC, setVencimento] = useState(0);
+    const [moedaC, setMoeda] = useState(1);
+    const [descontoC, setDesconto] = useState(0);
+    const [observacoesC, setObservacoes] = useState("Observacoes");
+    //Linha de artigo
+    const [artigoC, setArtigoL ] = useState("1");
+    const [descricaoC, setDescricaoL ] = useState("Artigo+Geral");
+    const [qtdC, setQtdL ] = useState("1");
+    const [precoC, setPrecoL ] = useState("33.333");
+    const [impostoC, setImpostoL ] = useState("1");
+    const [motivoC, setMotivoL ] = useState(null);
+    const [descontoCL, setDescontoL ] = useState("0");
+    const [retencaoC, setRetencaoL ] = useState("0");
+    const [centroC, setCentroL ] = useState("5");
+    const [comentarioC, setComentarioL ] = useState("");
+    
+    const [LinhasC, setLinhas] = useState();
+    const [finalizarDocumentoC, setFinalizarDocumento] = useState(0);
+
 
   const onSubmit = (data) => {
     setLinhas([...linhas, data]);
@@ -85,53 +115,93 @@ export default function CriarOrcamento({ navigation }) {
     setLinhas(linhas.filter((_, i) => i !== index));
   }
 
-  console.log(linhas);
+  console.log(LinhasC);
 
   const [selectedIdCliente, setSelectedIdCliente] = useState(null);
   const [selectedIdArtigo, setSelectedIdArtigo] = useState(null);
+
+  handleCreateOrcamento = () => {
+    clienteTeste = 1;
+    serieTeste = 3;
+    numeroTeste = 0;
+    dataTeste = "12/12/2022";
+    validadeTeste = "12/12/2022";
+    referenciaTeste = "Ref. Documento";
+    vencimentoTeste = 0;
+    moedaTeste = 1;
+    descontoTeste = 0;
+    observacoesTeste = "Observacoes";
+    //Linha = [artigo: artigo,descricao, qtd, preco, imposto, motivo, desconto, retencao]
+    LinhasTeste = [{"artigo":"1","descricao":"Artigo+Geral","qtd":"1","preco":"33.333","imposto":"1","motivo":null,"desconto":"0","retencao":"0","centro":"5","comentario":""}];
+    finalizarDocumentoTeste = 0;
+
+    setCliente(clienteTeste);
+    setSerie(serieTeste);
+    setNumero(numeroTeste);
+    setData(dataTeste);
+    setValidade(validadeTeste);
+    setReferencia(referenciaTeste);
+    setVencimento(vencimentoTeste);
+    setMoeda(moedaTeste);
+    setDesconto(descontoTeste);
+    setObservacoes(observacoesTeste);
+    setLinhas(LinhasTeste);
+    setFinalizarDocumento(finalizarDocumentoTeste);
+
+    console.log(clienteC + ' É aqui cepo');
+    addOrcamentos(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, artigoC,descricaoC,qtdC,precoC,impostoC,motivoC,descontoCL,retencaoC,centroC,comentarioC, finalizarDocumentoC).then(response => {
+        console.log(response + ' Resposta Criar Orçamento')
+    });
+}
  
-  function handleCreateOrcamento(){
-    const dadosOrcamento = {
+
+   /* const dadosOrcamento = {
       cliente:cliente,
       linhas: linhas
     }
-    addOrcamentos(dadosOrcamento).then((res)=>{
+    addOrcamentos().then((res)=>{
       console.log(res);
-    })
-  }
+    })*/
+
   return (
+    <ScrollView>
     <View style={styles.container}>
 
-
-
-      <View >
-        <TouchableNativeFeedback onPress={() => navigation.navigate("GesFaturação-Criar Cliente")}>
-          <View style={styles.button}>
-
-            <Text style={styles.textfont}>   Novo Cliente</Text>
-          </View>
-        </TouchableNativeFeedback>
-        <Picker placeholder="Selecione um cliente" selectedValue={selectedIdCliente} onValueChange={itemValue => setSelectedIdCliente(itemValue)}>
+      <View style={{marginTop: 10}}>
+        <Button  title="Novo Cliente" color="#d0933f" onPress={() => navigation.navigate("GesFaturação-Criar Cliente")} />
+        <Text style={styles.titleSelect}>Cliente</Text>
+        <View style={styles.borderMargin}>
+        <Picker  style={styles.pickerComponent} placeholder="Selecione um cliente" selectedValue={selectedIdCliente} onValueChange={itemValue => setSelectedIdCliente(itemValue)}>
           {dadosClientes.map(function (object, i) {
             return <Picker.Item label={object[2]} value={object[0]} key={i} />;
           })}
         </Picker>
-
+        </View>
+        <Text style={styles.titleSelect}>Data</Text>
+        <View style={styles.borderMargin}>
+        <TouchableOpacity  onPress={() => setOpen(true)} style={styles.touchableO}>
         <DatePicker
-          modal
-          mode="date"
-
-          open={open}
-          date={new Date()}
-          onConfirm={(datei) => {
-            setOpen(false)
-
-            setDatei(datei)
-          }}
-          onCancel={() => {
-            setOpen(false)
-          }}
-        />
+        modal
+        mode="date"
+        open={open}
+        date={new Date()}
+        onConfirm={(datei) => {
+          setOpen(false)
+          
+          setDatei(datei)
+        }}
+        onCancel={() => {
+          setOpen(false)
+        }}
+      />
+      
+      <Text style={styles.textDate}> {todaiDate = moment(datei).format("DD/MM/YYYY") }</Text>
+         
+      </TouchableOpacity>
+      
+        </View>
+        <Text style={styles.titleSelect}>Artigo</Text>
+        <View style={styles.borderMargin}>
         <Picker placeholder="Selecione um Artigo"
           selectedValue={artigo} onValueChange={itemValue => {
             setArtigo(itemValue);
@@ -143,7 +213,10 @@ export default function CriarOrcamento({ navigation }) {
             return <Picker.Item label={object[1]} value={object} key={i} />;
           })}
         </Picker>
+        </View>
         {/* {errors.artigo && <Text>{errors.artigo.message}</Text>} */}
+        <Text style={styles.titleSelect}>Quantidade</Text>
+        <View style={styles.borderMargin}>
         <TextInput
           value={quantidade}
           onChangeText={(text) => setQuantidade(text)}
@@ -151,7 +224,10 @@ export default function CriarOrcamento({ navigation }) {
           keyboardType="numeric"
         // ref={register({name: "quantidade"})} 
         />
+        </View>
         {/* {errors.quantidade && <Text>{errors.quantidade.message}</Text>} */}
+        <Text style={styles.titleSelect}>Preço</Text>
+        <View style={styles.borderMargin}>
         <TextInput
           value={precoPVP}
           defaultValue={precoPVP}
@@ -160,6 +236,9 @@ export default function CriarOrcamento({ navigation }) {
           keyboardType="numeric"
         // ref={register({name:"preco"})}
         />
+        </View>
+        <Text style={styles.titleSelect}>IVA</Text>
+        <View style={styles.borderMargin}>
         <Picker
           selectedValue={iva}
           onValueChange={(itemValue) => setIva(itemValue)}
@@ -170,25 +249,30 @@ export default function CriarOrcamento({ navigation }) {
           <Picker.Item label="6%" value="3" />
           <Picker.Item label="0%" value="4" />
         </Picker>
+        </View>
         {/* {errors.preco && <Text>{errors.preco.message}</Text>} */}
-        <Button title="Adicionar" onPress={() => {
+        <View style={{marginBottom: 10, marginTop: 10}}>
+        <Button title="Adicionar" color="#d0933f" onPress={() => {
           setLinhas([...linhas, {
             artigo: selectedIdArtigo, qtd: quantidade, preco: precoPVP, iva: iva
           }]);
           setListKey(listKey + 1);
         }}
         />
+        </View>
       </View>
       <FlatList
-        data={linhas}
+        data={LinhasC}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
           <Item item={item} onPress={() => removeItem(index)} />
         )}
       />
-      <Button title="Criar Orçamento" onPress={handleCreateOrcamento} />
-    </View>
-
+      <View style={{marginTop: 30, width: 350}}>
+      <Button  title="Criar Orçamento" color="#d0933f" onPress={() => handleCreateOrcamento()} />
+      </View>
+      </View>
+    </ScrollView>
   );
 
 }
@@ -209,5 +293,31 @@ const styles = StyleSheet.create({
     width: 300,
     padding: 10,
   },
+  textfont: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontweight: "bold"
+
+  },
+  titleSelect: {
+    fontSize: 20,
+    margin: 10,
+    fontWeight: "bold",
+    color: "#5F5D5C"
+  },
+  pickerComponent: {
+    width: 350,
+    
+  },
+  borderMargin: {
+    borderWidth: 1,
+    borderColor: 'grey',
+    
+  },
+  touchableO: {
+    width: 350,
+    height: 55,
+    justifyContent: "center"
+  }
 });
 

@@ -17,17 +17,19 @@ export default function MainOrcamento({navigation}) {
   
   const {getOrcamentos} = useContext(AuthContext);
   const {deleteOrcamento} = useContext(AuthContext);
+  const { getClientes } = useContext(AuthContext);
   Date.prototype.toDateString = function dtoString() {
     return `${this.getDay}`;
   }
 
-  
+  const [dadosClientes, setDadosClientes] = useState([]);
   const [dataAux, setDateAux] = useState(new Date())
   const [datei, setDatei] = useState(null)
   const [datef, setDatef] = useState(null)
   const [open, setOpen] = useState(false)
   const [openf, setOpenf] = useState(false)
   const [orcamentos, setOrcamentos] = useState([]);
+  const [selectedIdCliente, setSelectedIdCliente] = useState(null);
   const opcao = 0;
   const [search, setSearch] = useState("c")
   const numRows = 10;
@@ -71,7 +73,13 @@ export default function MainOrcamento({navigation}) {
       setIsLoading(false)
   });
   } 
-  
+  if (!dadosClientes.length) {
+    getClientes().then((res) => {
+      console.log(res.data)
+      setDadosClientes(res.data.aaData)
+      
+    });
+  }
   const columns = ['Nome', 'Preço', 'Estado', , 'Ações'];
 
   const data = orcamentos.map(item => [ item[2],parseFloat(item[6]).toFixed(2), item[7], 
@@ -130,14 +138,10 @@ export default function MainOrcamento({navigation}) {
       <View> 
         <Text style={styles.titleSelect}>Cliente</Text>
         <View style={styles.borderMargin}>
-        <Picker style={styles.pickerComponent} 
-              selectedValue={selectedClient}
-              onValueChange={(itemValue, itemIndex) =>
-              setSelectedClient(itemValue)}>
-          
-          <Picker.Item label="Selecione um cliente" />
-          <Picker.Item label="Java" value="java" />
-          <Picker.Item label="JavaScript" value="js" />
+        <Picker  style={styles.pickerComponent} placeholder="Selecione um cliente" selectedValue={selectedIdCliente} onValueChange={itemValue => setSelectedIdCliente(itemValue)}>
+          {dadosClientes.map(function (object, i) {
+            return <Picker.Item label={object[2]} value={object[0]} key={i} />;
+          })}
         </Picker>
         </View>
       </View>
@@ -219,7 +223,7 @@ export default function MainOrcamento({navigation}) {
         </TouchableNativeFeedback>
       </View> 
       <Table style={{width: '100%', height: '100%', marginLeft:40}}>
-        <Row data={columns} style={styles.head} textStyle={styles.text}/>
+        <Row data={columns}  textStyle={styles.text}/>
         <Rows data={data} />
       </Table>
       

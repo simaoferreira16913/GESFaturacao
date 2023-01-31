@@ -96,7 +96,7 @@ export const AuthProvider = ({children}) => {
     const finalizarOrcamento = async (id) =>{
         var token = await this.getToken();
         let aux = id;
-        console.log(aux);
+        console.log("Aqui",aux);
         axios.patch("https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos",
         {_token: token, opcao: '6', idOrcamento: id}).then((res)=>{
             console.log(res)
@@ -105,12 +105,27 @@ export const AuthProvider = ({children}) => {
     }
     const estadoOrcamento = async (id, estado) =>{
         var token = await this.getToken();
-        let aux = id;
-        console.log(aux);
+        console.log(token)
+        console.log(id);
+        console.log(estado);
         axios.patch("https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos",
-        {_token: token, opcao: '6', idDocument: id, estado: estado}).then((res)=>{
+        {_token: token, opcao: '9', idDocumento: id, estado: estado}).then((res)=>{
             console.log(res)
         })
+        /*return axios({
+            url: 'https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos',
+            method: 'PATCH',
+            //timeout: 5000,
+            params: {
+                _token: token,
+                opcao: '9',
+                idDocumento: id,
+                estado: estado
+            },
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        });*/
        
     }
 
@@ -224,11 +239,61 @@ export const AuthProvider = ({children}) => {
         });
     }
 
-    const addOrcamentos = async () => {
-        console.log("Entrei");
+    const addOrcamentos = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, artigoC,descricaoC,qtdC,precoC,impostoC,motivoC,descontoCL,retencaoC,centroC,comentarioC, finalizarDocumentoC) => {
+
+        console.log(clienteC + ' Cliente');
+        console.log(serieC + ' Serie');
+        console.log(numeroC + ' num');
+        console.log(dataC + ' data');
+        console.log(validadeC + ' val');
+        console.log(referenciaC + ' ref');
+        console.log(vencimentoC + ' ven');
+        console.log(moedaC + ' moeda');
+        console.log(descontoC + ' des');
+        console.log(observacoesC + ' obs');
+        
+        console.log(JSON.stringify(LinhasC) + ' linha')
+        console.log(finalizarDocumentoC + ' fim');
+          
+        const LinhasC = [{"artigo":artigoC,"descricao":descricaoC,"qtd":qtdC,"preco":precoC,"imposto":impostoC,"motivo":motivoC,"desconto":descontoCL,"retencao":retencaoC,"centro":centroC,"comentario":comentarioC}];
+        const stringifiedLinhas = JSON.stringify(LinhasC);
+
+        return axios({
+            url: 'https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos',
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '2',
+                _token: userToken,
+                cliente: clienteC, 
+                serie: serieC, 
+                numero: numeroC, 
+                data: dataC,  
+                validade: validadeC, 
+                referencia: referenciaC, 
+                vencimento: vencimentoC, 
+                moeda: moedaC, 
+                desconto: descontoC, 
+                observacoes: observacoesC, 
+                Linhas: stringifiedLinhas, 
+                finalizarDocumento: finalizarDocumentoC
+            }),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        })
+        .then(async res => {
+            console.log(res.data + 'Deu crl')
+            //return res.data
+        }).catch(e =>{
+            console.log(`Erro: ${e}` + ' Grande Erro');
+            setIsLoading(false)
+        });
+    }
+        /*console.log("Entrei");
         cliente = 1;
         serie = 1;
-        numero = 3;
+        numero = 5;
         data= "05/11/2022";
         validade = "12/12/2022";
         referencia = "Ref. Documento";
@@ -244,28 +309,29 @@ export const AuthProvider = ({children}) => {
         motivo=0 
         desconto=0
         retencao=0
-        Linha = [artigo,descricao, qtd, preco, imposto, motivo, desconto, retencao]
-        Linhas = [Linha];
+        //Linha = [artigo: artigo,descricao, qtd, preco, imposto, motivo, desconto, retencao]
+        Linhas = [{"artigo":"1","descricao":"Artigo+Geral","qtd":"1","preco":"11.707","imposto":"1","motivo":null,"desconto":"0","retencao":"0","centro":"5","comentario":""},{"artigo":"2","descricao":"Serviço+Geral","qtd":"1","preco":"60","imposto":"1","motivo":null,"desconto":"0","retencao":"0","centro":"5","comentario":"Teste\nlinha+2"}];
+        console.log(Linhas);
         finalizarDocumento=1;
         setIsLoading(true);
-        let _token = userToken;
+        var token = await this.getToken();
         let opcao = 2;
         //console.log(userToken);
-        axios.post(`${BASE_URL}/api/orcamentos/orcamentos`, {
-            _token: _token,
+        axios.post(`https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos`, {
+            _token: token,
             opcao: "2",
-            cliente: 1,
-            serie: 3,
-            numero: 0,
-            data: data,
-            validade: validade,
-            referencia: referencia,
-            vencimento: 0,
-            moeda: 1,
-            desconto: 0,
-            observacoes: observacoes,
-            Linhas: Linhas,
-            finalizarDocumento: 0,
+            cliente: "1",
+            serie: "3",
+            numero: "0",
+            data: "12/12/2022",
+            validade: "12/12/2022",
+            referencia: "Ref. Documento",
+            vencimento: "0",
+            moeda: "1",
+            desconto: "0",
+            observacoes: "observacoes",
+            Linhas: "[{'artigo':'1','descricao':'Artigo+Geral','qtd':'1','preco':'11.707','imposto':'1','motivo':null,'desconto':'0','retencao':'0','centro':'5','comentario':''},{'artigo':'2','descricao':'Serviço+Geral','qtd':'1','preco':'60','imposto':'1','motivo':null,'desconto':'0','retencao':'0','centro':'5','comentario':'Teste\nlinha+2'}]",
+            finalizarDocumento: "0",
         },{headers: { 'content-type': 'application/x-www-form-urlencoded' },})
         .then(async res => {
             console.log(res.data)
@@ -273,9 +339,8 @@ export const AuthProvider = ({children}) => {
         }).catch(e =>{
             console.log(`Erro: ${e}`);
             setIsLoading(false)
-        });
+        });*/
 
-}
 
     const getArtigoID = async (id) =>{
         var token = await this.getToken();
