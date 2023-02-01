@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import { AuthContext } from '../Context/AuthContext';
+import { AuthContext } from "../../Context/AuthContext";
 
 
-export default function Home({navigation}) {
+export default function MainArtigo({navigation}) {
   const {logout} = useContext(AuthContext);
 
   const entrar = () =>{
@@ -14,10 +14,10 @@ export default function Home({navigation}) {
     <View style={styles.container}>
      <View style={styles.button}>
       
-      <Button title='Orçamentos' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Orçamentos")}/>
-      <Button title='Artigos' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Artigos")}/>
+      <Button title='Criar Artigo' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Criar Artigo")}/>
       
-      <Button title='Logout' color='#d0933f' onPress={()=> {logout()}}/>
+      
+      
       
       </View> 
       
