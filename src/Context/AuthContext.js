@@ -282,7 +282,7 @@ export const AuthProvider = ({children}) => {
             },
         })
         .then(async res => {
-            console.log(res.data + 'Deu crl')
+            console.log(res.data)
             //return res.data
         }).catch(e =>{
             console.log(`Erro: ${e}` + ' Grande Erro');
@@ -671,12 +671,64 @@ export const AuthProvider = ({children}) => {
             console.log(res)
         })
     }
+
+    const addProforma = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC) => {
+
+        console.log(clienteC + ' Cliente');
+        console.log(serieC + ' Serie');
+        console.log(numeroC + ' num');
+        console.log(dataC + ' data');
+        console.log(validadeC + ' val');
+        console.log(referenciaC + ' ref');
+        console.log(vencimentoC + ' ven');
+        console.log(moedaC + ' moeda');
+        console.log(descontoC + ' des');
+        console.log(observacoesC + ' obs');
+        console.log(JSON.stringify(LinhasC) + ' linha');
+        console.log(finalizarDocumentoC + ' fim');
+           
+        //const LinhasC = [{"artigo": "0001", "descricao":descricaoC, "qtd":qtdC, "preco": "19.01", "imposto": "1", "motivo":motivoC, "desconto":descontoCL, "retencao":retencaoC}];
+        const stringifiedLinhas = JSON.stringify(LinhasC);
+
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/proformas`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '2',
+                _token: userToken,
+                cliente: clienteC, 
+                serie: serieC, 
+                numero: numeroC, 
+                data: dataC,  
+                validade: validadeC, 
+                referencia: referenciaC, 
+                vencimento: vencimentoC, 
+                moeda: moedaC, 
+                desconto: descontoC, 
+                observacoes: observacoesC, 
+                Linhas: stringifiedLinhas, 
+                finalizarDocumento: finalizarDocumentoC
+            }),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        })
+        .then(async res => {
+            console.log(res.data + 'Deu crl')
+            //return res.data
+        }).catch(e =>{
+            console.log(`Erro: ${e}` + ' Grande Erro');
+            setIsLoading(false)
+        });
+    }
+
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
             CriarFatura, deleteFatura, getFaturaDetalhes, getFaturas, finalizarFatura,
             getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes, getFaturasReb,
-            getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma
+            getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma, addProforma
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

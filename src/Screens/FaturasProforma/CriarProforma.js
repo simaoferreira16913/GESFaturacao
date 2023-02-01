@@ -18,20 +18,20 @@ function Item({ item, onPress }) {
   })
   return (
     <View>
-      <Text>Artigo: {nomeArtigo} | Preço: {Number(item.preco)} € | QTD: {item.qtd} | Total: {Number(item.preco) * Number(item.qtd)} €</Text>
+      <Text>Artigo: {nomeArtigo} | Preço: {item.preco} € | QTD: {item.qtd} | Total: {Number(item.preco) * Number(item.qtd)} €</Text>
       <Button title="Remover" color="#d0933f" onPress={onPress} />
     </View>
   );
 }
 
 
-export default function CriarOrcamento({ navigation }) {
+export default function CriarProforma({ navigation }) {
 
-  const { getFaturas } = useContext(AuthContext);
+  const { getProforma } = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);
   const { getclienteID } = useContext(AuthContext)
   const { getArtigos } = useContext(AuthContext);
-  const {CriarFatura} = useContext(AuthContext);
+  const {addProforma} = useContext(AuthContext);
   var coisa;
 
   /*const {register, handleSubmit, errors} = useForm({
@@ -41,10 +41,10 @@ export default function CriarOrcamento({ navigation }) {
   const [dadosArtigos, setDadosArtigos] = useState([]);
   //const [cliente, setCliente] = useState();
   //const [linhas, setLinhas] = useState([]);
-  const [datei, setDatei] = useState();
+  const [datei, setDatei] = useState(null);
   const [open, setOpen] = useState(false);
 
-  const [datev, setDatev] = useState();
+  const [datev, setDatev] = useState(null);
   const [openv, setOpenV] = useState(false);
 
   const [artigo, setArtigo] = useState();
@@ -55,7 +55,7 @@ export default function CriarOrcamento({ navigation }) {
   const [iva, setIva] = useState(1);
   
 
-    //Dados para CriarFatura
+    //Dados para addProforma
 
     const [clienteC, setCliente] = useState();
     const [serieC, setSerie] = useState(3);
@@ -99,7 +99,7 @@ export default function CriarOrcamento({ navigation }) {
       setDadosClientes(res.data.aaData)
       
     });
-    getFaturas().then((res) => {
+    getProforma().then((res) => {
       console.log(res.data);
 
     })
@@ -109,22 +109,19 @@ export default function CriarOrcamento({ navigation }) {
     setLinhas(LinhasC.filter((_, i) => i !== index));
   }
 
-  console.log("FJFJ",LinhasC);
+  console.log(LinhasC);
 
   const [selectedIdCliente, setSelectedIdCliente] = useState(null);
   const [selectedIdArtigo, setSelectedIdArtigo] = useState(null);
 
-  handleCreateFatura = () => {
+  handleCreateProforma = () => {
 
-    console.log(clienteC,"oi")
-    CriarFatura(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC).then(response => {
-        console.log(response + ' Resposta Criar Orçamento')
-        
+    console.log(clienteC);
+    addProforma(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC).then(response => {
+        console.log(response + ' Resposta Criar Proforma');
         navigation.navigate('GesFaturação');
-      ToastAndroid.show("Fatura Criada ", ToastAndroid.SHORT);
+        ToastAndroid.show("Proforma Criada ", ToastAndroid.SHORT);
     });
-   
-    
 }
 
   return (
@@ -220,7 +217,6 @@ export default function CriarOrcamento({ navigation }) {
         <TextInput
           value={vencimentoC}
           onChangeText={(text) => setVencimento(text)}
-          defaultValue={0}
           placeholder="Vencimento"
           keyboardType="numeric"
         // ref={register({name: "quantidade"})} 
@@ -350,7 +346,7 @@ export default function CriarOrcamento({ navigation }) {
         )}
       />
       <View style={{marginTop: 30, width: 350}}>
-      <Button  title="Criar Fatura" color="#d0933f" onPress={() => handleCreateFatura()} />
+      <Button  title="Criar Proforma" color="#d0933f" onPress={() => handleCreateProforma()} />
       </View>
       </View>
     </ScrollView>
@@ -401,3 +397,4 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
+

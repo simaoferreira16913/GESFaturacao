@@ -86,7 +86,7 @@ export default function DetalhesFaturaPro({navigation, route}) {
     if(estado == 1){
       ToastAndroid.show("Proforma Aceite ", ToastAndroid.SHORT);
     }else{
-      ToastAndroid.show("Proforma Rejeitado",  ToastAndroid.SHORT);
+      ToastAndroid.show("Proforma Rejeitada",  ToastAndroid.SHORT);
     }
     }
 
@@ -142,7 +142,7 @@ export default function DetalhesFaturaPro({navigation, route}) {
 <View style={styles.marginTOPButton2}>
 
 {proformaID.Estado === "Rascunho" ? (
-  <Button color="#d0933f"  title="Finalizar Orçamento" onPress={() => { handleFinalizarProforma()}} />
+  <Button color="#d0933f"  title="Finalizar Proforma" onPress={() => { handleFinalizarProforma()}} />
 ) : (proformaID.Estado === "Aberto" ? (
   <View>
     <Button color="#d0933f" title="Aceitar" onPress={() => { handleEstadoProforma(1) }} />
