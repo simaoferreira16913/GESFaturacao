@@ -681,7 +681,7 @@ export const AuthProvider = ({children}) => {
         var token = await this.getToken();
 
         return axios({
-            url: `${BASE_URL}/api/guias_tranporte`,
+            url: `${BASE_URL}/api/guias_transporte`,
             method: 'GET',
             timeout: 5000,
             params: {
