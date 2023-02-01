@@ -737,12 +737,66 @@ export const AuthProvider = ({children}) => {
         });
     }
 
+    /*Nota de Credito */
+    const getNotasCred = async () =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_credito`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                pag: '0',
+                numRows: '25',
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        });
+    }
+
+    const getNotasCredDetails = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_credito`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idDocument: id,
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+    const deleteNotaCred = async (id) => {
+        var token = await this.getToken();
+        console.log(token)
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_credito`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '10',
+                _token: token,
+                idProforma: id,
+            }),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        });
+    }
+
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
             CriarFatura, deleteFatura, getFaturaDetalhes, getFaturas, finalizarFatura,
             getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes, getFaturasReb,
-            getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma, addProforma
+            getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma, addProforma,
+            getNotasCred, getNotasCredDetails,deleteNotaCred
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
