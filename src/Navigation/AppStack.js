@@ -19,6 +19,7 @@ import MainFaturaRec from '../Screens/FaturaRecibo/MainFaturaRec';
 import MainFaturaPro from '../Screens/FaturasProforma/MainFaturaPro';
 import DetalhesFaturaPro from '../Screens/FaturasProforma/DetalhesFaturaPro';
 import CriarProforma from '../Screens/FaturasProforma/CriarProforma';
+import CriarFaturaSimp from '../Screens/FaturasSimplificadas/CriarFaturaSimp';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,7 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação-Proformas' component={MainFaturaPro}/>
         <Stack.Screen name='GesFaturação-Proformas Detalhes' component={DetalhesFaturaPro}/>
         <Stack.Screen name='GesFaturação-Criar Proforma' component={CriarProforma}/>
+        <Stack.Screen name='GesFaturação-Criar Fatura Simplificada' component={CriarFaturaSimp}/>
       </Stack.Navigator>
     );
 };

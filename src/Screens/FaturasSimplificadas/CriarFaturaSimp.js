@@ -25,13 +25,13 @@ function Item({ item, onPress }) {
 }
 
 
-export default function CriarFatura({ navigation }) {
+export default function CriarFaturaSimp({ navigation }) {
 
-  const { getFaturas } = useContext(AuthContext);
+  const { getFaturasSimp } = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);
   const { getclienteID } = useContext(AuthContext)
   const { getArtigos } = useContext(AuthContext);
-  const {CriarFatura} = useContext(AuthContext);
+  const {criarFaturaSimp} = useContext(AuthContext);
   var coisa;
 
   /*const {register, handleSubmit, errors} = useForm({
@@ -99,7 +99,7 @@ export default function CriarFatura({ navigation }) {
       setDadosClientes(res.data.aaData)
       
     });
-    getFaturas().then((res) => {
+    getFaturasSimp().then((res) => {
       console.log(res.data);
 
     })
@@ -117,7 +117,7 @@ export default function CriarFatura({ navigation }) {
   handleCreateFatura = () => {
 
     console.log(clienteC,"oi")
-    CriarFatura(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC).then(response => {
+    criarFaturaSimp(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC).then(response => {
         console.log(response + ' Resposta Criar Orçamento')
         
         navigation.navigate('GesFaturação');

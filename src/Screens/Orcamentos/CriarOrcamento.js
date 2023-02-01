@@ -343,7 +343,7 @@ export default function CriarOrcamento({ navigation }) {
           <Item item={item} onPress={() => removeItem(index)} />
         )}
       />
-      <View style={{marginTop: 30, width: 350}}>
+      <View style={{marginTop: 30,marginBottom: 10 ,width: 350}}>
       <Button  title="Criar Orçamento" color="#d0933f" onPress={() => handleCreateOrcamento()} />
       </View>
       </View>

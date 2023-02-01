@@ -528,9 +528,22 @@ export const AuthProvider = ({children}) => {
         });
     }
 
-    const criarFaturaSimp = async (dadosFatSimp) =>{
+    const criarFaturaSimp = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC) =>{
         var token = await this.getToken();
+        console.log(clienteC + ' Cliente');
+        console.log(serieC + ' Serie');
+        console.log(numeroC + ' num');
+        console.log(dataC + ' data');
+        console.log(validadeC + ' val');
+        console.log(referenciaC + ' ref');
+        console.log(vencimentoC + ' ven');
+        console.log(moedaC + ' moeda');
+        console.log(descontoC + ' des');
+        console.log(observacoesC + ' obs');
+        console.log(JSON.stringify(LinhasC) + ' linha');
+        console.log(finalizarDocumentoC + ' fim');
 
+        const stringifiedLinhas = JSON.stringify(LinhasC);
         return axios({
             url: `${BASE_URL}/api/vendas/faturas_simplificadas`,
             method: 'POST',
@@ -538,22 +551,22 @@ export const AuthProvider = ({children}) => {
             data: qs.stringify({
                 opcao: '2',
                 _token: token,
-                cliente: '1',
-                serie: dadosFatSimp.Serie,
-                numero: dadosFatSimp.Numero,
-                data: dadosFatSimp.Data,
-                validade: dadosFatSimp.Validade,
-                referencia: dadosFatSimp.referencia,
-                pagamento: dadosFatSimp.Pagamento,
-                banco: dadosFatSimp.Banco,
-                vencimento: dadosFatSimp.Vencimento,
-                moeda: dadosFatSimp.Moeda,
-                desconto: dadosFatSimp.Desconto,
-                observacoes: dadosFatSimp.Observacoes,
-                linhas: dadosFatSimp.Linhas,
-                finalizarDocumento: dadosFatSimp.FinalizarDocumento,
-                precisaBanco: dadosFatSimp.PrecisaBanco,
-                centrocusto: dadosFatSimp.Centocusto,
+                cliente: clienteC,
+                serie: serieC,
+                numero: numeroC,
+                moeda: 1,
+                data: dataC,
+                validade: validadeC,
+                referencia: referenciaC,
+                vencimento: vencimentoC,
+                desconto: descontoC,
+                observacoes: observacoesC,
+                finalizarDocumento: finalizarDocumentoC,
+                pagamento: 0,
+                Linhas: stringifiedLinhas,
+                banco: 0,
+                precisaBanco: 0,
+                centrocusto: 0
             }),
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
         });
@@ -582,6 +595,7 @@ export const AuthProvider = ({children}) => {
             console.log(res)
         })
     }
+
 
     /*Faturas Recibos */
     const getFaturasReb = async () =>{
