@@ -70,6 +70,7 @@ export const AuthProvider = ({children}) => {
             }
         }); 
     }
+
     const getClientes = async ()=> {
         
         var token = await this.getToken();
@@ -671,12 +672,54 @@ export const AuthProvider = ({children}) => {
             console.log(res)
         })
     }
+
+    //Pedido API para as Guias
+
+    //Guias de Transporte
+
+    const getGuiasTransporte = async ()=> {
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/guias_tranporte`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                _token: token,
+                pag: '0',
+                numRows: '25',
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        }); 
+    }
+
+    const deleteGuiaTransporte = async (id) => {
+        
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/orcamentos`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '5',
+                _token: userToken,
+                idGuia: id,
+            }),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        });
+    }
+
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
             CriarFatura, deleteFatura, getFaturaDetalhes, getFaturas, finalizarFatura,
             getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes, getFaturasReb,
-            getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma
+            getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma,
+            getGuiasTransporte, deleteGuiaTransporte
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

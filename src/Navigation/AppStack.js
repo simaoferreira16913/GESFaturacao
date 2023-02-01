@@ -19,6 +19,19 @@ import MainFaturaRec from '../Screens/FaturaRecibo/MainFaturaRec';
 import MainFaturaPro from '../Screens/FaturasProforma/MainFaturaPro';
 import DetalhesFaturaPro from '../Screens/FaturasProforma/DetalhesFaturaPro';
 
+//Guias
+import MainGuias from '../Screens/Guias/MainGuias';
+import CriarAtivos from '../Screens/Guias/Ativos/CriarAtivos';
+import MainAtivos from '../Screens/Guias/Ativos/MainAtivos';
+import CriarConsignacao from '../Screens/Guias/Consignacao/CriarConsignacao';
+import MainConsignacao from '../Screens/Guias/Consignacao/MainConsignacao';
+import CriarDevolucao from '../Screens/Guias/Devolucao/CriarDevolucao';
+import MainDevolucao from '../Screens/Guias/Devolucao/MainDevolucao';
+import CriarRemessa from '../Screens/Guias/Remessa/CriarRemessa';
+import MainRemessa from '../Screens/Guias/Remessa/MainRemessa';
+import CriarTransporte from '../Screens/Guias/Transporte/CriarTransporte';
+import MainTransporte from '../Screens/Guias/Transporte/MainTransporte';
+
 const Stack = createNativeStackNavigator();
 
 const AppStack = () => {
@@ -39,6 +52,18 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação-Fatura Recibo' component={MainFaturaRec}/>
         <Stack.Screen name='GesFaturação-Proformas' component={MainFaturaPro}/>
         <Stack.Screen name='GesFaturação-Proformas Detalhes' component={DetalhesFaturaPro}/>
+
+        <Stack.Screen name='GesFaturação-Doc. de Transporte' component={MainGuias}/>
+        <Stack.Screen name='GesFaturação-Criar Guia Ativos' component={CriarAtivos}/>
+        <Stack.Screen name='GesFaturação-Guias Ativos' component={MainAtivos}/>
+        <Stack.Screen name='GesFaturação-Criar Guia Consignação' component={CriarConsignacao}/>
+        <Stack.Screen name='GesFaturação-Guias Consignação' component={MainConsignacao}/>
+        <Stack.Screen name='GesFaturação-Criar Guia Devolução' component={CriarDevolucao}/>
+        <Stack.Screen name='GesFaturação-Guias Devolução' component={MainDevolucao}/>
+        <Stack.Screen name='GesFaturação-Criar Guia Remessa' component={CriarRemessa}/>
+        <Stack.Screen name='GesFaturação-Guias Remessa' component={MainRemessa}/>
+        <Stack.Screen name='GesFaturação-Criar Guia Transporte' component={CriarTransporte}/>
+        <Stack.Screen name='GesFaturação-Guias Transporte' component={MainTransporte}/>
       </Stack.Navigator>
     );
 };
