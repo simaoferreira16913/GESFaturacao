@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useContext } from 'react';
-import { Button, StyleSheet, Text, Touchable, TouchableNativeFeedback, TouchableOpacity, View, FlatList, TextInput,ScrollView,ToastAndroid } from 'react-native';
+import { Button, StyleSheet, Text, Touchable, TouchableNativeFeedback, TouchableOpacity, View, FlatList, TextInput,ScrollView,ToastAndroid, LogBox  } from 'react-native';
 import { AuthContext } from "../../Context/AuthContext";
 import { Picker } from '@react-native-picker/picker';
 import { BASE_URL } from '../../config';
@@ -26,7 +26,8 @@ function Item({ item, onPress }) {
 
 
 export default function CriarProforma({ navigation }) {
-
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
   const { getProforma } = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);
   const { getclienteID } = useContext(AuthContext)

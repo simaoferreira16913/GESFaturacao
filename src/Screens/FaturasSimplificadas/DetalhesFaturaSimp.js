@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable,
-  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid } from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid,LogBox  } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -15,6 +15,8 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-ta
 
 
 export default function DetalhesFaturaSimp({navigation, route}) {
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
   const {getArtigoID} = useContext(AuthContext);
   const {finalizarFaturaSimp} = useContext(AuthContext);
   const {getFaturaSimpDetalhes} = useContext(AuthContext);

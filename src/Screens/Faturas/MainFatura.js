@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable,
-  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid } from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid,LogBox  } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -14,7 +14,8 @@ import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
 export default function MainFatura({navigation}) {
-  
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
   const {getFaturas} = useContext(AuthContext);
   const {deleteFatura} = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);
