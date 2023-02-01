@@ -7,17 +7,7 @@ import { BASE_URL } from '../../config';
 import DatePicker from 'react-native-date-picker'
 import { useForm } from 'react-hook-form';
 import moment from 'moment/moment';
-//import {yupResolver} from '@hookform/resolvers/yup'
-//import * as yup from 'yup';
 
-/*const schema = yup.object().shape({
-    //artigo: yup.required("Selecione um artigo"),
-    quantidade: yup.number().required("Insira a quantidade")
-      .positive("A quantidade deve ser positiva")
-        .integer("A quantidade deve ser inteira"),
-    preco: yup.number().required("Inserira o preco")
-    .positive("O preço deve ser positivo").min(0.01,"Insira um preço válido")
-});*/
 
 
 function Item({ item, onPress }) {
@@ -28,7 +18,7 @@ function Item({ item, onPress }) {
   })
   return (
     <View>
-      <Text>Artigo: {nomeArtigo} Preço: {item.preco} QTD: {item.qtd} IVA: {item.iva} Total: {Number(item.preco) * Number(item.qtd)}</Text>
+      <Text>Artigo: {nomeArtigo} | Preço: {item.preco} € | QTD: {item.qtd} | Total: {Number(item.preco) * Number(item.qtd)} €</Text>
       <Button title="Remover" color="#d0933f" onPress={onPress} />
     </View>
   );
@@ -51,8 +41,12 @@ export default function CriarOrcamento({ navigation }) {
   const [dadosArtigos, setDadosArtigos] = useState([]);
   //const [cliente, setCliente] = useState();
   //const [linhas, setLinhas] = useState([]);
-  const [datei, setDatei] = useState(null)
+  const [datei, setDatei] = useState(null);
   const [open, setOpen] = useState(false);
+
+  const [datev, setDatev] = useState(null);
+  const [openv, setOpenV] = useState(false);
+
   const [artigo, setArtigo] = useState();
   const [quantidade, setQuantidade] = useState();
   const [preco, setPreco] = useState();
@@ -63,7 +57,7 @@ export default function CriarOrcamento({ navigation }) {
 
     //Dados para addOrçamento
 
-    const [clienteC, setCliente] = useState(1);
+    const [clienteC, setCliente] = useState();
     const [serieC, setSerie] = useState(3);
     const [numeroC, setNumero] = useState(0);
     const [dataC, setData] = useState("12/12/2022");
@@ -74,23 +68,23 @@ export default function CriarOrcamento({ navigation }) {
     const [descontoC, setDesconto] = useState(0);
     const [observacoesC, setObservacoes] = useState("Observacoes");
     //Linha de artigo
-    const [artigoC, setArtigoL ] = useState("1");
+    //const [artigoC, setArtigoL ] = useState("1");
     const [descricaoC, setDescricaoL ] = useState("Artigo+Geral");
-    const [qtdC, setQtdL ] = useState("1");
-    const [precoC, setPrecoL ] = useState("33.333");
-    const [impostoC, setImpostoL ] = useState("1");
-    const [motivoC, setMotivoL ] = useState(null);
-    const [descontoCL, setDescontoL ] = useState("0");
+    //const [qtdC, setQtdL ] = useState("1");
+    //const [precoC, setPrecoL ] = useState("33.333");
+    //const [impostoC, setImpostoL ] = useState("1");
+    //const [motivoC, setMotivoL ] = useState(null);
+    //const [descontoCL, setDescontoL ] = useState("0");
     const [retencaoC, setRetencaoL ] = useState("0");
-    const [centroC, setCentroL ] = useState("5");
-    const [comentarioC, setComentarioL ] = useState("");
+    //const [centroC, setCentroL ] = useState("5");
+    //const [comentarioC, setComentarioL ] = useState("");
     
-    const [LinhasC, setLinhas] = useState();
+    const [LinhasC, setLinhas] = useState([]);
     const [finalizarDocumentoC, setFinalizarDocumento] = useState(0);
 
 
   const onSubmit = (data) => {
-    setLinhas([...linhas, data]);
+    setLinhas([...LinhasC, data]);
   }
 
   if (!dadosArtigos.length) {
@@ -112,7 +106,7 @@ export default function CriarOrcamento({ navigation }) {
   }
   
   const removeItem = (index) => {
-    setLinhas(linhas.filter((_, i) => i !== index));
+    setLinhas(LinhasC.filter((_, i) => i !== index));
   }
 
   console.log(LinhasC);
@@ -121,47 +115,12 @@ export default function CriarOrcamento({ navigation }) {
   const [selectedIdArtigo, setSelectedIdArtigo] = useState(null);
 
   handleCreateOrcamento = () => {
-    clienteTeste = 1;
-    serieTeste = 3;
-    numeroTeste = 0;
-    dataTeste = "12/12/2022";
-    validadeTeste = "12/12/2022";
-    referenciaTeste = "Ref. Documento";
-    vencimentoTeste = 0;
-    moedaTeste = 1;
-    descontoTeste = 0;
-    observacoesTeste = "Observacoes";
-    //Linha = [artigo: artigo,descricao, qtd, preco, imposto, motivo, desconto, retencao]
-    LinhasTeste = [{"artigo":"1","descricao":"Artigo+Geral","qtd":"1","preco":"33.333","imposto":"1","motivo":null,"desconto":"0","retencao":"0","centro":"5","comentario":""}];
-    finalizarDocumentoTeste = 0;
-
-    setCliente(clienteTeste);
-    setSerie(serieTeste);
-    setNumero(numeroTeste);
-    setData(dataTeste);
-    setValidade(validadeTeste);
-    setReferencia(referenciaTeste);
-    setVencimento(vencimentoTeste);
-    setMoeda(moedaTeste);
-    setDesconto(descontoTeste);
-    setObservacoes(observacoesTeste);
-    setLinhas(LinhasTeste);
-    setFinalizarDocumento(finalizarDocumentoTeste);
 
     console.log(clienteC + ' É aqui cepo');
-    addOrcamentos(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, artigoC,descricaoC,qtdC,precoC,impostoC,motivoC,descontoCL,retencaoC,centroC,comentarioC, finalizarDocumentoC).then(response => {
+    addOrcamentos(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC).then(response => {
         console.log(response + ' Resposta Criar Orçamento')
     });
 }
- 
-
-   /* const dadosOrcamento = {
-      cliente:cliente,
-      linhas: linhas
-    }
-    addOrcamentos().then((res)=>{
-      console.log(res);
-    })*/
 
   return (
     <ScrollView>
@@ -171,12 +130,27 @@ export default function CriarOrcamento({ navigation }) {
         <Button  title="Novo Cliente" color="#d0933f" onPress={() => navigation.navigate("GesFaturação-Criar Cliente")} />
         <Text style={styles.titleSelect}>Cliente</Text>
         <View style={styles.borderMargin}>
-        <Picker  style={styles.pickerComponent} placeholder="Selecione um cliente" selectedValue={selectedIdCliente} onValueChange={itemValue => setSelectedIdCliente(itemValue)}>
+        <Picker  style={styles.pickerComponent} placeholder="Selecione um cliente" selectedValue={selectedIdCliente} onValueChange={itemValue => {
+          setSelectedIdCliente(itemValue); 
+          setCliente(itemValue[0]);}}>
           {dadosClientes.map(function (object, i) {
             return <Picker.Item label={object[2]} value={object[0]} key={i} />;
           })}
         </Picker>
         </View>
+
+        <Text style={styles.titleSelect}>Serie</Text>
+        <View style={styles.borderMargin}>
+        <Picker
+          selectedValue={serieC}
+          onValueChange={(itemValue) => setSerie(itemValue)}
+        >
+
+          <Picker.Item label="2022" value="3" />
+          <Picker.Item label="2023A" value="6" />
+        </Picker>
+        </View>
+
         <Text style={styles.titleSelect}>Data</Text>
         <View style={styles.borderMargin}>
         <TouchableOpacity  onPress={() => setOpen(true)} style={styles.touchableO}>
@@ -188,7 +162,8 @@ export default function CriarOrcamento({ navigation }) {
         onConfirm={(datei) => {
           setOpen(false)
           
-          setDatei(datei)
+          setDatei(datei);
+          setData(moment(datei).format("DD/MM/YYYY"));
         }}
         onCancel={() => {
           setOpen(false)
@@ -196,10 +171,94 @@ export default function CriarOrcamento({ navigation }) {
       />
       
       <Text style={styles.textDate}> {todaiDate = moment(datei).format("DD/MM/YYYY") }</Text>
+
+      </TouchableOpacity>
+      </View>
+
+      <Text style={styles.titleSelect}>Validade</Text>
+        <View style={styles.borderMargin}>
+        <TouchableOpacity  onPress={() => setOpenV(true)} style={styles.touchableO}>
+        <DatePicker
+        modal
+        mode="date"
+        open={openv}
+        date={new Date()}
+        onConfirm={(datev) => {
+          setOpenV(false)
+          
+          setDatev(datev);
+          setValidade(moment(datev).format("DD/MM/YYYY"))
+        }}
+        onCancel={() => {
+          setOpenV(false)
+        }}
+      />
+      
+      <Text style={styles.textDate}> {todayVDate = moment(datev).format("DD/MM/YYYY") }</Text>
          
       </TouchableOpacity>
-      
+      </View>
+
+      <Text style={styles.titleSelect}>Referencia</Text>
+        <View style={styles.borderMargin}>
+        <TextInput
+          value={referenciaC}
+          onChangeText={(text) => setReferencia(text)}
+          placeholder="Referencia"
+          keyboardType="default"
+        // ref={register({name: "quantidade"})} 
+        />
         </View>
+
+        <Text style={styles.titleSelect}>Vencimento</Text>
+        <View style={styles.borderMargin}>
+        <TextInput
+          value={vencimentoC}
+          onChangeText={(text) => setVencimento(text)}
+          placeholder="Vencimento"
+          keyboardType="numeric"
+        // ref={register({name: "quantidade"})} 
+        />
+        </View>
+
+        <Text style={styles.titleSelect}>Moeda</Text>
+        <View style={styles.borderMargin}>
+        <Picker
+          selectedValue={moedaC}
+          onValueChange={(itemValue) => setMoeda(itemValue)}
+        >
+
+          <Picker.Item label="Euro (€)" value="1" />
+          <Picker.Item label="Libra ING (GBP)" value="2" />
+          <Picker.Item label="Dólar USA ($)" value="3" />
+          <Picker.Item label="Real Br. (R$)" value="4" />
+          <Picker.Item label="Fr. Suiço (CHF)" value="5" />
+        </Picker>
+        </View>
+
+        <Text style={styles.titleSelect}>Desconto</Text>
+        <View style={styles.borderMargin}>
+        <TextInput
+          value={descontoC}
+          defaultValue={0}
+          onChangeText={(text) => setDesconto(text)}
+          placeholder="Desconto"
+          keyboardType="numeric"
+        // ref={register({name:"preco"})}
+        />
+        </View>
+
+        <Text style={styles.titleSelect}>Observações</Text>
+        <View style={styles.borderMargin}>
+        <TextInput
+          value={observacoesC}
+          onChangeText={(text) => setObservacoes(text)}
+          placeholder="Observações"
+          keyboardType="default"
+        // ref={register({name: "quantidade"})} 
+        />
+        </View>
+
         <Text style={styles.titleSelect}>Artigo</Text>
         <View style={styles.borderMargin}>
         <Picker placeholder="Selecione um Artigo"
@@ -207,7 +266,7 @@ export default function CriarOrcamento({ navigation }) {
             setArtigo(itemValue);
             setSelectedIdArtigo(itemValue[0]);
             setPrecoPVP(itemValue[4]);
-            console.log("Aui", precoPVP);
+            setDescricaoL(itemValue[1]);
           }} >
           {dadosArtigos.map(function (object, i) {
             return <Picker.Item label={object[1]} value={object} key={i} />;
@@ -237,7 +296,7 @@ export default function CriarOrcamento({ navigation }) {
         // ref={register({name:"preco"})}
         />
         </View>
-        <Text style={styles.titleSelect}>IVA</Text>
+        <Text style={styles.titleSelect}>Imposto</Text>
         <View style={styles.borderMargin}>
         <Picker
           selectedValue={iva}
@@ -250,17 +309,33 @@ export default function CriarOrcamento({ navigation }) {
           <Picker.Item label="0%" value="4" />
         </Picker>
         </View>
+        
         {/* {errors.preco && <Text>{errors.preco.message}</Text>} */}
         <View style={{marginBottom: 10, marginTop: 10}}>
         <Button title="Adicionar" color="#d0933f" onPress={() => {
-          setLinhas([...linhas, {
-            artigo: selectedIdArtigo, qtd: quantidade, preco: precoPVP, iva: iva
+          setLinhas([...LinhasC, {
+            artigo: selectedIdArtigo, descricao: descricaoC, qtd: quantidade, preco: precoPVP, imposto: iva, motivo: null, desconto: descontoC, retencao: retencaoC
           }]);
           setListKey(listKey + 1);
         }}
         />
         </View>
+
+        <Text style={styles.titleSelect}>Finalizar Documento</Text>
+        <View style={styles.borderMargin}>
+        <Picker
+          selectedValue={finalizarDocumentoC}
+          onValueChange={(itemValue) => setFinalizarDocumento(itemValue)}
+        >
+
+          <Picker.Item label="Rascunho" value="0" />
+          <Picker.Item label="Aberto" value="1" />
+        </Picker>
+        </View>
+        
       </View>
+
+      <Text style={styles.titleSelect}>Linha de Artigos</Text>
       <FlatList
         data={LinhasC}
         keyExtractor={(item, index) => index.toString()}

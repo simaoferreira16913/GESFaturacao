@@ -239,7 +239,7 @@ export const AuthProvider = ({children}) => {
         });
     }
 
-    const addOrcamentos = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, artigoC,descricaoC,qtdC,precoC,impostoC,motivoC,descontoCL,retencaoC,centroC,comentarioC, finalizarDocumentoC) => {
+    const addOrcamentos = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC) => {
 
         console.log(clienteC + ' Cliente');
         console.log(serieC + ' Serie');
@@ -251,11 +251,10 @@ export const AuthProvider = ({children}) => {
         console.log(moedaC + ' moeda');
         console.log(descontoC + ' des');
         console.log(observacoesC + ' obs');
-        
-        console.log(JSON.stringify(LinhasC) + ' linha')
+        console.log(JSON.stringify(LinhasC) + ' linha');
         console.log(finalizarDocumentoC + ' fim');
-          
-        const LinhasC = [{"artigo":artigoC,"descricao":descricaoC,"qtd":qtdC,"preco":precoC,"imposto":impostoC,"motivo":motivoC,"desconto":descontoCL,"retencao":retencaoC,"centro":centroC,"comentario":comentarioC}];
+           
+        //const LinhasC = [{"artigo": "0001", "descricao":descricaoC, "qtd":qtdC, "preco": "19.01", "imposto": "1", "motivo":motivoC, "desconto":descontoCL, "retencao":retencaoC}];
         const stringifiedLinhas = JSON.stringify(LinhasC);
 
         return axios({
