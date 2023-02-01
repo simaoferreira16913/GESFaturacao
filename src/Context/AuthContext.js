@@ -403,10 +403,21 @@ export const AuthProvider = ({children}) => {
         });
     }
 
-    const CriarFatura = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, artigoC,descricaoC,qtdC,precoC,impostoC,motivoC,descontoCL,retencaoC,centroC,comentarioC, finalizarDocumentoC) =>{
+    const CriarFatura = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC) =>{
         var token = await this.getToken();
+        console.log(clienteC + ' Cliente');
+        console.log(serieC + ' Serie');
+        console.log(numeroC + ' num');
+        console.log(dataC + ' data');
+        console.log(validadeC + ' val');
+        console.log(referenciaC + ' ref');
+        console.log(vencimentoC + ' ven');
+        console.log(moedaC + ' moeda');
+        console.log(descontoC + ' des');
+        console.log(observacoesC + ' obs');
+        console.log(JSON.stringify(LinhasC) + ' linha');
+        console.log(finalizarDocumentoC + ' fim');
 
-        const LinhasC = [{"artigo":artigoC,"descricao":descricaoC,"qtd":qtdC,"preco":precoC,"imposto":impostoC,"motivo":motivoC,"desconto":descontoCL,"retencao":retencaoC,"centro":centroC,"comentario":comentarioC}];
         const stringifiedLinhas = JSON.stringify(LinhasC);
         return axios({
             url: `${BASE_URL}/api/vendas/faturas`,
