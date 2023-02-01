@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable,
-  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image } from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -13,10 +13,10 @@ import { Renderer } from 'phaser';
 import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
-export default function MainOrcamento({navigation}) {
+export default function MainFaturaPro({navigation}) {
   
-  const {getOrcamentos} = useContext(AuthContext);
-  const {deleteOrcamento} = useContext(AuthContext);
+  const {getProforma} = useContext(AuthContext);
+  const {deleteProforma} = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);
   Date.prototype.toDateString = function dtoString() {
     return `${this.getDay}`;
@@ -28,16 +28,13 @@ export default function MainOrcamento({navigation}) {
   const [datef, setDatef] = useState()
   const [open, setOpen] = useState(false)
   const [openf, setOpenf] = useState(false)
-  const [orcamentos, setOrcamentos] = useState([]);
+  const [proformas, setProformas] = useState([]);
   const [selectedIdCliente, setSelectedIdCliente] = useState(null);
   const opcao = 0;
   const [search, setSearch] = useState("c")
   const numRows = 10;
   const pag = 10;
-  const entrar = () =>{
-    navigation.navigate("Ecra2")
-  }
-
+  
     const [client, setClient] = useState([]);
 
 
@@ -64,13 +61,12 @@ export default function MainOrcamento({navigation}) {
     );
   };
   
-  if(!orcamentos.length){
-    getOrcamentos().then((res)=>{
-      setOrcamentos(res.data.aaData);
+  if(!proformas.length){
+    getProforma().then((res)=>{
+      setProformas(res.data.aaData);
       console.log(res.data.aaData);
     }).catch(e =>{
       console.log(`Erro: ${e}`);
-      setIsLoading(false)
   });
   } 
   if (!dadosClientes.length) {
@@ -82,27 +78,43 @@ export default function MainOrcamento({navigation}) {
   }
   const columns = ['Nome', 'Preço', 'Estado', , 'Ações'];
 
-  const data = orcamentos.map(item => [ item[2],parseFloat(item[6]).toFixed(2), item[7], 
-  <View style={{flexDirection: 'row'}}>
-  <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[0])}>
-    <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/></TouchableOpacity >
-  <TouchableOpacity onPress={() => mudarEcra(item[0])}>
-  <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
-  </TouchableOpacity >
-  </View>
-]);
+  const data = proformas.map(item => {
+    let botoes;
+    if (item[7] === 'Rascunho') {
+      botoes = (
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[0])}>
+            <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
+          </TouchableOpacity >
+          <TouchableOpacity onPress={() => mudarEcra(item[0])}>
+            <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
+          </TouchableOpacity >
+        </View>
+      );
+    } else {
+      botoes = (
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity onPress={() => mudarEcra(item[0])}>
+            <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
+          </TouchableOpacity >
+        </View>
+      );
+    }
+    return [ item[2],parseFloat(item[6]).toFixed(2), item[7], botoes];
+  });
 
   const handleRemove = (id) => {
     console.log(id)
-    deleteOrcamento(id).then((res)=>{
+    deleteProforma(id).then((res)=>{
       console.log(res);
     });
 
-    setOrcamentos(orcamentos.filter(item => item[0] !== id));
+    setProformas(proformas.filter(item => item[0] !== id));
+    ToastAndroid.show("Proforma Eliminada",ToastAndroid.SHORT);
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Ver Detalhes',  { id: value });
+    navigation.navigate('GesFaturação-Proformas Detalhes',  { id: value });
   }
 
   return (
@@ -110,27 +122,19 @@ export default function MainOrcamento({navigation}) {
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Orçamento")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Proforma")}>
           <View style={styles.button}>
           
-            <Text style={styles.textfont}>   Novo Orçamento</Text>
+            <Text style={styles.textfont}>Nova Proforma</Text>
           </View>
         </TouchableNativeFeedback>
       </View>
-      
+
       <View > 
         <TouchableNativeFeedback>
           <View style={styles.button}>
           
-            <Text style={styles.textfont}> Integrar Orçamento</Text>
-          </View>
-        </TouchableNativeFeedback>
-      </View> 
-      <View > 
-        <TouchableNativeFeedback>
-          <View style={styles.button}>
-          
-            <Text style={styles.textfont}>   Enviar Orçamentos</Text>
+            <Text style={styles.textfont}>Enviar Proforma</Text>
           </View>
         </TouchableNativeFeedback>
       </View> 
@@ -215,7 +219,7 @@ export default function MainOrcamento({navigation}) {
       </View>
       
       <View  > 
-        <TouchableNativeFeedback onPress={()=> getOrcamentos(search,numRows,pag)}>
+        <TouchableNativeFeedback onPress={()=> getFaturasSimp(search,numRows,pag)}>
           <View style={styles.button}>
 
             <Text style={styles.textfont}>   Pesquisar</Text>

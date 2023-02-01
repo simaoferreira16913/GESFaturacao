@@ -14,28 +14,25 @@ import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
 
-export default function DetalhesOrcamento({navigation, route}) {
+export default function DetalhesFaturaPro({navigation, route}) {
   const {getArtigoID} = useContext(AuthContext);
-  const {getOrcamentos} = useContext(AuthContext);
-  const {deleteOrcamento} = useContext(AuthContext);
-  const {estadoOrcamento} = useContext(AuthContext);
-  const {finalizarOrcamento} = useContext(AuthContext);
-  const {getOrcamentosDetalhes} = useContext(AuthContext);
-  const [orcamentoID, setOrcamentoID] = useState([]);
+ 
+  const {estadoProforma} = useContext(AuthContext);
+  const {finalizarProforma} = useContext(AuthContext);
+  const {getProformaDetalhes} = useContext(AuthContext);
+  const [proformaID, setProformaID] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [aux, setAux] = useState();
   const [aux2, setAux2] = useState();
   const id = route.params.id;
 
 
-  const mudarEcra = (value) => {
-    navigation.navigate('DetalhesOrcamento.js', value);
-  }
+  
 
-  if(orcamentoID.length == 0){
-    getOrcamentosDetalhes(id).then((res)=>{
+  if(proformaID.length == 0){
+    getProformaDetalhes(id).then((res)=>{
         console.log(res.data.data);
-        setOrcamentoID(res.data.data);
+        setProformaID(res.data.data);
         setTableData(res.data.data.linhas.map(linha => [linha.artigo, Number(linha.preco).toFixed(2), parseFloat(linha.qtd).toFixed(2),
              linha.imposto, Number(linha.totalLinha).toFixed(2)]));
         setAux(1);   
@@ -63,8 +60,8 @@ export default function DetalhesOrcamento({navigation, route}) {
     }
     
 
-    function handleFinalizarOrcamento(){
-      finalizarOrcamento(id).then((res)=>{
+    function handleFinalizarProforma(){
+      finalizarProforma(id).then((res)=>{
         console.log(res);
       })
       .catch(e => {
@@ -73,13 +70,13 @@ export default function DetalhesOrcamento({navigation, route}) {
     navigation.goBack()
     navigation.navigate('GesFaturação');
     //navigation.navigate('GesFaturação-Ver Detalhes',  { id: id });
-    ToastAndroid.show("Orçamento Finalizado",ToastAndroid.SHORT);
+    ToastAndroid.show("Proforma Finalizado",ToastAndroid.SHORT);
 
     }
 
-    function handleEstadoOrcamento(estado){
+    function handleEstadoProforma(estado){
       console.log("Tou Aqui",estado)
-      estadoOrcamento(id, estado).then((res)=>{
+      estadoProforma(id, estado).then((res)=>{
         console.log(res);
       }).catch(e => {
         console.log(`Login error ${e}`);
@@ -87,9 +84,9 @@ export default function DetalhesOrcamento({navigation, route}) {
     navigation.navigate('GesFaturação');
     //ToastAndroid.show("Orçamento Aceite");
     if(estado == 1){
-      ToastAndroid.show("Orçamento Aceite ", ToastAndroid.SHORT);
+      ToastAndroid.show("Proforma Aceite ", ToastAndroid.SHORT);
     }else{
-      ToastAndroid.show("Orçamento Rejeitado",  ToastAndroid.SHORT);
+      ToastAndroid.show("Proforma Rejeitado",  ToastAndroid.SHORT);
     }
     }
 
@@ -97,35 +94,35 @@ export default function DetalhesOrcamento({navigation, route}) {
     <ScrollView>
       <Text style={styles.titleSelect}>Cliente</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{orcamentoID.Cliente}</Text>
+        <Text style={{marginLeft: 4}}>{proformaID.Cliente}</Text>
       </View>
       <Text style={styles.titleSelect}>NIF</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{orcamentoID.Nif}</Text>
+        <Text style={{marginLeft: 4}}>{proformaID.Nif}</Text>
       </View>
       <Text style={styles.titleSelect}>Endereço</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{orcamentoID.EnderecoCliente}</Text>
+        <Text style={{marginLeft: 4}}>{proformaID.EnderecoCliente}</Text>
       </View>
       <Text style={styles.titleSelect}>Série</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{orcamentoID.Serie}</Text>
+        <Text style={{marginLeft: 4}}>{proformaID.Serie}</Text>
       </View>
       <Text style={styles.titleSelect}>Data</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{orcamentoID.Data}</Text>
+        <Text style={{marginLeft: 4}}>{proformaID.Data}</Text>
       </View>
       <Text style={styles.titleSelect}>Data Vencimento</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{orcamentoID.DataValidade}</Text>
+        <Text style={{marginLeft: 4}}>{proformaID.DataValidade}</Text>
       </View>
       <Text style={styles.titleSelect}>Desconto</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{parseFloat(orcamentoID.PercentagemDesconto).toFixed(2)}%</Text>
+        <Text style={{marginLeft: 4}}>{parseFloat(proformaID.PercentagemDesconto).toFixed(2)}%</Text>
       </View>
       <Text style={styles.titleSelect}>Moeda</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{orcamentoID.Moeda}</Text>
+        <Text style={{marginLeft: 4}}>{proformaID.Moeda}</Text>
       </View>
       <Text style={styles.titleSelect}>Linhas</Text>
       <Table style={{marginLeft: 10}}>
@@ -144,12 +141,12 @@ export default function DetalhesOrcamento({navigation, route}) {
 </View>
 <View style={styles.marginTOPButton2}>
 
-{orcamentoID.Estado === "Rascunho" ? (
-  <Button color="#d0933f"  title="Finalizar Orçamento" onPress={() => { handleFinalizarOrcamento()}} />
-) : (orcamentoID.Estado === "Aberto" ? (
+{proformaID.Estado === "Rascunho" ? (
+  <Button color="#d0933f"  title="Finalizar Orçamento" onPress={() => { handleFinalizarProforma()}} />
+) : (proformaID.Estado === "Aberto" ? (
   <View>
-    <Button color="#d0933f" title="Aceitar" onPress={() => { handleEstadoOrcamento(1) }} />
-    <Button color="#d0933f" title="Rejeitar" onPress={() => { handleEstadoOrcamento(0) }} />
+    <Button color="#d0933f" title="Aceitar" onPress={() => { handleEstadoProforma(1) }} />
+    <Button color="#d0933f" title="Rejeitar" onPress={() => { handleEstadoProforma(0) }} />
   </View>
 ) : (
   <View>
@@ -160,6 +157,7 @@ export default function DetalhesOrcamento({navigation, route}) {
 </View>
     </ScrollView>
   );
+
 
 }
 

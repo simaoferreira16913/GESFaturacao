@@ -10,6 +10,14 @@ import CriarCliente from '../Screens/Clientes/CriarCliente';
 import CriarArtigo from '../Screens/Artigos/CriarArtigo';
 import MainArtigo from '../Screens/Artigos/MainArtigo';
 import VerDetalhesOrc from '../Screens/Orcamentos/DetalhesOrcamento';
+import MainFatura from '../Screens/Faturas/MainFatura';
+import DetalhesFatura from '../Screens/Faturas/DetalhesFatura';
+import CriarFatura from '../Screens/Faturas/CriarFatura';
+import DetalhesFaturaSimp from '../Screens/FaturasSimplificadas/DetalhesFaturaSimp';
+import MainFaturaSimp from '../Screens/FaturasSimplificadas/MainFaturaSimp';
+import MainFaturaRec from '../Screens/FaturaRecibo/MainFaturaRec';
+import MainFaturaPro from '../Screens/FaturasProforma/MainFaturaPro';
+import DetalhesFaturaPro from '../Screens/FaturasProforma/DetalhesFaturaPro';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +31,14 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação-Artigos' component={MainArtigo}/>
         <Stack.Screen name='GesFaturação-Criar Artigo' component={CriarArtigo}/>
         <Stack.Screen name='GesFaturação-Ver Detalhes' component={VerDetalhesOrc}/>
+        <Stack.Screen name='GesFaturação-Faturas' component={MainFatura}/>
+        <Stack.Screen name='GesFaturação-Fatura Detalhes' component={DetalhesFatura}/>
+        <Stack.Screen name='GesFaturação-Criar Fatura' component={CriarFatura}/>
+        <Stack.Screen name='GesFaturação-Faturas Simplificadas' component={MainFaturaSimp}/>
+        <Stack.Screen name='GesFaturação-Fatura Simplificada Detalhes' component={DetalhesFaturaSimp}/>
+        <Stack.Screen name='GesFaturação-Fatura Recibo' component={MainFaturaRec}/>
+        <Stack.Screen name='GesFaturação-Proformas' component={MainFaturaPro}/>
+        <Stack.Screen name='GesFaturação-Proformas Detalhes' component={DetalhesFaturaPro}/>
       </Stack.Navigator>
     );
 };

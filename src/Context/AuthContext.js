@@ -97,7 +97,7 @@ export const AuthProvider = ({children}) => {
         var token = await this.getToken();
         let aux = id;
         console.log("Aqui",aux);
-        axios.patch("https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos",
+        axios.patch(`${BASE_URL}/api/orcamentos/orcamentos`,
         {_token: token, opcao: '6', idOrcamento: id}).then((res)=>{
             console.log(res)
         })
@@ -108,7 +108,7 @@ export const AuthProvider = ({children}) => {
         console.log(token)
         console.log(id);
         console.log(estado);
-        axios.patch("https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/orcamentos/orcamentos",
+        axios.patch(`${BASE_URL}/api/orcamentos/orcamentos`,
         {_token: token, opcao: '9', idDocumento: id, estado: estado}).then((res)=>{
             console.log(res)
         })
@@ -210,7 +210,7 @@ export const AuthProvider = ({children}) => {
         var token = await this.getToken();
         console.log(token)
         return axios({
-            url: `${BASE_URL}/api/tabelas/clientes`,
+            url: `${BASE_URL}/api/orcamentos/orcamentos`,
             method: 'DELETE',
             timeout: 5000,
             data: qs.stringify({
@@ -392,11 +392,291 @@ export const AuthProvider = ({children}) => {
     }
 
 
-    
+    /*Faturas*/
+    const getFaturas = async () =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                pag: '0',
+                numRows: '25',
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        });
+    }
 
+    const getFaturaDetalhes= async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idDocument: id,
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        });
+    }
+    const finalizarFatura= async (id) =>{
+        var token = await this.getToken();
+        
+        axios.patch(`${BASE_URL}/api/vendas/faturas`,
+        {_token: token, opcao: '6', idFatura: id}).then((res)=>{
+            console.log(res)
+        })
+    }
+
+    const deleteFatura = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '5',
+                _token: token,
+                idFatura: id,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+
+    const CriarFatura = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC) =>{
+        var token = await this.getToken();
+        console.log(clienteC + ' Cliente');
+        console.log(serieC + ' Serie');
+        console.log(numeroC + ' num');
+        console.log(dataC + ' data');
+        console.log(validadeC + ' val');
+        console.log(referenciaC + ' ref');
+        console.log(vencimentoC + ' ven');
+        console.log(moedaC + ' moeda');
+        console.log(descontoC + ' des');
+        console.log(observacoesC + ' obs');
+        console.log(JSON.stringify(LinhasC) + ' linha');
+        console.log(finalizarDocumentoC + ' fim');
+
+        const stringifiedLinhas = JSON.stringify(LinhasC);
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '2',
+                _token: token,
+                cliente: clienteC,
+                serie: serieC,
+                numero: numeroC,
+                moeda: 1,
+                data: dataC,
+                validade: validadeC,
+                referencia: referenciaC,
+                vencimento: vencimentoC,
+                desconto: descontoC,
+                observacoes: observacoesC,
+                finalizarDocumento: finalizarDocumentoC,
+                pagamento: 0,
+                Linhas: stringifiedLinhas,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+
+    /*Fatura Simplificadas */
+    const getFaturasSimp = async () =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas_simplificadas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                _token: token,
+                numRows: '25',
+                pag: '0',
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        });
+    }
+
+    const getFaturaSimpDetalhes = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas_simplificadas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idDocument: id,
+                _token: token,
+            },
+            headers: {
+                Accept: 'application/json'
+            }
+        });
+    }
+
+    const criarFaturaSimp = async (dadosFatSimp) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas_simplificadas`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '2',
+                _token: token,
+                cliente: '1',
+                serie: dadosFatSimp.Serie,
+                numero: dadosFatSimp.Numero,
+                data: dadosFatSimp.Data,
+                validade: dadosFatSimp.Validade,
+                referencia: dadosFatSimp.referencia,
+                pagamento: dadosFatSimp.Pagamento,
+                banco: dadosFatSimp.Banco,
+                vencimento: dadosFatSimp.Vencimento,
+                moeda: dadosFatSimp.Moeda,
+                desconto: dadosFatSimp.Desconto,
+                observacoes: dadosFatSimp.Observacoes,
+                linhas: dadosFatSimp.Linhas,
+                finalizarDocumento: dadosFatSimp.FinalizarDocumento,
+                precisaBanco: dadosFatSimp.PrecisaBanco,
+                centrocusto: dadosFatSimp.Centocusto,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+
+    const deleteFauratSimp = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas_simplificadas`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '5',
+                _token: token,
+                idFatura: id,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+
+    const finalizarFaturaSimp= async (id) =>{
+        var token = await this.getToken();
+        
+        axios.patch(`${BASE_URL}/api/vendas/faturas_simplificadas`,
+        {_token: token, opcao: '6', idFatura: id}).then((res)=>{
+            console.log(res)
+        })
+    }
+
+    /*Faturas Recibos */
+    const getFaturasReb = async () =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                pag: '0',
+                numRows: '25',
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        });
+    }
+    /*Faturas Proforma */
+    const getProforma = async ()=> {
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/proformas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                _token: token,
+                pag: '0',
+                numRows: '25',
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        }); 
+    }
+    const getProformaDetalhes = async (id) =>{
+        var token = await this.getToken();
+       
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/proformas`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idDocument: id,
+                _token: token,
+            }
+        });
+    }
+    const deleteProforma = async (id) => {
+        var token = await this.getToken();
+        console.log(token)
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/proformas`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '10',
+                _token: token,
+                idProforma: id,
+            }),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        });
+    }
+    const finalizarProforma = async (id) =>{
+        var token = await this.getToken();
+        let aux = id;
+        console.log("Aqui",aux);
+        axios.patch(`${BASE_URL}/api/orcamentos/proformas`,
+        {_token: token, opcao: '6', idProforma: id}).then((res)=>{
+            console.log(res)
+        })
+       
+    }
+    const estadoProforma = async (id, estado) =>{
+        var token = await this.getToken();
+        console.log(token)
+        console.log(id);
+        console.log(estado);
+        axios.patch(`${BASE_URL}/api/orcamentos/proformas`,
+        {_token: token, opcao: '7', idDocumento: id, estado: estado}).then((res)=>{
+            console.log(res)
+        })
+    }
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
-            CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento
+            CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
+            CriarFatura, deleteFatura, getFaturaDetalhes, getFaturas, finalizarFatura,
+            getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes, getFaturasReb,
+            getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
