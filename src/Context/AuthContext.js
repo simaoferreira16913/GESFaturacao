@@ -756,7 +756,7 @@ export const AuthProvider = ({children}) => {
         });
     }
 
-    const getNotasCredDetails = async (id) =>{
+    const getNotasCredDetalhes = async (id) =>{
         var token = await this.getToken();
         return axios({
             url: `${BASE_URL}/api/vendas/notas_credito`,
@@ -780,14 +780,86 @@ export const AuthProvider = ({children}) => {
             method: 'DELETE',
             timeout: 5000,
             data: qs.stringify({
-                opcao: '10',
+                opcao: '5',
                 _token: token,
-                idProforma: id,
+                idNota: id,
             }),
             headers: {
                 'content-type': 'application/x-www-form-urlencoded',
             },
         });
+    }
+    const finalizarNotaCred = async (id) =>{
+        var token = await this.getToken();
+        let aux = id;
+        console.log("Aqui",aux);
+        axios.patch(`${BASE_URL}/api/vendas/notas_credito`,
+        {_token: token, opcao: '6', idNota: id}).then((res)=>{
+            console.log(res)
+        })
+       
+    }
+    /*Nota de Debito*/
+    const getNotasDeb = async () =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_debito`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                pag: '0',
+                numRows: '25',
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        });
+    }
+
+    const getNotasDebDetalhes = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_debito`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idDocument: id,
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+    const deleteNotaDeb = async (id) => {
+        var token = await this.getToken();
+        console.log(token)
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_debito`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '5',
+                _token: token,
+                idNota: id,
+            }),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        });
+    }
+    const finalizarNotaDeb = async (id) =>{
+        var token = await this.getToken();
+        let aux = id;
+        console.log("Aqui",aux);
+        axios.patch(`${BASE_URL}/api/vendas/notas_debito`,
+        {_token: token, opcao: '6', idNota: id}).then((res)=>{
+            console.log(res)
+        })
+       
     }
 
     return(
@@ -796,7 +868,8 @@ export const AuthProvider = ({children}) => {
             CriarFatura, deleteFatura, getFaturaDetalhes, getFaturas, finalizarFatura,
             getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes, getFaturasReb,
             getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma, addProforma,
-            getNotasCred, getNotasCredDetails,deleteNotaCred
+            getNotasCred, getNotasCredDetalhes,deleteNotaCred, finalizarNotaCred,
+            getNotasDeb,getNotasDebDetalhes,deleteNotaDeb,finalizarNotaDeb
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

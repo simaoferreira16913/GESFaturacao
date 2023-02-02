@@ -20,6 +20,10 @@ import MainFaturaPro from '../Screens/FaturasProforma/MainFaturaPro';
 import DetalhesFaturaPro from '../Screens/FaturasProforma/DetalhesFaturaPro';
 import CriarProforma from '../Screens/FaturasProforma/CriarProforma';
 import CriarFaturaSimp from '../Screens/FaturasSimplificadas/CriarFaturaSimp';
+import MainNotaCred from '../Screens/notasCredito/MainNotaCred';
+import DetalhesNotaCred from '../Screens/notasCredito/DetalhesNotaCred';
+import MainNotaDeb from '../Screens/notasDebito/MainNotaDeb';
+import DetalhesNotaDeb from '../Screens/notasDebito/DetalhesNotaDeb';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +47,10 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação-Proformas Detalhes' component={DetalhesFaturaPro}/>
         <Stack.Screen name='GesFaturação-Criar Proforma' component={CriarProforma}/>
         <Stack.Screen name='GesFaturação-Criar Fatura Simplificada' component={CriarFaturaSimp}/>
+        <Stack.Screen name='GesFaturação-Notas de Créditos' component={MainNotaCred}/>
+        <Stack.Screen name='GesFaturação-Notas de Créditos Detalhes' component={DetalhesNotaCred}/>
+        <Stack.Screen name='GesFaturação-Notas de Débito' component={MainNotaDeb}/>
+        <Stack.Screen name='GesFaturação-Nota de Débito Detalhes' component={DetalhesNotaDeb}/>
       </Stack.Navigator>
     );
 };

@@ -13,11 +13,11 @@ import { Renderer } from 'phaser';
 import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
-export default function MainNotaCred({navigation}) {
+export default function MainNotaDeb({navigation}) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
-  const {getNotasCred} = useContext(AuthContext);
-  const {deleteNotaCred} = useContext(AuthContext);
+  const {getNotasDeb} = useContext(AuthContext);
+  const {deleteNotaDeb} = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);
   Date.prototype.toDateString = function dtoString() {
     return `${this.getDay}`;
@@ -29,7 +29,7 @@ export default function MainNotaCred({navigation}) {
   const [datef, setDatef] = useState()
   const [open, setOpen] = useState(false)
   const [openf, setOpenf] = useState(false)
-  const [notasCredito, setNotasCredito] = useState([]);
+  const [notasDeb, setNotasDeb] = useState([]);
   const [selectedIdCliente, setSelectedIdCliente] = useState(null);
   const opcao = 0;
   const [search, setSearch] = useState("c")
@@ -65,9 +65,9 @@ export default function MainNotaCred({navigation}) {
     );
   };
   
-  if(!notasCredito.length){
-    getNotasCred().then((res)=>{
-      setNotasCredito(res.data.aaData);
+  if(!notasDeb.length){
+    getNotasDeb().then((res)=>{
+      setNotasDeb(res.data.aaData);
       console.log("ADAD")
       console.log(res.data.aaData);
     }).catch(e =>{
@@ -83,9 +83,9 @@ export default function MainNotaCred({navigation}) {
   }
   const columns = ['Nome', 'Preço', 'Estado', , 'Ações'];
 
-  const data = notasCredito.map(item => {
+  const data = notasDeb.map(item => {
     let botoes;
-    if (item[7] === 'Rascunho') {
+    if (item[8] === 'Rascunho') {
       botoes = (
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[0])}>
@@ -105,21 +105,21 @@ export default function MainNotaCred({navigation}) {
         </View>
       );
     }
-    return [ item[2],parseFloat(item[6]).toFixed(2), item[7], botoes];
+    return [ item[2],parseFloat(item[6]).toFixed(2), item[8], botoes];
   });
 
   const handleRemove = (id) => {
     console.log(id)
-    deleteNotaCred(id).then((res)=>{
+    deleteNotaDeb(id).then((res)=>{
       console.log(res);
     });
 
-    setNotasCredito(notasCredito.filter(item => item[0] !== id));
+    setNotasDeb(notasDeb.filter(item => item[0] !== id));
     ToastAndroid.show("Nota Eliminada",ToastAndroid.SHORT);
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Notas de Créditos Detalhes',  { id: value });
+    navigation.navigate('GesFaturação-Nota de Débito Detalhes',  { id: value });
   }
 
   return (
@@ -130,7 +130,7 @@ export default function MainNotaCred({navigation}) {
         <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Nota de Crédito")}>
           <View style={styles.button}>
           
-            <Text style={styles.textfont}>Nova Nota de Crédito</Text>
+            <Text style={styles.textfont}>Nova Nota de Débito</Text>
           </View>
         </TouchableNativeFeedback>
       </View>
@@ -138,7 +138,7 @@ export default function MainNotaCred({navigation}) {
         <TouchableNativeFeedback>
           <View style={styles.button}>
           
-            <Text style={styles.textfont}>Integrar Nota de Crédito</Text>
+            <Text style={styles.textfont}>Integrar Nota de Débito</Text>
           </View>
         </TouchableNativeFeedback>
       </View> 
@@ -146,7 +146,7 @@ export default function MainNotaCred({navigation}) {
         <TouchableNativeFeedback>
           <View style={styles.button}>
           
-            <Text style={styles.textfont}>Enviar Nota de Crédito</Text>
+            <Text style={styles.textfont}>Enviar Nota de Débito</Text>
           </View>
         </TouchableNativeFeedback>
       </View> 
@@ -231,7 +231,7 @@ export default function MainNotaCred({navigation}) {
       </View>
       
       <View  > 
-        <TouchableNativeFeedback onPress={()=> getNotasCred(search,numRows,pag)}>
+        <TouchableNativeFeedback onPress={()=> getNotasDeb(search,numRows,pag)}>
           <View style={styles.button}>
 
             <Text style={styles.textfont}>   Pesquisar</Text>

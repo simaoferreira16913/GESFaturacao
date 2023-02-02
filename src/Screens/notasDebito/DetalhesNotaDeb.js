@@ -14,13 +14,13 @@ import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
 
-export default function DetalhesNotaCred({navigation, route}) {
+export default function DetalhesNotaDeb({navigation, route}) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
   const {getArtigoID} = useContext(AuthContext);
-  const {finalizarNotaCred} = useContext(AuthContext);
-  const {getNotasCredDetalhes} = useContext(AuthContext);
-  const [notaCredito, setNotaCredito] = useState([]);
+  const {finalizarNotaDeb} = useContext(AuthContext);
+  const {getNotasDebDetalhes} = useContext(AuthContext);
+  const [notaDeb, setNotaDeb] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [aux, setAux] = useState();
   const [aux2, setAux2] = useState();
@@ -31,10 +31,10 @@ export default function DetalhesNotaCred({navigation, route}) {
     navigation.navigate('DetalhesOrcamento.js', value);
   }*/
 
-  if(notaCredito.length == 0){
-    getNotasCredDetalhes(id).then((res)=>{
+  if(notaDeb.length == 0){
+    getNotasDebDetalhes(id).then((res)=>{
         console.log("NOTA:",res.data.data);
-        setNotaCredito(res.data.data);
+        setNotaDeb(res.data.data);
         setTableData(res.data.data.linhas.map(linha => [linha.artigo, Number(linha.preco).toFixed(2), parseFloat(linha.qtd).toFixed(2),
              linha.imposto, Number(linha.totalLinha).toFixed(2)]));
         setAux(1);   
@@ -62,8 +62,8 @@ export default function DetalhesNotaCred({navigation, route}) {
     }
     
 
-    function handleFinalizarNotaCred(){
-      finalizarNotaCred(id).then((res)=>{
+    function handleFinalizarNotaDeb(){
+      finalizarNotaDeb(id).then((res)=>{
         console.log(res);
         ToastAndroid.show("Nota Finalizada",ToastAndroid.SHORT);
       })
@@ -83,43 +83,43 @@ export default function DetalhesNotaCred({navigation, route}) {
     <ScrollView>
       <Text style={styles.titleSelect}>Cliente</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{notaCredito.Cliente}</Text>
+        <Text style={{marginLeft: 4}}>{notaDeb.Cliente}</Text>
       </View>
       <Text style={styles.titleSelect}>NIF</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{notaCredito.Nif}</Text>
+        <Text style={{marginLeft: 4}}>{notaDeb.Nif}</Text>
       </View>
       <Text style={styles.titleSelect}>Endereço</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{notaCredito.EnderecoCliente}</Text>
+        <Text style={{marginLeft: 4}}>{notaDeb.EnderecoCliente}</Text>
       </View>
       <Text style={styles.titleSelect}>Série</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{notaCredito.Serie}</Text>
+        <Text style={{marginLeft: 4}}>{notaDeb.Serie}</Text>
       </View>
       <Text style={styles.titleSelect}>Data</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{notaCredito.Data}</Text>
+        <Text style={{marginLeft: 4}}>{notaDeb.Data}</Text>
       </View>
       <Text style={styles.titleSelect}>Data Vencimento</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{notaCredito.Validade}</Text>
+        <Text style={{marginLeft: 4}}>{notaDeb.Validade}</Text>
       </View>
       <Text style={styles.titleSelect}>Desconto</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{parseFloat(notaCredito.PercentagemDesconto).toFixed(2)}%</Text>
+        <Text style={{marginLeft: 4}}>{parseFloat(notaDeb.PercentagemDesconto).toFixed(2)}%</Text>
       </View>
       <Text style={styles.titleSelect}>Moeda</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{notaCredito.Moeda}</Text>
+        <Text style={{marginLeft: 4}}>{notaDeb.Moeda}</Text>
       </View>
       <Text style={styles.titleSelect}>Motivo</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{notaCredito.Reason_Origem}</Text>
+        <Text style={{marginLeft: 4}}>{notaDeb.Reason_Origem}</Text>
       </View>
       <Text style={styles.titleSelect}>Total</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{Number(notaCredito.TotalPagar)}</Text>
+        <Text style={{marginLeft: 4}}>{Number(notaDeb.TotalPagar)}</Text>
       </View>
       <Text style={styles.titleSelect}>Linhas</Text>
       <Table style={{marginLeft: 10}}>
@@ -138,8 +138,8 @@ export default function DetalhesNotaCred({navigation, route}) {
 </View>
 <View style={styles.marginTOPButton2}>
 
-{notaCredito.Estado === "Rascunho" ? (
-  <Button color="#d0933f"  title="Finalizar Nota de Crédito" onPress={() => { handleFinalizarNotaCred()}} />
+{notaDeb.Estado === "Rascunho" ? (
+  <Button color="#d0933f"  title="Finalizar Nota de Débito" onPress={() => { handleFinalizarNotaDeb()}} />
 ) : (
   
   <Text></Text>
