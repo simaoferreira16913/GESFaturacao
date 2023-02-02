@@ -63,9 +63,9 @@ export default function DetalhesFornecedor({navigation, route}) {
         <Text style={{marginLeft: 4}}>{fornecedorID.Localidade}</Text>
       </View>
       <View style = {styles.lineStyle} />
-      <Text style={styles.titleSelect}>Contacto</Text>
+      <Text style={styles.titleSelect}>Telemóvel</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{fornecedorID.Contacto}</Text>
+        <Text style={{marginLeft: 4}}>{fornecedorID.Telemovel}</Text>
       </View>
       <Text style={styles.titleSelect}>Email</Text>
       <View style={styles.borderMargin}>

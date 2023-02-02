@@ -29,6 +29,9 @@ import DetalhesFornecedor from '../Screens/Fornecedores/DetalhesFornecedores';
 import CriarFornecedores from '../Screens/Fornecedores/CriarFornecedores';
 import DetalhesCliente from '../Screens/Clientes/DetalhesCliente';
 import MainCliente from '../Screens/Clientes/MainCliente';
+import MainCompra from '../Screens/Compras/MainCompra';
+import DetalhesCompra from '../Screens/Compras/DetalhesCompra';
+import CriarCompra from '../Screens/Compras/CriarCompra';
 
 const Stack = createNativeStackNavigator();
 
@@ -61,6 +64,9 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação-Criar Fornecedores' component={CriarFornecedores}/>
         <Stack.Screen name='GesFaturação-Clientes' component={MainCliente}/>
         <Stack.Screen name='GesFaturação-Cliente Detalhes' component={DetalhesCliente}/>
+        <Stack.Screen name='GesFaturação-Compras' component={MainCompra}/>
+        <Stack.Screen name='GesFaturação-Compra Detalhes' component={DetalhesCompra}/>
+        <Stack.Screen name='GesFaturação-Criar Compra' component={CriarCompra}/>
       </Stack.Navigator>
     );
 };

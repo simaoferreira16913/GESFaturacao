@@ -13,11 +13,11 @@ import { Renderer } from 'phaser';
 import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
-export default function MainFatura({navigation}) {
+export default function MainCompra({navigation}) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
-  const {getFaturas} = useContext(AuthContext);
-  const {deleteFatura} = useContext(AuthContext);
+  const {getComprasFat} = useContext(AuthContext);
+  const {deleteCompra} = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);
   Date.prototype.toDateString = function dtoString() {
     return `${this.getDay}`;
@@ -66,7 +66,7 @@ export default function MainFatura({navigation}) {
   };
   
   if(!faturas.length){
-    getFaturas().then((res)=>{
+    getComprasFat().then((res)=>{
       setFaturas(res.data.aaData);
       console.log(res.data.aaData);
     }).catch(e =>{
@@ -84,7 +84,7 @@ export default function MainFatura({navigation}) {
 
   const data = faturas.map(item => {
     let botoes;
-    if (item[8] === 'Rascunho') {
+    if (item[7] === 'Rascunho') {
       botoes = (
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[0])}>
@@ -104,21 +104,21 @@ export default function MainFatura({navigation}) {
         </View>
       );
     }
-    return [ item[2],parseFloat(item[6]).toFixed(2), item[8], botoes];
+    return [ item[1],parseFloat(item[5]).toFixed(2), item[7], botoes];
   });
 
   const handleRemove = (id) => {
     console.log(id)
-    deleteFatura(id).then((res)=>{
+    deleteCompra(id).then((res)=>{
       console.log(res);
     });
 
     setFaturas(faturas.filter(item => item[0] !== id));
-    ToastAndroid.show("Fatura Eliminada",ToastAndroid.SHORT);
+    ToastAndroid.show("Compra Eliminada",ToastAndroid.SHORT);
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Fatura Detalhes',  { id: value });
+    navigation.navigate('GesFaturação-Compra Detalhes',  { id: value });
   }
 
   return (
@@ -126,10 +126,10 @@ export default function MainFatura({navigation}) {
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Fatura")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Compra")}>
           <View style={styles.button}>
           
-            <Text style={styles.textfont}>   Nova Fatura</Text>
+            <Text style={styles.textfont}>   Nova Compra</Text>
           </View>
         </TouchableNativeFeedback>
       </View>
@@ -138,7 +138,7 @@ export default function MainFatura({navigation}) {
         <TouchableNativeFeedback>
           <View style={styles.button}>
           
-            <Text style={styles.textfont}>   Enviar Faturas</Text>
+            <Text style={styles.textfont}>   Enviar Compras</Text>
           </View>
         </TouchableNativeFeedback>
       </View> 

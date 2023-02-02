@@ -14,12 +14,12 @@ import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
 
-export default function DetalhesFatura({navigation, route}) {
+export default function DetalhesCompra({navigation, route}) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
   const {getArtigoID} = useContext(AuthContext);
-  const {finalizarFatura} = useContext(AuthContext);
-  const {getFaturaDetalhes} = useContext(AuthContext);
+  const {finalizarCompra} = useContext(AuthContext);
+  const {getComprasFatDetalhes} = useContext(AuthContext);
   const [faturaID, setFaturaID] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [aux, setAux] = useState();
@@ -32,7 +32,7 @@ export default function DetalhesFatura({navigation, route}) {
   }*/
 
   if(faturaID.length == 0){
-    getFaturaDetalhes(id).then((res)=>{
+    getComprasFatDetalhes(id).then((res)=>{
         console.log(res.data.data);
         setFaturaID(res.data.data);
         setTableData(res.data.data.linhas.map(linha => [linha.artigo, Number(linha.preco).toFixed(2), parseFloat(linha.qtd).toFixed(2),

@@ -1036,6 +1036,46 @@ export const AuthProvider = ({children}) => {
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
         });
     }
+    const CriarCompra = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC) =>{
+        var token = await this.getToken();
+        console.log(clienteC + ' Cliente');
+        console.log(serieC + ' Serie');
+        console.log(numeroC + ' num');
+        console.log(dataC + ' data');
+        console.log(validadeC + ' val');
+        console.log(referenciaC + ' ref');
+        console.log(vencimentoC + ' ven');
+        console.log(moedaC + ' moeda');
+        console.log(descontoC + ' des');
+        console.log(observacoesC + ' obs');
+        console.log(JSON.stringify(LinhasC) + ' linha');
+        console.log(finalizarDocumentoC + ' fim');
+
+        const stringifiedLinhas = JSON.stringify(LinhasC);
+        return axios({
+            url: `${BASE_URL}/api/compras/compras`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '2',
+                _token: token,
+                fornecedor: clienteC,
+                serie: serieC,
+                numero: 1,
+                moeda: 1,
+                data: dataC,
+                validade: validadeC,
+                referencia: referenciaC,
+                vencimento: vencimentoC,
+                desconto: descontoC,
+                observacoes: observacoesC,
+                finalizarDocumento: finalizarDocumentoC,
+                pagamento: 0,
+                Linhas: stringifiedLinhas,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
@@ -1044,7 +1084,7 @@ export const AuthProvider = ({children}) => {
             getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma, addProforma,
             getNotasCred, getNotasCredDetalhes,deleteNotaCred, finalizarNotaCred,
             getNotasDeb,getNotasDebDetalhes,deleteNotaDeb,finalizarNotaDeb, getFornecedores, getFornecedorDetalhes,deleteFornecedor,CriarFornecedor,
-            getComprasFat,getComprasFatDetalhes,finalizarCompra,anularCompra,deleteCompra
+            getComprasFat,getComprasFatDetalhes,finalizarCompra,anularCompra,deleteCompra,CriarCompra
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

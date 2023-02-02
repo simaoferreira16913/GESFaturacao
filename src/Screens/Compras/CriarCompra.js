@@ -25,14 +25,14 @@ function Item({ item, onPress }) {
 }
 
 
-export default function CriarFatura({ navigation }) {
+export default function CriarCompra({ navigation }) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
-  const { getFaturas } = useContext(AuthContext);
-  const { getClientes } = useContext(AuthContext);
+  const { getComprasFat } = useContext(AuthContext);
+  const { getFornecedores } = useContext(AuthContext);
   const { getclienteID } = useContext(AuthContext)
   const { getArtigos } = useContext(AuthContext);
-  const {CriarFatura} = useContext(AuthContext);
+  const {CriarCompra} = useContext(AuthContext);
   var coisa;
 
   /*const {register, handleSubmit, errors} = useForm({
@@ -95,12 +95,12 @@ export default function CriarFatura({ navigation }) {
     });
   }
   if (!dadosClientes.length) {
-    getClientes().then((res) => {
+    getFornecedores().then((res) => {
       console.log(res.data)
       setDadosClientes(res.data.aaData)
       
     });
-    getFaturas().then((res) => {
+    getComprasFat().then((res) => {
       console.log(res.data);
 
     })
@@ -118,7 +118,7 @@ export default function CriarFatura({ navigation }) {
   handleCreateFatura = () => {
 
     console.log(clienteC,"oi")
-    CriarFatura(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC).then(response => {
+    CriarCompra(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC).then(response => {
         console.log(response + ' Resposta Criar Orçamento')
         
         navigation.navigate('GesFaturação');
@@ -133,14 +133,14 @@ export default function CriarFatura({ navigation }) {
     <View style={styles.container}>
 
       <View style={{marginTop: 10}}>
-        <Button  title="Novo Cliente" color="#d0933f" onPress={() => navigation.navigate("GesFaturação-Criar Cliente")} />
+        <Button  title="Novo Fornecedor" color="#d0933f" onPress={() => navigation.navigate("GesFaturação-Criar Fornecedor")} />
         <Text style={styles.titleSelect}>Cliente</Text>
         <View style={styles.borderMargin}>
-        <Picker  style={styles.pickerComponent} placeholder="Selecione um cliente" selectedValue={selectedIdCliente} onValueChange={itemValue => {
+        <Picker  style={styles.pickerComponent} placeholder="Selecione um Fornecedor" selectedValue={selectedIdCliente} onValueChange={itemValue => {
           setSelectedIdCliente(itemValue); 
           setCliente(itemValue[0]);}}>
           {dadosClientes.map(function (object, i) {
-            return <Picker.Item label={object[2]} value={object[0]} key={i} />;
+            return <Picker.Item label={object[1]} value={object[0]} key={i} />;
           })}
         </Picker>
         </View>
@@ -223,6 +223,17 @@ export default function CriarFatura({ navigation }) {
           onChangeText={(text) => setVencimento(text)}
           defaultValue={0}
           placeholder="Vencimento"
+          keyboardType="numeric"
+        // ref={register({name: "quantidade"})} 
+        />
+        </View>
+        <Text style={styles.titleSelect}>Número</Text>
+        <View style={styles.borderMargin}>
+        <TextInput
+          value={numeroC}
+          onChangeText={(text) => setNumero(text)}
+          defaultValue={0}
+          placeholder="Numero"
           keyboardType="numeric"
         // ref={register({name: "quantidade"})} 
         />
@@ -351,7 +362,7 @@ export default function CriarFatura({ navigation }) {
         )}
       />
       <View style={{marginTop: 30,marginBottom: 10 ,width: 350}}>
-      <Button  title="Criar Fatura" color="#d0933f" onPress={() => handleCreateFatura()} />
+      <Button  title="Criar Fatura de Compra" color="#d0933f" onPress={() => handleCreateFatura()} />
       </View>
       </View>
     </ScrollView>
