@@ -861,6 +861,89 @@ export const AuthProvider = ({children}) => {
         })
        
     }
+    /*Fornecedores */
+    const getFornecedores = async () =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/tabelas/fornecedores`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                pag: '0',
+                numRows: '25',
+                _token: token,
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+
+    const getFornecedorDetalhes = async (id) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/tabelas/fornecedores`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idFornecedor: id,
+                _token: token,
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+
+    const deleteFornecedor = async (id) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/tabelas/fornecedores`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '4',
+                _token: token,
+                idFornecedor: id,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        })
+    }
+
+    const CriarFornecedor = async (dadosCli) =>{
+        var token = await this.getToken();
+        console.log(token)
+        console.log(dadosCli)
+        axios.post(`${BASE_URL}/api/tabelas/fornecedores`, {
+                    opcao: '2',
+                    _token: token,
+                    nome_fornecedor: dadosCli.Nome,
+                    nif_fornecedor: dadosCli.Nif,
+                    pais_fornecedor: dadosCli.Pais,
+                    endereco_fornecedor: dadosCli.Endereco,
+                    codigopostal_fornecedor: dadosCli.CodigoPostal,
+                    regiao_fornecedor: dadosCli.Regiao,
+                    cidade_fornecedor: dadosCli.Cidade,
+                    email_fornecedor: dadosCli.Email,
+                    website_fornecedor: dadosCli.Website,
+                    tlm_fornecedor: dadosCli.Telemovel,
+                    tlf_fornecedor: dadosCli.Telefone,
+                    fax_fornecedor: dadosCli.Fax,
+                    preferencial_nome_fornecedor: "oi",
+                    preferencial_email_fornecedor: "asd@gmail.com",
+                    preferencial_tlm_fornecedor: "789456123",
+                    preferencial_tlf_fornecedor: "9657894560",
+                    pagamento_fornecedor: "0",
+                    vencimento_fornecedor: dadosCli.Vencimento,
+                    desconto_fornecedor: dadosCli.Desconto,
+                    flagContaGeral: "0"
+    
+        }, {headers: { Accept: 'application/json',}})}
 
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
@@ -869,7 +952,7 @@ export const AuthProvider = ({children}) => {
             getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes, getFaturasReb,
             getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma, addProforma,
             getNotasCred, getNotasCredDetalhes,deleteNotaCred, finalizarNotaCred,
-            getNotasDeb,getNotasDebDetalhes,deleteNotaDeb,finalizarNotaDeb
+            getNotasDeb,getNotasDebDetalhes,deleteNotaDeb,finalizarNotaDeb, getFornecedores, getFornecedorDetalhes,deleteFornecedor,CriarFornecedor
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

@@ -24,6 +24,9 @@ import MainNotaCred from '../Screens/notasCredito/MainNotaCred';
 import DetalhesNotaCred from '../Screens/notasCredito/DetalhesNotaCred';
 import MainNotaDeb from '../Screens/notasDebito/MainNotaDeb';
 import DetalhesNotaDeb from '../Screens/notasDebito/DetalhesNotaDeb';
+import MainFornecedores from '../Screens/Fornecedores/MainFornecedores';
+import DetalhesFornecedor from '../Screens/Fornecedores/DetalhesFornecedores';
+import CriarFornecedores from '../Screens/Fornecedores/CriarFornecedores';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +54,9 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação-Notas de Créditos Detalhes' component={DetalhesNotaCred}/>
         <Stack.Screen name='GesFaturação-Notas de Débito' component={MainNotaDeb}/>
         <Stack.Screen name='GesFaturação-Nota de Débito Detalhes' component={DetalhesNotaDeb}/>
+        <Stack.Screen name='GesFaturação-Fornecedores' component={MainFornecedores}/>
+        <Stack.Screen name='GesFaturação-Fornecedores Detalhes' component={DetalhesFornecedor}/>
+        <Stack.Screen name='GesFaturação-Criar Fornecedores' component={CriarFornecedores}/>
       </Stack.Navigator>
     );
 };
