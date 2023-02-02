@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,TextInput,Touchable, Alert, 
-  TouchableNativeFeedback, TouchableOpacity, View , ScrollView} from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View , ScrollView,ToastAndroid} from 'react-native';
 import { AuthContext } from "../../Context/AuthContext";
 import { useForm, Controller } from "react-hook-form";
 import {yupResolver} from '@hookform/resolvers/yup'
@@ -25,6 +25,8 @@ export default function CriarCliente({navigation}) {
   function submitcliente(data){
     
       criarCliente(data)
+      navigation.navigate('GesFaturação');
+      ToastAndroid.show("Cliente Criado ", ToastAndroid.SHORT);
   }
 
     

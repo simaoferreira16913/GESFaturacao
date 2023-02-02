@@ -70,28 +70,7 @@ export const AuthProvider = ({children}) => {
             }
         }); 
     }
-    const getClientes = async ()=> {
-        
-        var token = await this.getToken();
-
-        return axios({
-            url: `${BASE_URL}/api/tabelas/clientes`,
-            method: 'GET',
-            //timeout: 5000,
-            params: {
-                opcao: '0',
-                _token: token,
-                pag: '0',
-                numRows: '25',
-                table_usage: '1'
-            },
-            headers: {
-                Accept: 'application/json',
-            }
-        })
-
-        
-    }
+    
 
     const finalizarOrcamento = async (id) =>{
         var token = await this.getToken();
@@ -130,22 +109,7 @@ export const AuthProvider = ({children}) => {
     }
 
 
-    const getclienteID = async (id) =>{
-        var token = await this.getToken();
-        return axios({
-            url: `${BASE_URL}/api/tabelas/clientes`,
-            method: 'GET',
-            //timeout: 5000,
-            params: {
-                opcao: '1',
-                idCliente: id,
-                _token: token
-            },
-            headers: {
-                Accept: 'application/json',
-            },
-        });
-    }
+    
     
     const getArtigos = async () =>{
         var token = await this.getToken();
@@ -167,44 +131,9 @@ export const AuthProvider = ({children}) => {
 
 
     getToken = async () => AsyncStorage.getItem('@userToken');
-    const deletecliente = async (id) =>{
-        var token = await this.getToken();
-        return axios({
-            url: `${BASE_URL}/api/tabelas/clientes`,
-            method: 'DELETE',
-            timeout: 5000,
-            data: qs.stringify({
-                opcao: '4',
-                _token: token,
-                idCliente: id
-            }),
-            headers: { 'content-type': 'application/x-www-form-urlencoded' },
-        });
-    }
     
-   const criarCliente = async (dadosCli) =>{
-    var token = await this.getToken();
-    console.log(token)
-    console.log(dadosCli)
-    axios.post(`${BASE_URL}/api/tabelas/clientes`, {
-    opcao: '2',
-                _token: token,
-                nome_cliente: dadosCli.Nome,
-                nif_cliente: dadosCli.Nif,
-                pais_cliente: dadosCli.Pais,
-                endereco_cliente: dadosCli.Endereco,
-                codigopostal_cliente: dadosCli.CodigoPostal,
-                regiao_cliente: dadosCli.Regiao,
-                cidade_cliente: dadosCli.Cidade,
-                email_cliente: dadosCli.Email,
-                website_cliente: dadosCli.Website,
-                tlm_cliente: dadosCli.Telemovel,
-                tlf_cliente: dadosCli.Telefone,
-                fax_cliente: dadosCli.Fax,
-                vencimento_cliente: dadosCli.Vencimento,
-                desconto_cliente: dadosCli.Desconto,
-
-    }, {headers: { Accept: 'application/json',}})}
+    
+   
     
     const deleteOrcamento = async (id) => {
         var token = await this.getToken();
@@ -944,7 +873,83 @@ export const AuthProvider = ({children}) => {
                     flagContaGeral: "0"
     
         }, {headers: { Accept: 'application/json',}})}
-
+        /*Clientes */
+        const getClientes = async ()=> {
+        
+            var token = await this.getToken();
+    
+            return axios({
+                url: `${BASE_URL}/api/tabelas/clientes`,
+                method: 'GET',
+                //timeout: 5000,
+                params: {
+                    opcao: '0',
+                    _token: token,
+                    pag: '0',
+                    numRows: '25',
+                    table_usage: '1'
+                },
+                headers: {
+                    Accept: 'application/json',
+                }
+            })
+    
+            
+        }
+        const getclienteID = async (id) =>{
+            console.log("AQUI", id)
+            var token = await this.getToken();
+            return axios({
+                url: `${BASE_URL}/api/tabelas/clientes`,
+                method: 'GET',
+                //timeout: 5000,
+                params: {
+                    opcao: '1',
+                    idCliente: 3,
+                    _token: token
+                },
+                headers: {
+                    Accept: 'application/json',
+                },
+            });
+        }
+        const criarCliente = async (dadosCli) =>{
+            var token = await this.getToken();
+            console.log(token)
+            console.log(dadosCli)
+            axios.post(`${BASE_URL}/api/tabelas/clientes`, {
+            opcao: '2',
+                        _token: token,
+                        nome_cliente: dadosCli.Nome,
+                        nif_cliente: dadosCli.Nif,
+                        pais_cliente: dadosCli.Pais,
+                        endereco_cliente: dadosCli.Endereco,
+                        codigopostal_cliente: dadosCli.CodigoPostal,
+                        regiao_cliente: dadosCli.Regiao,
+                        cidade_cliente: dadosCli.Cidade,
+                        email_cliente: dadosCli.Email,
+                        website_cliente: dadosCli.Website,
+                        tlm_cliente: dadosCli.Telemovel,
+                        tlf_cliente: dadosCli.Telefone,
+                        fax_cliente: dadosCli.Fax,
+                        vencimento_cliente: dadosCli.Vencimento,
+                        desconto_cliente: dadosCli.Desconto,
+        
+            }, {headers: { Accept: 'application/json',}})}
+            const deletecliente = async (id) =>{
+                var token = await this.getToken();
+                return axios({
+                    url: `${BASE_URL}/api/tabelas/clientes`,
+                    method: 'DELETE',
+                    timeout: 5000,
+                    data: qs.stringify({
+                        opcao: '4',
+                        _token: token,
+                        idCliente: id
+                    }),
+                    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+                });
+            }
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,

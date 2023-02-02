@@ -22,6 +22,7 @@ export default function Home({navigation}) {
       <Button title='Notas de Crédito' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Notas de Créditos")}/>
       <Button title='Notas de Débito' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Notas de Débito")}/>
       <Button title='Fornecedores' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Fornecedores")}/>
+      <Button title='Clientes' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Clientes")}/>
       <Button title='Logout' color='#d0933f' onPress={()=> {logout()}}/>
       
       </View> 

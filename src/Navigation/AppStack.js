@@ -27,6 +27,8 @@ import DetalhesNotaDeb from '../Screens/notasDebito/DetalhesNotaDeb';
 import MainFornecedores from '../Screens/Fornecedores/MainFornecedores';
 import DetalhesFornecedor from '../Screens/Fornecedores/DetalhesFornecedores';
 import CriarFornecedores from '../Screens/Fornecedores/CriarFornecedores';
+import DetalhesCliente from '../Screens/Clientes/DetalhesCliente';
+import MainCliente from '../Screens/Clientes/MainCliente';
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +59,8 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação-Fornecedores' component={MainFornecedores}/>
         <Stack.Screen name='GesFaturação-Fornecedores Detalhes' component={DetalhesFornecedor}/>
         <Stack.Screen name='GesFaturação-Criar Fornecedores' component={CriarFornecedores}/>
+        <Stack.Screen name='GesFaturação-Clientes' component={MainCliente}/>
+        <Stack.Screen name='GesFaturação-Cliente Detalhes' component={DetalhesCliente}/>
       </Stack.Navigator>
     );
 };

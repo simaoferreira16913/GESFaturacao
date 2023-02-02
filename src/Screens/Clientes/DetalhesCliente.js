@@ -14,26 +14,26 @@ import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
 
-export default function DetalhesFornecedor({navigation, route}) {
+export default function DetalhesCliente({navigation, route}) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
   const {getArtigoID} = useContext(AuthContext);
-  const {getFornecedorDetalhes} = useContext(AuthContext);
-  const [fornecedorID, setFornecedorID] = useState([]);
+  const {getclienteID} = useContext(AuthContext);
+  const [clienteID, setClienteID] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [aux, setAux] = useState();
   const [aux2, setAux2] = useState();
   const id = route.params.id;
-
+  console.log(id)
 
   /*const mudarEcra = (value) => {
     navigation.navigate('DetalhesOrcamento.js', value);
   }*/
 
-  if(fornecedorID.length == 0){
-    getFornecedorDetalhes(id).then((res)=>{
-        console.log(res.data.data);
-        setFornecedorID(res.data.data);   
+  if(clienteID.length == 0){
+    getclienteID(id).then((res)=>{
+        console.log("CLIENTE",res.data);
+        setClienteID(res.data.data);   
     });
   
   }
@@ -48,38 +48,38 @@ export default function DetalhesFornecedor({navigation, route}) {
     <ScrollView>
       <Text style={styles.titleSelect}>Nome</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{fornecedorID.Nome}</Text>
+        <Text style={{marginLeft: 4}}>{clienteID.Nome}</Text>
       </View>
       <Text style={styles.titleSelect}>NIF</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{fornecedorID.Nif}</Text>
+        <Text style={{marginLeft: 4}}>{clienteID.Nif}</Text>
       </View>
       <Text style={styles.titleSelect}>Endereço</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{fornecedorID.Endereco}</Text>
+        <Text style={{marginLeft: 4}}>{clienteID.Endereco}</Text>
       </View>
       <Text style={styles.titleSelect}>Localidade</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{fornecedorID.Localidade}</Text>
+        <Text style={{marginLeft: 4}}>{clienteID.Localidade}</Text>
       </View>
       <View style = {styles.lineStyle} />
       <Text style={styles.titleSelect}>Contacto</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{fornecedorID.Contacto}</Text>
+        <Text style={{marginLeft: 4}}>{clienteID.Contacto}</Text>
       </View>
       <Text style={styles.titleSelect}>Email</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{fornecedorID.Email}</Text>
+        <Text style={{marginLeft: 4}}>{clienteID.Email}</Text>
       </View>
       
       <Text style={styles.titleSelect}>Telefone</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{fornecedorID.Telefone}</Text>
+        <Text style={{marginLeft: 4}}>{clienteID.Telefone}</Text>
       </View>
       <View style = {styles.lineStyle} />
       <Text style={styles.titleSelect}>Método Pagamento</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{fornecedorID.Metodo}</Text>
+        <Text style={{marginLeft: 4}}>{clienteID.Metodo}</Text>
       </View>
       
 
