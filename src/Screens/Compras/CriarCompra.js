@@ -227,17 +227,7 @@ export default function CriarCompra({ navigation }) {
         // ref={register({name: "quantidade"})} 
         />
         </View>
-        <Text style={styles.titleSelect}>Número</Text>
-        <View style={styles.borderMargin}>
-        <TextInput
-          value={numeroC}
-          onChangeText={(text) => setNumero(text)}
-          defaultValue={0}
-          placeholder="Numero"
-          keyboardType="numeric"
-        // ref={register({name: "quantidade"})} 
-        />
-        </View>
+        
 
         <Text style={styles.titleSelect}>Moeda</Text>
         <View style={styles.borderMargin}>
