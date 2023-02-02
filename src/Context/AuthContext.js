@@ -905,7 +905,7 @@ export const AuthProvider = ({children}) => {
                 //timeout: 5000,
                 params: {
                     opcao: '1',
-                    idCliente: 3,
+                    idCliente: id,
                     _token: token
                 },
                 headers: {
@@ -950,6 +950,92 @@ export const AuthProvider = ({children}) => {
                     headers: { 'content-type': 'application/x-www-form-urlencoded' },
                 });
             }
+
+    /*Compras Fatura */
+    const getComprasFat = async () =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/compras/compras`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                _token: token,
+                pag: '0',
+                numRows: '25',
+                table_usage: '1'
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+
+    const getComprasFatDetalhes = async (id) =>{
+        var token = await this.getToken();
+        console.log(id);
+        return axios({
+            url: `${BASE_URL}/api/compras/compras`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idCompra: id,
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+
+
+    const finalizarCompra = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/compras/compras`,
+            method: 'PATCH',
+            timeout: 5000,
+            data : qs.stringify({
+                opcao: '6',
+                _token: token,
+                idCompra: id,
+        }),
+                headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+
+    const anularCompra = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/compras/compras`,
+            method: 'PATCH',
+            timeout: 5000,
+            data : qs.stringify({
+                opcao: '5',
+                _token: token,
+                idCompra: id,
+        }),
+                headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+
+
+    const deleteCompra = async (id) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/compras/compras`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '4',
+                _token: token,
+                idCompra: id
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
@@ -957,7 +1043,8 @@ export const AuthProvider = ({children}) => {
             getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes, getFaturasReb,
             getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma, addProforma,
             getNotasCred, getNotasCredDetalhes,deleteNotaCred, finalizarNotaCred,
-            getNotasDeb,getNotasDebDetalhes,deleteNotaDeb,finalizarNotaDeb, getFornecedores, getFornecedorDetalhes,deleteFornecedor,CriarFornecedor
+            getNotasDeb,getNotasDebDetalhes,deleteNotaDeb,finalizarNotaDeb, getFornecedores, getFornecedorDetalhes,deleteFornecedor,CriarFornecedor,
+            getComprasFat,getComprasFatDetalhes,finalizarCompra,anularCompra,deleteCompra
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

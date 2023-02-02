@@ -81,10 +81,10 @@ export default function MainCliente({navigation}) {
     
       botoes = (
         <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[0])}>
+          <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[9])}>
             <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
           </TouchableOpacity >
-          <TouchableOpacity onPress={() => mudarEcra(item[0])}>
+          <TouchableOpacity onPress={() => mudarEcra(item[9])}>
             <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
           </TouchableOpacity >
         </View>

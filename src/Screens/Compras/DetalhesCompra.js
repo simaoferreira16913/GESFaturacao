@@ -14,77 +14,128 @@ import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
 
-export default function DetalhesCliente({navigation, route}) {
+export default function DetalhesFatura({navigation, route}) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
   const {getArtigoID} = useContext(AuthContext);
-  const {getclienteID} = useContext(AuthContext);
-  const [clienteID, setClienteID] = useState([]);
+  const {finalizarFatura} = useContext(AuthContext);
+  const {getFaturaDetalhes} = useContext(AuthContext);
+  const [faturaID, setFaturaID] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [aux, setAux] = useState();
   const [aux2, setAux2] = useState();
   const id = route.params.id;
-  console.log(id)
+
 
   /*const mudarEcra = (value) => {
     navigation.navigate('DetalhesOrcamento.js', value);
   }*/
 
-  if(clienteID.length == 0){
-    getclienteID(id).then((res)=>{
-        console.log("CLIENTE",res.data.data);
-        setClienteID(res.data.data);   
+  if(faturaID.length == 0){
+    getFaturaDetalhes(id).then((res)=>{
+        console.log(res.data.data);
+        setFaturaID(res.data.data);
+        setTableData(res.data.data.linhas.map(linha => [linha.artigo, Number(linha.preco).toFixed(2), parseFloat(linha.qtd).toFixed(2),
+             linha.imposto, Number(linha.totalLinha).toFixed(2)]));
+        setAux(1);   
     });
   
   }
   
-   
+    if(aux2 != 1){
+      if(aux == 1){
+        for(let i = 0; i < tableData.length; i++){
+        
+          getArtigoID(tableData[i][0]).then((res)=>{
+            if(tableData[i][0] != res.data.data.Nome){
+              console.log(res.data.data.Nome);
+              if(res.data.data.Nome != null){
+              tableData[i][0] = res.data.data.Nome;
+              console.log("Oi",tableData);
+              setTableData([...tableData]);
+              setAux2(1);
+              }
+            }
+          });
+        }
+      }
+    }
+    
 
-  
+    function handleFinalizarFatura(){
+      finalizarFatura(id).then((res)=>{
+        console.log(res);
+        ToastAndroid.show("Fatura Finalizada",ToastAndroid.SHORT);
+      })
+      .catch(e => {
+        console.log(`Login error ${e}`);
+    });
+    navigation.goBack()
+    navigation.navigate('GesFaturação');
+    //navigation.navigate('GesFaturação-Ver Detalhes',  { id: id });
+    
+
+    }
 
     
 
   return (
     <ScrollView>
-      <Text style={styles.titleSelect}>Nome</Text>
+      <Text style={styles.titleSelect}>Cliente</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{clienteID.Nome}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.Cliente}</Text>
       </View>
       <Text style={styles.titleSelect}>NIF</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{clienteID.Nif}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.Nif}</Text>
       </View>
       <Text style={styles.titleSelect}>Endereço</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{clienteID.Endereco}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.EnderecoCliente}</Text>
       </View>
-      <Text style={styles.titleSelect}>Localidade</Text>
+      <Text style={styles.titleSelect}>Série</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{clienteID.Localidade}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.Serie}</Text>
       </View>
-      <View style = {styles.lineStyle} />
-      <Text style={styles.titleSelect}>Telemóvel</Text>
+      <Text style={styles.titleSelect}>Data</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{clienteID.Telemovel}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.Data}</Text>
       </View>
-      <Text style={styles.titleSelect}>Email</Text>
+      <Text style={styles.titleSelect}>Data Vencimento</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{clienteID.Email}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.Validade}</Text>
       </View>
-      
-      <Text style={styles.titleSelect}>Telefone</Text>
+      <Text style={styles.titleSelect}>Desconto</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{clienteID.Telefone}</Text>
+        <Text style={{marginLeft: 4}}>{parseFloat(faturaID.PercentagemDesconto).toFixed(2)}%</Text>
       </View>
-      <View style = {styles.lineStyle} />
-      <Text style={styles.titleSelect}>Método Pagamento</Text>
+      <Text style={styles.titleSelect}>Moeda</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{clienteID.Metodo}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.Moeda}</Text>
       </View>
-      
-
+      <Text style={styles.titleSelect}>Linhas</Text>
+      <Table style={{marginLeft: 10}}>
+    <Row data={["Artigo", "Preço", "QTD", "IVA", "Total"]}/>
+    {tableData.map((rowData, index) => (
+        <Row
+            key={index}
+            data={rowData}
+            style={[styles.row, index%2 && {backgroundColor: '#f9f9f9'}]}
+            textStyle={styles.text}
+        />
+    ))}
+</Table>
+<View style={styles.marginTOPButton}>
+  <Button color="#d0933f"  title="Enviar Email" onPress={() => { /* código para enviar orçamento */ }} />
+</View>
 <View style={styles.marginTOPButton2}>
 
+{faturaID.Estado === "Rascunho" ? (
+  <Button color="#d0933f"  title="Finalizar Fatura" onPress={() => { handleFinalizarFatura()}} />
+) : (
+  
+  <Text></Text>
+)}
 </View>
     </ScrollView>
   );
@@ -166,10 +217,5 @@ const styles = StyleSheet.create({
       marginLeft: 20,
       marginRight: 20,
       marginBottom: 7
-    },
-    lineStyle:{
-      borderWidth: 0.5,
-      borderColor:'black',
-      margin:10,
     }
   });
