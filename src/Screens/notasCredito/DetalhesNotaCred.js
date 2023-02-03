@@ -18,6 +18,7 @@ export default function DetalhesNotaCred({navigation, route}) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
   const {getArtigoID} = useContext(AuthContext);
+  const {enviarNotaCred} = useContext(AuthContext);
   const {finalizarNotaCred} = useContext(AuthContext);
   const {getNotasCredDetalhes} = useContext(AuthContext);
   const [notaCredito, setNotaCredito] = useState([]);
@@ -141,8 +142,40 @@ export default function DetalhesNotaCred({navigation, route}) {
 {notaCredito.Estado === "Rascunho" ? (
   <Button color="#d0933f"  title="Finalizar Nota de Crédito" onPress={() => { handleFinalizarNotaCred()}} />
 ) : (
-  
-  <Text></Text>
+  <View style={styles.marginTOPButton}>
+<Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}>
+        <View style={{ marginTop: 22 }}>
+          <View>
+            
+            <Text style={styles.titleSelect}>Email</Text>
+            <View style={styles.borderMargin}>
+            <TextInput placeholder="Email" value={inputValue} onChangeText={text => setInputValue(text)}/>
+            </View>
+            <View style={{margin: 10}}>
+            <Button color="#488c6c"  title="Enviar" onPress={() => {
+              setModalVisible(!modalVisible);
+                enviarNotaCred(id, inputValue).then((res)=>{
+                  console.log(res);
+                });
+              }} />
+            </View>
+            <View style={{margin: 10}}>
+            <Button  title="Cancelar" onPress={() => {
+              setModalVisible(!modalVisible);
+
+              }} />
+            </View>
+          </View>
+        </View>
+      </Modal>
+  <Button color="#d0933f"  title="Enviar Email" onPress={()=>setModalVisible(true)} />
+</View>
 )}
 </View>
     </ScrollView>

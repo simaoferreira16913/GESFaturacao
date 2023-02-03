@@ -1130,6 +1130,96 @@ export const AuthProvider = ({children}) => {
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
         });
     }
+    /*Enviar Email Proforma */
+    const enviarProforma = async (id, mail) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/proformas`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '5',
+                _token: token,
+                documento: id,
+                tipo_doc: 'PF',
+                email:mail
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+    /*Enviar Email Fatura*/
+    const enviarFatura = async (id, mail) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '7',
+                _token: token,
+                documento: id,
+                tipo_doc: 'FT',
+                email:mail
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+    /*Enviar Email Fat Simp */
+    const enviarFatSimp = async (id, mail) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas_simplificadas`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '7',
+                _token: token,
+                documento: id,
+                tipo_doc: 'FS',
+                email:mail
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+    /*Enviar Notas Cred*/
+    const enviarNotaCred = async (id, mail) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_credito`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '7',
+                _token: token,
+                documento: id,
+                tipo_doc: 'NC',
+                email:mail
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+    /*Enviar Notas Deb */
+    const enviarNotaDeb = async (id, mail) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_debito`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '7',
+                _token: token,
+                documento: id,
+                tipo_doc: 'ND',
+                email:mail
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
@@ -1139,7 +1229,7 @@ export const AuthProvider = ({children}) => {
             getNotasCred, getNotasCredDetalhes,deleteNotaCred, finalizarNotaCred,
             getNotasDeb,getNotasDebDetalhes,deleteNotaDeb,finalizarNotaDeb, getFornecedores, getFornecedorDetalhes,deleteFornecedor,CriarFornecedor,
             getComprasFat,getComprasFatDetalhes,finalizarCompra,anularCompra,deleteCompra,CriarCompra,deleteArtigo,getAnalise
-            ,enviarOrcamento
+            ,enviarOrcamento,enviarProforma, enviarFatura, enviarFatSimp,enviarNotaDeb,enviarNotaCred
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

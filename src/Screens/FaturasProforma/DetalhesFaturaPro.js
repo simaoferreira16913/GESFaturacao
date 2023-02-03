@@ -18,7 +18,7 @@ export default function DetalhesFaturaPro({navigation, route}) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
   const {getArtigoID} = useContext(AuthContext);
- 
+  const {enviarProforma} = useContext(AuthContext);
   const {estadoProforma} = useContext(AuthContext);
   const {finalizarProforma} = useContext(AuthContext);
   const {getProformaDetalhes} = useContext(AuthContext);
@@ -27,7 +27,8 @@ export default function DetalhesFaturaPro({navigation, route}) {
   const [aux, setAux] = useState();
   const [aux2, setAux2] = useState();
   const id = route.params.id;
-
+  const [modalVisible, setModalVisible] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   
 
@@ -138,21 +139,86 @@ export default function DetalhesFaturaPro({navigation, route}) {
         />
     ))}
 </Table>
-<View style={styles.marginTOPButton}>
-  <Button color="#d0933f"  title="Enviar Email" onPress={() => { /* código para enviar orçamento */ }} />
-</View>
+
 <View style={styles.marginTOPButton2}>
 
 {proformaID.Estado === "Rascunho" ? (
   <Button color="#d0933f"  title="Finalizar Proforma" onPress={() => { handleFinalizarProforma()}} />
 ) : (proformaID.Estado === "Aberto" ? (
   <View>
+    <View style={styles.marginTOPButton}>
+<Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}>
+        <View style={{ marginTop: 22 }}>
+          <View>
+            
+            <Text style={styles.titleSelect}>Email</Text>
+            <View style={styles.borderMargin}>
+            <TextInput placeholder="Email" value={inputValue} onChangeText={text => setInputValue(text)}/>
+            </View>
+            <View style={{margin: 10}}>
+            <Button color="#488c6c"  title="Enviar" onPress={() => {
+              setModalVisible(!modalVisible);
+                enviarProforma(id, inputValue).then((res)=>{
+                  console.log(res);
+                });
+              }} />
+            </View>
+            <View style={{margin: 10}}>
+            <Button  title="Cancelar" onPress={() => {
+              setModalVisible(!modalVisible);
+
+              }} />
+            </View>
+          </View>
+        </View>
+      </Modal>
+  <Button color="#d0933f"  title="Enviar Email" onPress={()=>setModalVisible(true)} />
+</View>
     <Button color="#d0933f" title="Aceitar" onPress={() => { handleEstadoProforma(1) }} />
     <Button color="#d0933f" title="Rejeitar" onPress={() => { handleEstadoProforma(0) }} />
   </View>
 ) : (
   <View>
-    
+    <View style={styles.marginTOPButton}>
+<Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}>
+        <View style={{ marginTop: 22 }}>
+          <View>
+            
+            <Text style={styles.titleSelect}>Email</Text>
+            <View style={styles.borderMargin}>
+            <TextInput placeholder="Email" value={inputValue} onChangeText={text => setInputValue(text)}/>
+            </View>
+            <View style={{margin: 10}}>
+            <Button color="#488c6c"  title="Enviar" onPress={() => {
+              setModalVisible(!modalVisible);
+                enviarProforma(id, inputValue).then((res)=>{
+                  console.log(res);
+                });
+              }} />
+            </View>
+            <View style={{margin: 10}}>
+            <Button  title="Cancelar" onPress={() => {
+              setModalVisible(!modalVisible);
+
+              }} />
+            </View>
+          </View>
+        </View>
+      </Modal>
+  <Button color="#d0933f"  title="Enviar Email" onPress={()=>setModalVisible(true)} />
+</View>
   </View>
   
 ))}

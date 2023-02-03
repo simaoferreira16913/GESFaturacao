@@ -17,6 +17,7 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-ta
 export default function DetalhesFaturaSimp({navigation, route}) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
+  const {enviarFatSimp} = useContext(AuthContext);
   const {getArtigoID} = useContext(AuthContext);
   const {finalizarFaturaSimp} = useContext(AuthContext);
   const {getFaturaSimpDetalhes} = useContext(AuthContext);
@@ -25,7 +26,8 @@ export default function DetalhesFaturaSimp({navigation, route}) {
   const [aux, setAux] = useState();
   const [aux2, setAux2] = useState();
   const id = route.params.id;
-
+  const [modalVisible, setModalVisible] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   /*const mudarEcra = (value) => {
     navigation.navigate('DetalhesOrcamento.js', value);
@@ -125,16 +127,46 @@ export default function DetalhesFaturaSimp({navigation, route}) {
         />
     ))}
 </Table>
-<View style={styles.marginTOPButton}>
-  <Button color="#d0933f"  title="Enviar Email" onPress={() => { /* código para enviar orçamento */ }} />
-</View>
+
 <View style={styles.marginTOPButton2}>
 
 {faturaID.Estado === "Rascunho" ? (
   <Button color="#d0933f"  title="Finalizar Fatura" onPress={() => { handleFinalizarFatura()}} />
 ) : (
-  
-  <Text></Text>
+  <View style={styles.marginTOPButton}>
+<Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}>
+        <View style={{ marginTop: 22 }}>
+          <View>
+            
+            <Text style={styles.titleSelect}>Email</Text>
+            <View style={styles.borderMargin}>
+            <TextInput placeholder="Email" value={inputValue} onChangeText={text => setInputValue(text)}/>
+            </View>
+            <View style={{margin: 10}}>
+            <Button color="#488c6c"  title="Enviar" onPress={() => {
+              setModalVisible(!modalVisible);
+                enviarFatSimp(id, inputValue).then((res)=>{
+                  console.log(res);
+                });
+              }} />
+            </View>
+            <View style={{margin: 10}}>
+            <Button  title="Cancelar" onPress={() => {
+              setModalVisible(!modalVisible);
+
+              }} />
+            </View>
+          </View>
+        </View>
+      </Modal>
+  <Button color="#d0933f"  title="Enviar Email" onPress={()=>setModalVisible(true)} />
+</View>
 )}
 </View>
     </ScrollView>

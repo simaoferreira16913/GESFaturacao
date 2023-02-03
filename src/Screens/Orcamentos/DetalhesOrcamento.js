@@ -155,7 +155,17 @@ export default function DetalhesOrcamento({navigation, route}) {
         />
     ))}
 </Table>
-<View style={styles.marginTOPButton}>
+
+<View style={styles.marginTOPButton2}>
+
+{orcamentoID.Estado === "Rascunho" ? (
+  <View style={styles.marginTOPButton}>
+    <Button color="#d0933f"  title="Finalizar Orçamento" onPress={() => { handleFinalizarOrcamento()}} />
+  </View>
+) : (orcamentoID.Estado === "Aberto" ? (
+  
+  <View>
+    <View style={styles.marginTOPButton}>
 <Modal
         animationType="slide"
         transparent={false}
@@ -165,38 +175,69 @@ export default function DetalhesOrcamento({navigation, route}) {
         }}>
         <View style={{ marginTop: 22 }}>
           <View>
-            <TextInput
-              placeholder="Email"
-              value={inputValue}
-              onChangeText={text => setInputValue(text)}
-            />
-
-            <TouchableHighlight
-              onPress={() => {
-                setModalVisible(!modalVisible);
+            
+            <Text style={styles.titleSelect}>Email</Text>
+            <View style={styles.borderMargin}>
+            <TextInput placeholder="Email" value={inputValue} onChangeText={text => setInputValue(text)}/>
+            </View>
+            <View style={{margin: 10}}>
+            <Button color="#488c6c"  title="Enviar" onPress={() => {
+              setModalVisible(!modalVisible);
                 enviarOrcamento(id, inputValue).then((res)=>{
                   console.log(res);
                 });
-              }}>
-              <Text>OK</Text>
-            </TouchableHighlight>
+              }} />
+            </View>
+            <View style={{margin: 10}}>
+            <Button  title="Cancelar" onPress={() => {
+              setModalVisible(!modalVisible);
+
+              }} />
+            </View>
           </View>
         </View>
       </Modal>
   <Button color="#d0933f"  title="Enviar Email" onPress={()=>setModalVisible(true)} />
 </View>
-<View style={styles.marginTOPButton2}>
-
-{orcamentoID.Estado === "Rascunho" ? (
-  <Button color="#d0933f"  title="Finalizar Orçamento" onPress={() => { handleFinalizarOrcamento()}} />
-) : (orcamentoID.Estado === "Aberto" ? (
-  <View>
     <Button color="#d0933f" title="Aceitar" onPress={() => { handleEstadoOrcamento(1) }} />
     <Button color="#d0933f" title="Rejeitar" onPress={() => { handleEstadoOrcamento(0) }} />
   </View>
 ) : (
   <View>
-    
+    <View style={styles.marginTOPButton}>
+<Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}>
+        <View style={{ marginTop: 22 }}>
+          <View>
+            
+            <Text style={styles.titleSelect}>Email</Text>
+            <View style={styles.borderMargin}>
+            <TextInput placeholder="Email" value={inputValue} onChangeText={text => setInputValue(text)}/>
+            </View>
+            <View style={{margin: 10}}>
+            <Button color="#488c6c"  title="Enviar" onPress={() => {
+              setModalVisible(!modalVisible);
+                enviarOrcamento(id, inputValue).then((res)=>{
+                  console.log(res);
+                });
+              }} />
+            </View>
+            <View style={{margin: 10}}>
+            <Button  title="Cancelar" onPress={() => {
+              setModalVisible(!modalVisible);
+
+              }} />
+            </View>
+          </View>
+        </View>
+      </Modal>
+  <Button color="#d0933f"  title="Enviar Email" onPress={()=>setModalVisible(true)} />
+</View>
   </View>
   
 ))}
@@ -275,7 +316,8 @@ const styles = StyleSheet.create({
       color:"#000000"
     },
     marginTOPButton: {
-      margin: 20
+      marginTop: 20,
+      marginBottom: 20
     },
     marginTOPButton2: {
       marginLeft: 20,
