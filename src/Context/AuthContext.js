@@ -696,15 +696,16 @@ export const AuthProvider = ({children}) => {
         }); 
     }
 
-    const deleteGuiaTransporte = async (id) => {
+    const deleteGuiasTransporte = async (id) => {
+        var token = await this.getToken();
         
         return axios({
-            url: `${BASE_URL}/api/orcamentos/orcamentos`,
+            url: `${BASE_URL}/api/guias_transporte`,
             method: 'DELETE',
             timeout: 5000,
             data: qs.stringify({
                 opcao: '5',
-                _token: userToken,
+                _token: token,
                 idGuia: id,
             }),
             headers: {
@@ -713,13 +714,37 @@ export const AuthProvider = ({children}) => {
         });
     }
 
+    const getGuiaTransporteDetalhes = async (id) =>{
+        var token = await this.getToken();
+       
+        return axios({
+            url: `${BASE_URL}/api/guias_transporte`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idDocument: id,
+                _token: token,
+            }
+        });
+    }
+
+    const finalizarGuiaTransporte = async (id) =>{
+        
+        axios.patch(`${BASE_URL}/api/guias_transporte`,
+        {_token: userToken, opcao: '6', idGuia: id}).then((res)=>{
+            console.log(res)
+        })
+       
+    }
+
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
             CriarFatura, deleteFatura, getFaturaDetalhes, getFaturas, finalizarFatura,
             getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes, getFaturasReb,
             getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma,
-            getGuiasTransporte, deleteGuiaTransporte
+            getGuiasTransporte, deleteGuiasTransporte, getGuiaTransporteDetalhes, finalizarGuiaTransporte
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

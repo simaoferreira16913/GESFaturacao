@@ -67,7 +67,7 @@ export default function MainTransporte({navigation}) {
   if(!guiasTransporte.length){
     getGuiasTransporte().then((res)=>{
       setGuiasTransporte(res.data.aaData);
-      console.log(res.data.aaData + ' cenas');
+      console.log(JSON.stringify(res.data.aaData) + ' cenas');
     }).catch(e =>{
       console.log(`Erro: ${e}` + ' ganda erro');
       //setIsLoading(false)
@@ -92,17 +92,17 @@ export default function MainTransporte({navigation}) {
   </View>
 ]);
 
-  const handleRemove = (idGuia) => {
-    console.log(idGuia)
-    deleteGuiasTransporte(idGuia).then((res)=>{
-      console.log(res);
+  const handleRemove = (id) => {
+    console.log(id)
+    deleteGuiasTransporte(id).then((res)=>{
+      console.log(JSON.stringify(res));
     });
 
-    setGuiasTransporte(guiasTransporte.filter(item => item[0] !== idGuia));
+    setGuiasTransporte(guiasTransporte.filter(item => item[0] !== id));
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Ver Detalhes',  { id: value });
+    navigation.navigate('GesFaturação-Detalhes Guia Transporte',  { id: value });
   }
 
   return (

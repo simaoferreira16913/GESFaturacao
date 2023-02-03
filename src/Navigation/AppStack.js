@@ -31,6 +31,7 @@ import CriarRemessa from '../Screens/Guias/Remessa/CriarRemessa';
 import MainRemessa from '../Screens/Guias/Remessa/MainRemessa';
 import CriarTransporte from '../Screens/Guias/Transporte/CriarTransporte';
 import MainTransporte from '../Screens/Guias/Transporte/MainTransporte';
+import DetalhesTransporte from '../Screens/Guias/Transporte/DetalhesTransporte';
 
 const Stack = createNativeStackNavigator();
 
@@ -64,6 +65,8 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação-Guias Remessa' component={MainRemessa}/>
         <Stack.Screen name='GesFaturação-Criar Guia Transporte' component={CriarTransporte}/>
         <Stack.Screen name='GesFaturação-Guias Transporte' component={MainTransporte}/>
+        <Stack.Screen name='GesFaturação-Detalhes Guia Transporte' component={DetalhesTransporte}/>
+        
       </Stack.Navigator>
     );
 };
