@@ -1091,6 +1091,45 @@ export const AuthProvider = ({children}) => {
                 headers: { 'content-type': 'application/x-www-form-urlencoded' },
         });
     }
+    /*Analise */
+    const getAnalise = async () =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/analise`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                _token: token,
+                pag: '0',
+                numRows: '25',
+                //cliente: '1',
+                dataInicio: '02/02/2023',
+                dataFim: '25/02/2023'
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+    /**Enviar Email Orcamento */
+    const enviarOrcamento = async (id, mail) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/orcamentos`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '5',
+                _token: token,
+                documento: id,
+                tipo_doc: 'OR',
+                email:mail
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
@@ -1099,7 +1138,8 @@ export const AuthProvider = ({children}) => {
             getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma, addProforma,
             getNotasCred, getNotasCredDetalhes,deleteNotaCred, finalizarNotaCred,
             getNotasDeb,getNotasDebDetalhes,deleteNotaDeb,finalizarNotaDeb, getFornecedores, getFornecedorDetalhes,deleteFornecedor,CriarFornecedor,
-            getComprasFat,getComprasFatDetalhes,finalizarCompra,anularCompra,deleteCompra,CriarCompra,deleteArtigo
+            getComprasFat,getComprasFatDetalhes,finalizarCompra,anularCompra,deleteCompra,CriarCompra,deleteArtigo,getAnalise
+            ,enviarOrcamento
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

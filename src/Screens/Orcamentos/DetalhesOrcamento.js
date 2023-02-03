@@ -1,7 +1,8 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable,
-  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid } from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View, 
+  ScrollView,FlatList,Image, ToastAndroid,Alert, TextInput,Modal,TouchableHighlight } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -12,10 +13,12 @@ import DatePicker from 'react-native-date-picker'
 import { Renderer } from 'phaser';
 import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
-
+import Dialog from "react-native-dialog";
+import Prompt from 'react-native-prompt-android';
 
 export default function DetalhesOrcamento({navigation, route}) {
   const {getArtigoID} = useContext(AuthContext);
+  const {enviarOrcamento} = useContext(AuthContext);
   const {getOrcamentos} = useContext(AuthContext);
   const {deleteOrcamento} = useContext(AuthContext);
   const {estadoOrcamento} = useContext(AuthContext);
@@ -26,8 +29,9 @@ export default function DetalhesOrcamento({navigation, route}) {
   const [aux, setAux] = useState();
   const [aux2, setAux2] = useState();
   const id = route.params.id;
-
-
+  const [modalVisible, setModalVisible] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  
   const mudarEcra = (value) => {
     navigation.navigate('DetalhesOrcamento.js', value);
   }
@@ -92,6 +96,18 @@ export default function DetalhesOrcamento({navigation, route}) {
       ToastAndroid.show("Orçamento Rejeitado",  ToastAndroid.SHORT);
     }
     }
+    const handleButtonEnviar = () =>{
+      console.log("Cheguei")
+      Alert.prompt("OI","NOME:",[{
+        text:"Submit",
+        onPress:(text)=>console.log(text)
+      },
+    {
+      text:"Cancel",
+      onPress:()=>console.log("Cancel")
+    }],"plain-text","Name")
+      
+    }
 
   return (
     <ScrollView>
@@ -140,7 +156,34 @@ export default function DetalhesOrcamento({navigation, route}) {
     ))}
 </Table>
 <View style={styles.marginTOPButton}>
-  <Button color="#d0933f"  title="Enviar Email" onPress={() => { /* código para enviar orçamento */ }} />
+<Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}>
+        <View style={{ marginTop: 22 }}>
+          <View>
+            <TextInput
+              placeholder="Email"
+              value={inputValue}
+              onChangeText={text => setInputValue(text)}
+            />
+
+            <TouchableHighlight
+              onPress={() => {
+                setModalVisible(!modalVisible);
+                enviarOrcamento(id, inputValue).then((res)=>{
+                  console.log(res);
+                });
+              }}>
+              <Text>OK</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
+  <Button color="#d0933f"  title="Enviar Email" onPress={()=>setModalVisible(true)} />
 </View>
 <View style={styles.marginTOPButton2}>
 
