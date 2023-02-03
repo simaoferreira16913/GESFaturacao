@@ -1076,6 +1076,21 @@ export const AuthProvider = ({children}) => {
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
         });
     }
+    /*Artigos */
+    const deleteArtigo = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: 'https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/tabelas/artigos',
+            method: 'DELETE',
+            timeout: 5000,
+            data : qs.stringify({
+                opcao: '4',
+                _token: token,
+                idArtigo: id
+                }),
+                headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
@@ -1084,7 +1099,7 @@ export const AuthProvider = ({children}) => {
             getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma, addProforma,
             getNotasCred, getNotasCredDetalhes,deleteNotaCred, finalizarNotaCred,
             getNotasDeb,getNotasDebDetalhes,deleteNotaDeb,finalizarNotaDeb, getFornecedores, getFornecedorDetalhes,deleteFornecedor,CriarFornecedor,
-            getComprasFat,getComprasFatDetalhes,finalizarCompra,anularCompra,deleteCompra,CriarCompra
+            getComprasFat,getComprasFatDetalhes,finalizarCompra,anularCompra,deleteCompra,CriarCompra,deleteArtigo
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

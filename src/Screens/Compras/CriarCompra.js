@@ -134,7 +134,7 @@ export default function CriarCompra({ navigation }) {
 
       <View style={{marginTop: 10}}>
         <Button  title="Novo Fornecedor" color="#d0933f" onPress={() => navigation.navigate("GesFaturação-Criar Fornecedor")} />
-        <Text style={styles.titleSelect}>Cliente</Text>
+        <Text style={styles.titleSelect}>Fornecedor</Text>
         <View style={styles.borderMargin}>
         <Picker  style={styles.pickerComponent} placeholder="Selecione um Fornecedor" selectedValue={selectedIdCliente} onValueChange={itemValue => {
           setSelectedIdCliente(itemValue); 

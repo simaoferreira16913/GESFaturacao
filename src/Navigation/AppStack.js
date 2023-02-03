@@ -8,7 +8,7 @@ import MainOrcamento from '../Screens/Orcamentos/MainOrcamento';
 import CriarOrcamento from '../Screens/Orcamentos/CriarOrcamento';
 import CriarCliente from '../Screens/Clientes/CriarCliente';
 import CriarArtigo from '../Screens/Artigos/CriarArtigo';
-import MainArtigo from '../Screens/Artigos/MainArtigo';
+import MainArtigos from '../Screens/Artigos/MainArtigos';
 import VerDetalhesOrc from '../Screens/Orcamentos/DetalhesOrcamento';
 import MainFatura from '../Screens/Faturas/MainFatura';
 import DetalhesFatura from '../Screens/Faturas/DetalhesFatura';
@@ -32,6 +32,7 @@ import MainCliente from '../Screens/Clientes/MainCliente';
 import MainCompra from '../Screens/Compras/MainCompra';
 import DetalhesCompra from '../Screens/Compras/DetalhesCompra';
 import CriarCompra from '../Screens/Compras/CriarCompra';
+import DetalhesArtigo from '../Screens/Artigos/DetalhesArtigo';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,7 +43,8 @@ const AppStack = () => {
         <Stack.Screen name="GesFaturação-Orçamentos" component={MainOrcamento} />
         <Stack.Screen name='GesFaturação-Criar Orçamento' component={CriarOrcamento}/>
         <Stack.Screen name='GesFaturação-Criar Cliente' component={CriarCliente}/>
-        <Stack.Screen name='GesFaturação-Artigos' component={MainArtigo}/>
+        <Stack.Screen name='GesFaturação-Artigos' component={MainArtigos}/>
+        <Stack.Screen name='GesFaturação-Artigo Detalhes' component={DetalhesArtigo}/>
         <Stack.Screen name='GesFaturação-Criar Artigo' component={CriarArtigo}/>
         <Stack.Screen name='GesFaturação-Ver Detalhes' component={VerDetalhesOrc}/>
         <Stack.Screen name='GesFaturação-Faturas' component={MainFatura}/>
