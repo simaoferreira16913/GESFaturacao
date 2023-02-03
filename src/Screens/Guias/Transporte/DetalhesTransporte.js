@@ -29,6 +29,7 @@ export default function DetalhesTransporte({navigation, route}) {
   const [tableData, setTableData] = useState([]);
   const [aux, setAux] = useState();
   const [aux2, setAux2] = useState();
+  const [idGuiaT, setIdGuia] = useState(null);
   const id = route.params.id;
 
 
@@ -68,12 +69,12 @@ export default function DetalhesTransporte({navigation, route}) {
     
 
     function handleFinalizarGuiaTransporte(){
-      finalizarGuiaTransporte(id).then((res)=>{
-        console.log(res);
+      finalizarGuiaTransporte(guiaTransporteID.ID_GuiaTransporte).then((res)=>{
+        console.log(JSON.stringify(res));
         ToastAndroid.show("Fatura Finalizada",ToastAndroid.SHORT);
       })
       .catch(e => {
-        console.log(`Login error ${e}`);
+        console.log(`Error ${e}` + 'Finalizar Guia');
     });
     navigation.goBack()
     navigation.navigate('GesFaturação');
@@ -376,13 +377,10 @@ export default function DetalhesTransporte({navigation, route}) {
         />
     ))}
 </Table>
-<View style={styles.marginTOPButton}>
-  <Button color="#d0933f"  title="Enviar Email" onPress={() => { /* código para enviar orçamento */ }} />
-</View>
 <View style={styles.marginTOPButton2}>
 
 {guiaTransporteID.Estado === "Rascunho" ? (
-  <Button color="#d0933f"  title="Finalizar Orçamento" onPress={() => { handleFinalizarGuiaTransporte()}} />
+  <Button color="#d0933f"  title="Finalizar Guia" onPress={() => {handleFinalizarGuiaTransporte()}} />
 ) : (
 
   <Text></Text>

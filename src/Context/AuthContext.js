@@ -729,10 +729,12 @@ export const AuthProvider = ({children}) => {
         });
     }
 
-    const finalizarGuiaTransporte = async (id) =>{
-        
+    const finalizarGuiaTransporte = async (idGuiaT) =>{
+        var token = await this.getToken();
+        console.log(idGuiaT + 'ID GUIA')
+
         axios.patch(`${BASE_URL}/api/guias_transporte`,
-        {_token: userToken, opcao: '6', idGuia: id}).then((res)=>{
+        { opcao: '6', _token: token, idGuia: idGuiaT}).then((res)=>{
             console.log(res)
         })
        

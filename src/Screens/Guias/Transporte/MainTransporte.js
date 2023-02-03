@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable,
-  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image } from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -84,8 +84,16 @@ export default function MainTransporte({navigation}) {
 
   const data = guiasTransporte.map(item => [ item[2],parseFloat(item[8]).toFixed(2), item[9], 
   <View style={{flexDirection: 'row'}}>
-  <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[0])}>
-    <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/></TouchableOpacity >
+            {item[9] === "Rascunho" ? (
+            <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[0])}>
+            <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/></TouchableOpacity >
+            ) : (item[9] !== "Rascunho" ? (
+              <View>                
+              </View> 
+            ) : (
+              <View>                
+              </View>              
+            ))}
   <TouchableOpacity onPress={() => mudarEcra(item[0])}>
   <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
   </TouchableOpacity >
@@ -100,6 +108,10 @@ export default function MainTransporte({navigation}) {
 
     setGuiasTransporte(guiasTransporte.filter(item => item[0] !== id));
   }
+
+  const showToast = () => {
+    ToastAndroid.show('Apenas guias com estado "Rascunho" podem ser apagadas', ToastAndroid.SHORT);
+  };
 
   const mudarEcra = (value) => {
     navigation.navigate('GesFaturação-Detalhes Guia Transporte',  { id: value });
@@ -216,7 +228,7 @@ export default function MainTransporte({navigation}) {
         </View>
       </View>
       
-      <View  > 
+      <View> 
         <TouchableNativeFeedback onPress={()=> 
           getGuiasTransporte()}>
           <View style={styles.button}>
@@ -224,7 +236,7 @@ export default function MainTransporte({navigation}) {
             <Text style={styles.textfont}>Pesquisar</Text>
           </View>
         </TouchableNativeFeedback>
-      </View> 
+      </View>  
       <Table style={{width: '100%', height: '100%', marginLeft:40}}>
         <Row data={columns}  textStyle={styles.text}/>
         <Rows data={data} />
