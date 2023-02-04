@@ -157,7 +157,7 @@ export default function DetalhesFaturaSimp({navigation, route}) {
               }} />
             </View>
             <View style={{margin: 10}}>
-            <Button  title="Cancelar" onPress={() => {
+            <Button color="#d0933f" title="Cancelar" onPress={() => {
               setModalVisible(!modalVisible);
 
               }} />
@@ -243,7 +243,9 @@ const styles = StyleSheet.create({
       color:"#000000"
     },
     marginTOPButton: {
-      margin: 20
+      marginTop: 20,
+      marginBottom: 20
+      
     },
     marginTOPButton2: {
       marginLeft: 20,

@@ -170,7 +170,7 @@ export default function DetalhesFaturaPro({navigation, route}) {
               }} />
             </View>
             <View style={{margin: 10}}>
-            <Button  title="Cancelar" onPress={() => {
+            <Button color="#d0933f" title="Cancelar" onPress={() => {
               setModalVisible(!modalVisible);
 
               }} />
@@ -180,8 +180,8 @@ export default function DetalhesFaturaPro({navigation, route}) {
       </Modal>
   <Button color="#d0933f"  title="Enviar Email" onPress={()=>setModalVisible(true)} />
 </View>
-    <Button color="#d0933f" title="Aceitar" onPress={() => { handleEstadoProforma(1) }} />
-    <Button color="#d0933f" title="Rejeitar" onPress={() => { handleEstadoProforma(0) }} />
+    <Button color="#488c6c" title="Aceitar" onPress={() => { handleEstadoProforma(1) }} />
+    <Button color="#bf4346" title="Rejeitar" onPress={() => { handleEstadoProforma(0) }} />
   </View>
 ) : (
   <View>
@@ -209,7 +209,7 @@ export default function DetalhesFaturaPro({navigation, route}) {
               }} />
             </View>
             <View style={{margin: 10}}>
-            <Button  title="Cancelar" onPress={() => {
+            <Button color="#d0933f" title="Cancelar" onPress={() => {
               setModalVisible(!modalVisible);
 
               }} />
@@ -298,7 +298,8 @@ const styles = StyleSheet.create({
       color:"#000000"
     },
     marginTOPButton: {
-      margin: 20
+      marginTop: 20,
+      marginBottom:20
     },
     marginTOPButton2: {
       marginLeft: 20,

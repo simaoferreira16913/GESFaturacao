@@ -189,7 +189,7 @@ export default function DetalhesOrcamento({navigation, route}) {
               }} />
             </View>
             <View style={{margin: 10}}>
-            <Button  title="Cancelar" onPress={() => {
+            <Button color="#d0933f" title="Cancelar" onPress={() => {
               setModalVisible(!modalVisible);
 
               }} />
@@ -199,8 +199,8 @@ export default function DetalhesOrcamento({navigation, route}) {
       </Modal>
   <Button color="#d0933f"  title="Enviar Email" onPress={()=>setModalVisible(true)} />
 </View>
-    <Button color="#d0933f" title="Aceitar" onPress={() => { handleEstadoOrcamento(1) }} />
-    <Button color="#d0933f" title="Rejeitar" onPress={() => { handleEstadoOrcamento(0) }} />
+    <Button color="#488c6c" title="Aceitar" onPress={() => { handleEstadoOrcamento(1) }} />
+    <Button color="#bf4346" title="Rejeitar" onPress={() => { handleEstadoOrcamento(0) }} />
   </View>
 ) : (
   <View>
@@ -228,7 +228,7 @@ export default function DetalhesOrcamento({navigation, route}) {
               }} />
             </View>
             <View style={{margin: 10}}>
-            <Button  title="Cancelar" onPress={() => {
+            <Button color="#d0933f" title="Cancelar" onPress={() => {
               setModalVisible(!modalVisible);
 
               }} />
