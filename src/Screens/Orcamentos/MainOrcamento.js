@@ -12,8 +12,13 @@ import DatePicker from 'react-native-date-picker'
 import { Renderer } from 'phaser';
 import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
+import { LogBox } from 'react-native';
 
 export default function MainOrcamento({navigation}) {
+
+  
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
   
   const {getOrcamentos} = useContext(AuthContext);
   const {deleteOrcamento} = useContext(AuthContext);
@@ -31,7 +36,7 @@ export default function MainOrcamento({navigation}) {
   const [orcamentos, setOrcamentos] = useState([]);
   const [selectedIdCliente, setSelectedIdCliente] = useState(null);
   const opcao = 0;
-  const [search, setSearch] = useState("c")
+  const [searchO, setSearchO] = useState("c")
   const numRows = 10;
   const pag = 10;
   const entrar = () =>{
@@ -138,7 +143,9 @@ export default function MainOrcamento({navigation}) {
       <View> 
         <Text style={styles.titleSelect}>Cliente</Text>
         <View style={styles.borderMargin}>
-        <Picker  style={styles.pickerComponent} placeholder="Selecione um cliente" selectedValue={selectedIdCliente} onValueChange={itemValue => setSelectedIdCliente(itemValue)}>
+        <Picker  style={styles.pickerComponent} placeholder="Selecione um cliente" 
+        selectedValue={selectedIdCliente} 
+        onValueChange={itemValue => setSelectedIdCliente(itemValue[0])}>
           {dadosClientes.map(function (object, i) {
             return <Picker.Item label={object[2]} value={object[0]} key={i} />;
           })}
@@ -215,10 +222,11 @@ export default function MainOrcamento({navigation}) {
       </View>
       
       <View  > 
-        <TouchableNativeFeedback onPress={()=> getOrcamentos(search,numRows,pag)}>
+        <TouchableNativeFeedback onPress={()=> {setSearchO(selectedEst)
+          getOrcamentos(searchO)}}>
           <View style={styles.button}>
 
-            <Text style={styles.textfont}>   Pesquisar</Text>
+            <Text style={styles.textfont}>Pesquisar</Text>
           </View>
         </TouchableNativeFeedback>
       </View> 
