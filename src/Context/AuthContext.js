@@ -763,6 +763,24 @@ export const AuthProvider = ({children}) => {
        
     }
 
+    const enviarGuiaTransporte = async (id, mail) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/guias_transporte`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '8',
+                _token: token,
+                email:mail,
+                tipo_doc: 'GT',
+                documento: id
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+
 
     const addProforma = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC) => {
 
@@ -1374,8 +1392,7 @@ export const AuthProvider = ({children}) => {
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
             CriarFatura, deleteFatura, getFaturaDetalhes, getFaturas, finalizarFatura,
             getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes, getFaturasReb,
-            getGuiasTransporte, deleteGuiasTransporte, getGuiaTransporteDetalhes, finalizarGuiaTransporte, addGuiasTransporte, atualizarCodigoATGuia, gerarDocumentoGuia,
-
+            getGuiasTransporte, deleteGuiasTransporte, getGuiaTransporteDetalhes, finalizarGuiaTransporte, addGuiasTransporte, atualizarCodigoATGuia, gerarDocumentoGuia, enviarGuiaTransporte,
             getProforma, getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma, addProforma,
             getNotasCred, getNotasCredDetalhes,deleteNotaCred, finalizarNotaCred,
             getNotasDeb,getNotasDebDetalhes,deleteNotaDeb,finalizarNotaDeb, getFornecedores, getFornecedorDetalhes,deleteFornecedor,CriarFornecedor,

@@ -20,18 +20,19 @@ export default function DetalhesTransporte({navigation, route}) {
   const [modal3Visible, setModal3Visible] = useState(false);
   const [modal4Visible, setModal4Visible] = useState(false);
   const [modal5Visible, setModal5Visible] = useState(false);
+  const [modal6Visible, setModal6Visible] = useState(false);
   const [codigoAT, setCodigoAT] = useState(null);
   const {getArtigoID} = useContext(AuthContext);
   const {atualizarCodigoATGuia} = useContext(AuthContext);
   const {gerarDocumentoGuia} = useContext(AuthContext);
-  const {estadoOrcamento} = useContext(AuthContext);
+  const {enviarGuiaTransporte} = useContext(AuthContext);
   const {finalizarGuiaTransporte} = useContext(AuthContext);
   const {getGuiaTransporteDetalhes} = useContext(AuthContext);
   const [guiaTransporteID, setGuiaTransporteID] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [aux, setAux] = useState();
   const [aux2, setAux2] = useState();
-  const [idGuiaT, setIdGuia] = useState(null);
+  const [inputValue, setInputValue] = useState('');
   const id = route.params.id;
 
 
@@ -434,23 +435,49 @@ export default function DetalhesTransporte({navigation, route}) {
         </ScrollView>
       </Modal>
 
-<View style={styles.marginTOPButton}>
-  <Button color="#d0933f"  title="Enviar Email" onPress={() => { /* código para enviar orçamento */ console.log(guiaTransporteID)}} />
-</View>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={modal6Visible}
+        onRequestClose={() => {
+          setModal6Visible(false);
+        }}>
+        <View style={{ marginTop: 22 }}>
+          <View>
+            
+            <Text style={styles.titleSelect}>Email</Text>
+            <View style={styles.borderMargin}>
+            <TextInput placeholder="Email" value={inputValue} onChangeText={text => setInputValue(text)}/>
+            </View>
+            <View style={{margin: 10}}>
+            <Button color="#488c6c"  title="Enviar" onPress={() => {
+              setModal6Visible(false);
+                enviarGuiaTransporte(guiaTransporteID.ID_GuiaTransporte, inputValue).then((res)=>{
+                  console.log(res);
+                });
+              }} />
+            </View>
+            <View style={{margin: 10}}>
+            <Button color="#d0933f" title="Cancelar" onPress={() => {
+              setModal6Visible(false);
 
+              }} />
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      <View style={styles.marginTOPButton2}>
+      </View>  
 
 <View style={styles.marginTOPButton2}>
   {guiaTransporteID.Estado === "Rascunho" ? (
     <Button color="#d0933f"  title="Finalizar Guia" onPress={() => {handleFinalizarGuiaTransporte()}} />
   ) : guiaTransporteID.Estado === "Aberto" ? (
-  
-    <View style={styles.marginTOPButton}>
       <Button color="#d0933f"
-        title="Atualizar CódigoAT"
+        title="Atualizar Código AT"
         onPress={() => setModal5Visible(true)}
       />
-      </View>
-
   ): (
     <View></View>
   )}
@@ -464,6 +491,18 @@ export default function DetalhesTransporte({navigation, route}) {
     </View>
   )}
 </View>
+
+<View style={styles.marginTOPButton2}>
+  {guiaTransporteID.Estado === "Aberto" ? (
+    <Button color="#d0933f"  title="Enviar Email" onPress={() => { setModal6Visible(true)}} />
+  ) : guiaTransporteID.Estado === "Fechado" ? (
+  
+    <Button color="#d0933f"  title="Enviar Email" onPress={() => { setModal6Visible(true)}} />
+
+  ): (
+    <View></View>
+  )}
+    </View> 
     </ScrollView>
   );
 
