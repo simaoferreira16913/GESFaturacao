@@ -67,7 +67,7 @@ export default function MainTransporte({navigation}) {
   if(!guiasTransporte.length){
     getGuiasTransporte().then((res)=>{
       setGuiasTransporte(res.data.aaData);
-      console.log(JSON.stringify(res.data.aaData) + ' cenas');
+      //console.log(JSON.stringify(res.data.aaData) + ' cenas');
     }).catch(e =>{
       console.log(`Erro: ${e}` + ' ganda erro');
       //setIsLoading(false)

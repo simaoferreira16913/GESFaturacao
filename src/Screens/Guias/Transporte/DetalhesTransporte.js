@@ -377,6 +377,10 @@ export default function DetalhesTransporte({navigation, route}) {
         />
     ))}
 </Table>
+
+<View style={styles.marginTOPButton}>
+  <Button color="#d0933f"  title="Enviar Email" onPress={() => { /* código para enviar orçamento */ console.log(guiaTransporteID)}} />
+</View>
 <View style={styles.marginTOPButton2}>
 
 {guiaTransporteID.Estado === "Rascunho" ? (

@@ -740,13 +740,72 @@ export const AuthProvider = ({children}) => {
        
     }
 
+    const addGuiasTransporte = async (
+        clienteC, serieG, numeroG, dataG, validadeG, referenciaG, vencimentoG, moedaG, 
+        descontoG, observacoesG, dataCargaC, horaCargaC, enderecoC, codigoPostalC, cidadeC, 
+        paisC, dataDescargaD, horaDescargaD, enderecoD, codigoPostalD, cidadeD, paisD, matriculaC, 
+        distritoC, distritoD, LinhasG, finalizarDocumentoG, precisaBancoG) => {
+
+           
+        //const LinhasC = [{"artigo": "0001", "descricao":descricaoC, "qtd":qtdC, "preco": "19.01", "imposto": "1", "motivo":motivoC, "desconto":descontoCL, "retencao":retencaoC}];
+        const stringifiedLinhas = JSON.stringify(LinhasG);
+
+        return axios({
+            url: 'https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/guias_transporte',
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '2',
+                _token: userToken,
+                cliente: clienteC,
+                serie: serieG,
+                numero: numeroG,
+                data: dataG,
+                validade: validadeG,
+                referencia: referenciaG,
+                vencimento: vencimentoG,
+                moeda: moedaG,
+                desconto: descontoG,
+                observacoes: observacoesG,
+                data_carga_guia: dataCargaC,
+                hora_carga_guia: horaCargaC,
+                endereco_carga_guia: enderecoC,
+                codigopostal_carga_guia: codigoPostalC,
+                cidade_carga_guia: cidadeC,
+                pais_carga_guia: paisC,
+                data_descarga_guia: dataDescargaD,
+                hora_descarga_guia: horaDescargaD,
+                endereco_descarga_guia: enderecoD,
+                codigopostal_descarga_guia: codigoPostalD,
+                cidade_descarga_guia: cidadeD,
+                pais_descarga_guia: paisD,
+                matricula_carga_guia: matriculaC,
+                regiao_carga_guia: distritoC,
+                regiao_descarga_guia: distritoD,
+                Linhas: stringifiedLinhas,
+                finalizarDocumento: finalizarDocumentoG,
+                precisaBanco: precisaBancoG
+            }),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        })
+        .then(async res => {
+            console.log(res.data + 'Deu crl')
+            //return res.data
+        }).catch(e =>{
+            console.log(`Erro: ${e}` + ' Grande Erro');
+            setIsLoading(false)
+        });
+    }
+
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
             CriarFatura, deleteFatura, getFaturaDetalhes, getFaturas, finalizarFatura,
             getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes, getFaturasReb,
             getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma,
-            getGuiasTransporte, deleteGuiasTransporte, getGuiaTransporteDetalhes, finalizarGuiaTransporte
+            getGuiasTransporte, deleteGuiasTransporte, getGuiaTransporteDetalhes, finalizarGuiaTransporte, addGuiasTransporte
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>
