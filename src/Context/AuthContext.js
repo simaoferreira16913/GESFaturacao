@@ -1220,6 +1220,98 @@ export const AuthProvider = ({children}) => {
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
         });
     }
+    /*Bancos */
+    const getBancos = async () =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/tabelas/bancos`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                pag: '0',
+                numRows: '25',
+                _token: token,
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+
+    const getBancoDetalhes = async (id) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/tabelas/bancos`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idBanco: id,
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+
+    const criarBanco = async (nome, numero_snc , deb , cred) =>{
+        var token = await this.getToken();
+        
+        return axios({
+            url: `${BASE_URL}/api/tabelas/bancos`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '2',
+                _token: token,
+                snc_base_banco: numero_snc,
+                debito_banco: deb,
+                credito_banco: cred,
+                flagPredefinir: '0',
+                descricao_banco: nome,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        }).then(response => {
+            console.log(response)
+        }).catch(error => {
+            console.log("error" + error)
+        })
+
+    }
+
+    const deleteBanco = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/tabelas/bancos`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '4',
+                _token: token,
+                idBanco: id,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+
+    const predefinirBanco = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/tabelas/bancos`,
+            method: 'PATCH',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '6',
+                _token: token,
+                idBanco: id,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
@@ -1229,7 +1321,8 @@ export const AuthProvider = ({children}) => {
             getNotasCred, getNotasCredDetalhes,deleteNotaCred, finalizarNotaCred,
             getNotasDeb,getNotasDebDetalhes,deleteNotaDeb,finalizarNotaDeb, getFornecedores, getFornecedorDetalhes,deleteFornecedor,CriarFornecedor,
             getComprasFat,getComprasFatDetalhes,finalizarCompra,anularCompra,deleteCompra,CriarCompra,deleteArtigo,getAnalise
-            ,enviarOrcamento,enviarProforma, enviarFatura, enviarFatSimp,enviarNotaDeb,enviarNotaCred
+            ,enviarOrcamento,enviarProforma, enviarFatura, enviarFatSimp,enviarNotaDeb,enviarNotaCred,
+            getBancos, getBancoDetalhes, criarBanco, deleteBanco,predefinirBanco
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

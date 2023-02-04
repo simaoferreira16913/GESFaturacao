@@ -34,6 +34,9 @@ import DetalhesCompra from '../Screens/Compras/DetalhesCompra';
 import CriarCompra from '../Screens/Compras/CriarCompra';
 import DetalhesArtigo from '../Screens/Artigos/DetalhesArtigo';
 import MainAnalise from '../Screens/Analise/MainAnalise';
+import MainBancos from '../Screens/Banco/MainBancos';
+import DetalhesBancos from '../Screens/Banco/DetalhesBancos';
+import CriarBanco from '../Screens/Banco/CriarBanco';
 
 const Stack = createNativeStackNavigator();
 
@@ -71,6 +74,9 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação-Compra Detalhes' component={DetalhesCompra}/>
         <Stack.Screen name='GesFaturação-Criar Compra' component={CriarCompra}/>
         <Stack.Screen name='GesFaturação-Analise' component={MainAnalise}/>
+        <Stack.Screen name='GesFaturação-Bancos' component={MainBancos}/>
+        <Stack.Screen name='GesFaturação-Criar Banco' component={CriarBanco}/>
+        <Stack.Screen name='GesFaturação-Banco Detalhes' component={DetalhesBancos}/>
       </Stack.Navigator>
     );
 };
