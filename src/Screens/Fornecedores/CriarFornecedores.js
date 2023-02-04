@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,TextInput,Touchable, Alert, 
-  TouchableNativeFeedback, TouchableOpacity, View , ScrollView,ToastAndroid} from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View , ScrollView} from 'react-native';
 import { AuthContext } from "../../Context/AuthContext";
 import { useForm, Controller } from "react-hook-form";
 import {yupResolver} from '@hookform/resolvers/yup'
@@ -15,18 +15,16 @@ const schema = yup.object({
 
 })
 
-export default function CriarCliente({navigation}) {
+export default function CriarFornecedores({navigation}) {
   
   const { control,register, handleSubmit, watch, formState: { errors } } = useForm({
     resolver:yupResolver(schema)
   });
   
-  const {criarCliente} = useContext(AuthContext);
-  function submitcliente(data){
+  const {CriarFornecedor} = useContext(AuthContext);
+  function submitFornecedor(data){
     
-      criarCliente(data)
-      navigation.navigate('GesFaturação');
-      ToastAndroid.show("Cliente Criado ", ToastAndroid.SHORT);
+    CriarFornecedor(data)
   }
 
     
@@ -68,21 +66,6 @@ export default function CriarCliente({navigation}) {
           )}
           />
           </View>
-          <Text style={styles.titleSelect}>País</Text>
-          <View style={styles.borderMargin}>
-          <Controller 
-          control={control}
-          name="Pais"
-          render={({field: {onChange, onBlur, value}})=>(
-              <TextInput 
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                placeholder="País"
-              />
-          )}
-          />
-          </View>
           <Text style={styles.titleSelect}>Endereço</Text>
           <View style={styles.borderMargin}>
           <Controller 
@@ -98,6 +81,23 @@ export default function CriarCliente({navigation}) {
           )}
           />
           </View>
+          <Text style={styles.titleSelect}>País</Text>
+          <View style={styles.borderMargin}>
+          <Controller 
+          control={control}
+          name="Pais"
+          render={({field: {onChange, onBlur, value}})=>(
+              <TextInput 
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={value}
+                placeholder="País"
+              />
+          )}
+          />
+          </View>
+          
+          
           <Text style={styles.titleSelect}>Código-Postal</Text>
           <View style={styles.borderMargin}>
           <Controller 
@@ -113,21 +113,7 @@ export default function CriarCliente({navigation}) {
           )}
           />
           </View>
-          <Text style={styles.titleSelect}>Região</Text>
-          <View style={styles.borderMargin}>
-          <Controller 
-          control={control}
-          name="Regiao"
-          render={({field: {onChange, onBlur, value}})=>(
-              <TextInput 
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                placeholder="Região"
-              />
-          )}
-          />
-          </View>
+          
           <Text style={styles.titleSelect}>Cidade</Text>
           <View style={styles.borderMargin}>
           <Controller 
@@ -203,36 +189,8 @@ export default function CriarCliente({navigation}) {
           )}
           />
           </View>
-          <Text style={styles.titleSelect}>Fax</Text>
-          <View style={styles.borderMargin}>
-          <Controller 
-          control={control}
-          name="Fax"
-          render={({field: {onChange, onBlur, value}})=>(
-              <TextInput 
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                placeholder="Fax"
-              />
-          )}
-          />
-          </View>
-          <Text style={styles.titleSelect}>Vencimento</Text>
-          <View style={styles.borderMargin}>
-          <Controller 
-          control={control}
-          name="Vencimento"
-          render={({field: {onChange, onBlur, value}})=>(
-              <TextInput 
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                placeholder="Vencimento"
-              />
-          )}
-          />
-          </View>
+          
+          
           <Text style={styles.titleSelect}>Desconto</Text>
           <View style={styles.borderMargin}>
           <Controller 
@@ -250,8 +208,8 @@ export default function CriarCliente({navigation}) {
           </View>
           <View style={{margin: 10}}>
           <Button
-          title="Criar Cliente" color='#d0933f'
-          onPress={handleSubmit(submitcliente)}
+          title="Criar Fornecedor" color='#d0933f'
+          onPress={handleSubmit(submitFornecedor)}
         />
         </View>
        </View>

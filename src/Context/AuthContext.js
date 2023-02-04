@@ -74,25 +74,7 @@ export const AuthProvider = ({children}) => {
     const getClientes = async ()=> {
         
         var token = await this.getToken();
-
-        return axios({
-            url: `${BASE_URL}/api/tabelas/clientes`,
-            method: 'GET',
-            //timeout: 5000,
-            params: {
-                opcao: '0',
-                _token: token,
-                pag: '0',
-                numRows: '25',
-                table_usage: '1'
-            },
-            headers: {
-                Accept: 'application/json',
-            }
-        })
-
-        
-    }
+    
 
     const finalizarOrcamento = async (id) =>{
         var token = await this.getToken();
@@ -131,22 +113,7 @@ export const AuthProvider = ({children}) => {
     }
 
 
-    const getclienteID = async (id) =>{
-        var token = await this.getToken();
-        return axios({
-            url: `${BASE_URL}/api/tabelas/clientes`,
-            method: 'GET',
-            //timeout: 5000,
-            params: {
-                opcao: '1',
-                idCliente: id,
-                _token: token
-            },
-            headers: {
-                Accept: 'application/json',
-            },
-        });
-    }
+    
     
     const getArtigos = async () =>{
         var token = await this.getToken();
@@ -168,44 +135,9 @@ export const AuthProvider = ({children}) => {
 
 
     getToken = async () => AsyncStorage.getItem('@userToken');
-    const deletecliente = async (id) =>{
-        var token = await this.getToken();
-        return axios({
-            url: `${BASE_URL}/api/tabelas/clientes`,
-            method: 'DELETE',
-            timeout: 5000,
-            data: qs.stringify({
-                opcao: '4',
-                _token: token,
-                idCliente: id
-            }),
-            headers: { 'content-type': 'application/x-www-form-urlencoded' },
-        });
-    }
     
-   const criarCliente = async (dadosCli) =>{
-    var token = await this.getToken();
-    console.log(token)
-    console.log(dadosCli)
-    axios.post(`${BASE_URL}/api/tabelas/clientes`, {
-    opcao: '2',
-                _token: token,
-                nome_cliente: dadosCli.Nome,
-                nif_cliente: dadosCli.Nif,
-                pais_cliente: dadosCli.Pais,
-                endereco_cliente: dadosCli.Endereco,
-                codigopostal_cliente: dadosCli.CodigoPostal,
-                regiao_cliente: dadosCli.Regiao,
-                cidade_cliente: dadosCli.Cidade,
-                email_cliente: dadosCli.Email,
-                website_cliente: dadosCli.Website,
-                tlm_cliente: dadosCli.Telemovel,
-                tlf_cliente: dadosCli.Telefone,
-                fax_cliente: dadosCli.Fax,
-                vencimento_cliente: dadosCli.Vencimento,
-                desconto_cliente: dadosCli.Desconto,
-
-    }, {headers: { Accept: 'application/json',}})}
+    
+   
     
     const deleteOrcamento = async (id) => {
         var token = await this.getToken();
@@ -283,7 +215,7 @@ export const AuthProvider = ({children}) => {
             },
         })
         .then(async res => {
-            console.log(res.data + 'Deu crl')
+            console.log(res.data)
             //return res.data
         }).catch(e =>{
             console.log(`Erro: ${e}` + ' Grande Erro');
@@ -529,9 +461,22 @@ export const AuthProvider = ({children}) => {
         });
     }
 
-    const criarFaturaSimp = async (dadosFatSimp) =>{
+    const criarFaturaSimp = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC) =>{
         var token = await this.getToken();
+        console.log(clienteC + ' Cliente');
+        console.log(serieC + ' Serie');
+        console.log(numeroC + ' num');
+        console.log(dataC + ' data');
+        console.log(validadeC + ' val');
+        console.log(referenciaC + ' ref');
+        console.log(vencimentoC + ' ven');
+        console.log(moedaC + ' moeda');
+        console.log(descontoC + ' des');
+        console.log(observacoesC + ' obs');
+        console.log(JSON.stringify(LinhasC) + ' linha');
+        console.log(finalizarDocumentoC + ' fim');
 
+        const stringifiedLinhas = JSON.stringify(LinhasC);
         return axios({
             url: `${BASE_URL}/api/vendas/faturas_simplificadas`,
             method: 'POST',
@@ -539,22 +484,22 @@ export const AuthProvider = ({children}) => {
             data: qs.stringify({
                 opcao: '2',
                 _token: token,
-                cliente: '1',
-                serie: dadosFatSimp.Serie,
-                numero: dadosFatSimp.Numero,
-                data: dadosFatSimp.Data,
-                validade: dadosFatSimp.Validade,
-                referencia: dadosFatSimp.referencia,
-                pagamento: dadosFatSimp.Pagamento,
-                banco: dadosFatSimp.Banco,
-                vencimento: dadosFatSimp.Vencimento,
-                moeda: dadosFatSimp.Moeda,
-                desconto: dadosFatSimp.Desconto,
-                observacoes: dadosFatSimp.Observacoes,
-                linhas: dadosFatSimp.Linhas,
-                finalizarDocumento: dadosFatSimp.FinalizarDocumento,
-                precisaBanco: dadosFatSimp.PrecisaBanco,
-                centrocusto: dadosFatSimp.Centocusto,
+                cliente: clienteC,
+                serie: serieC,
+                numero: numeroC,
+                moeda: 1,
+                data: dataC,
+                validade: validadeC,
+                referencia: referenciaC,
+                vencimento: vencimentoC,
+                desconto: descontoC,
+                observacoes: observacoesC,
+                finalizarDocumento: finalizarDocumentoC,
+                pagamento: 0,
+                Linhas: stringifiedLinhas,
+                banco: 0,
+                precisaBanco: 0,
+                centrocusto: 0
             }),
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
         });
@@ -583,6 +528,7 @@ export const AuthProvider = ({children}) => {
             console.log(res)
         })
     }
+
 
     /*Faturas Recibos */
     const getFaturasReb = async () =>{
@@ -821,6 +767,612 @@ export const AuthProvider = ({children}) => {
        
     }
 
+
+    const addProforma = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC) => {
+
+        console.log(clienteC + ' Cliente');
+        console.log(serieC + ' Serie');
+        console.log(numeroC + ' num');
+        console.log(dataC + ' data');
+        console.log(validadeC + ' val');
+        console.log(referenciaC + ' ref');
+        console.log(vencimentoC + ' ven');
+        console.log(moedaC + ' moeda');
+        console.log(descontoC + ' des');
+        console.log(observacoesC + ' obs');
+        console.log(JSON.stringify(LinhasC) + ' linha');
+        console.log(finalizarDocumentoC + ' fim');
+           
+        //const LinhasC = [{"artigo": "0001", "descricao":descricaoC, "qtd":qtdC, "preco": "19.01", "imposto": "1", "motivo":motivoC, "desconto":descontoCL, "retencao":retencaoC}];
+        const stringifiedLinhas = JSON.stringify(LinhasC);
+
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/proformas`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '2',
+                _token: userToken,
+                cliente: clienteC, 
+                serie: serieC, 
+                numero: numeroC, 
+                data: dataC,  
+                validade: validadeC, 
+                referencia: referenciaC, 
+                vencimento: vencimentoC, 
+                moeda: moedaC, 
+                desconto: descontoC, 
+                observacoes: observacoesC, 
+                Linhas: stringifiedLinhas, 
+                finalizarDocumento: finalizarDocumentoC
+            }),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        })
+        .then(async res => {
+            console.log(res.data + 'Deu crl')
+            //return res.data
+        }).catch(e =>{
+            console.log(`Erro: ${e}` + ' Grande Erro');
+            setIsLoading(false)
+        });
+    }
+
+    /*Nota de Credito */
+    const getNotasCred = async () =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_credito`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                pag: '0',
+                numRows: '25',
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        });
+    }
+
+    const getNotasCredDetalhes = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_credito`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idDocument: id,
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+    const deleteNotaCred = async (id) => {
+        var token = await this.getToken();
+        console.log(token)
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_credito`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '5',
+                _token: token,
+                idNota: id,
+            }),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        });
+    }
+    const finalizarNotaCred = async (id) =>{
+        var token = await this.getToken();
+        let aux = id;
+        console.log("Aqui",aux);
+        axios.patch(`${BASE_URL}/api/vendas/notas_credito`,
+        {_token: token, opcao: '6', idNota: id}).then((res)=>{
+            console.log(res)
+        })
+       
+    }
+    /*Nota de Debito*/
+    const getNotasDeb = async () =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_debito`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                pag: '0',
+                numRows: '25',
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            }
+        });
+    }
+
+    const getNotasDebDetalhes = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_debito`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idDocument: id,
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+    const deleteNotaDeb = async (id) => {
+        var token = await this.getToken();
+        console.log(token)
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_debito`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '5',
+                _token: token,
+                idNota: id,
+            }),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+        });
+    }
+    const finalizarNotaDeb = async (id) =>{
+        var token = await this.getToken();
+        let aux = id;
+        console.log("Aqui",aux);
+        axios.patch(`${BASE_URL}/api/vendas/notas_debito`,
+        {_token: token, opcao: '6', idNota: id}).then((res)=>{
+            console.log(res)
+        })
+       
+    }
+    /*Fornecedores */
+    const getFornecedores = async () =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/tabelas/fornecedores`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                pag: '0',
+                numRows: '25',
+                _token: token,
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+
+    const getFornecedorDetalhes = async (id) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/tabelas/fornecedores`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idFornecedor: id,
+                _token: token,
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+
+    const deleteFornecedor = async (id) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/tabelas/fornecedores`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '4',
+                _token: token,
+                idFornecedor: id,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        })
+    }
+
+    const CriarFornecedor = async (dadosCli) =>{
+        var token = await this.getToken();
+        console.log(token)
+        console.log(dadosCli)
+        axios.post(`${BASE_URL}/api/tabelas/fornecedores`, {
+                    opcao: '2',
+                    _token: token,
+                    nome_fornecedor: dadosCli.Nome,
+                    nif_fornecedor: dadosCli.Nif,
+                    pais_fornecedor: dadosCli.Pais,
+                    endereco_fornecedor: dadosCli.Endereco,
+                    codigopostal_fornecedor: dadosCli.CodigoPostal,
+                    regiao_fornecedor: dadosCli.Regiao,
+                    cidade_fornecedor: dadosCli.Cidade,
+                    email_fornecedor: dadosCli.Email,
+                    website_fornecedor: dadosCli.Website,
+                    tlm_fornecedor: dadosCli.Telemovel,
+                    tlf_fornecedor: dadosCli.Telefone,
+                    fax_fornecedor: dadosCli.Fax,
+                    preferencial_nome_fornecedor: "oi",
+                    preferencial_email_fornecedor: "asd@gmail.com",
+                    preferencial_tlm_fornecedor: "789456123",
+                    preferencial_tlf_fornecedor: "9657894560",
+                    pagamento_fornecedor: "0",
+                    vencimento_fornecedor: dadosCli.Vencimento,
+                    desconto_fornecedor: dadosCli.Desconto,
+                    flagContaGeral: "0"
+    
+        }, {headers: { Accept: 'application/json',}})}
+        /*Clientes */
+        const getClientes = async ()=> {
+        
+            var token = await this.getToken();
+    
+            return axios({
+                url: `${BASE_URL}/api/tabelas/clientes`,
+                method: 'GET',
+                //timeout: 5000,
+                params: {
+                    opcao: '0',
+                    _token: token,
+                    pag: '0',
+                    numRows: '25',
+                    table_usage: '1'
+                },
+                headers: {
+                    Accept: 'application/json',
+                }
+            })
+    
+            
+        }
+        const getclienteID = async (id) =>{
+            console.log("AQUI", id)
+            var token = await this.getToken();
+            return axios({
+                url: `${BASE_URL}/api/tabelas/clientes`,
+                method: 'GET',
+                //timeout: 5000,
+                params: {
+                    opcao: '1',
+                    idCliente: id,
+                    _token: token
+                },
+                headers: {
+                    Accept: 'application/json',
+                },
+            });
+        }
+        const criarCliente = async (dadosCli) =>{
+            var token = await this.getToken();
+            console.log(token)
+            console.log(dadosCli)
+            axios.post(`${BASE_URL}/api/tabelas/clientes`, {
+            opcao: '2',
+                        _token: token,
+                        nome_cliente: dadosCli.Nome,
+                        nif_cliente: dadosCli.Nif,
+                        pais_cliente: dadosCli.Pais,
+                        endereco_cliente: dadosCli.Endereco,
+                        codigopostal_cliente: dadosCli.CodigoPostal,
+                        regiao_cliente: dadosCli.Regiao,
+                        cidade_cliente: dadosCli.Cidade,
+                        email_cliente: dadosCli.Email,
+                        website_cliente: dadosCli.Website,
+                        tlm_cliente: dadosCli.Telemovel,
+                        tlf_cliente: dadosCli.Telefone,
+                        fax_cliente: dadosCli.Fax,
+                        vencimento_cliente: dadosCli.Vencimento,
+                        desconto_cliente: dadosCli.Desconto,
+        
+            }, {headers: { Accept: 'application/json',}})}
+            const deletecliente = async (id) =>{
+                var token = await this.getToken();
+                return axios({
+                    url: `${BASE_URL}/api/tabelas/clientes`,
+                    method: 'DELETE',
+                    timeout: 5000,
+                    data: qs.stringify({
+                        opcao: '4',
+                        _token: token,
+                        idCliente: id
+                    }),
+                    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+                });
+            }
+
+    /*Compras Fatura */
+    const getComprasFat = async () =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/compras/compras`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                _token: token,
+                pag: '0',
+                numRows: '25',
+                table_usage: '1'
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+
+    const getComprasFatDetalhes = async (id) =>{
+        var token = await this.getToken();
+        console.log(id);
+        return axios({
+            url: `${BASE_URL}/api/compras/compras`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '1',
+                idCompra: id,
+                _token: token
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+
+
+    const finalizarCompra = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/compras/compras`,
+            method: 'PATCH',
+            timeout: 5000,
+            data : qs.stringify({
+                opcao: '6',
+                _token: token,
+                idCompra: id,
+        }),
+                headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+
+    const anularCompra = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/compras/compras`,
+            method: 'PATCH',
+            timeout: 5000,
+            data : qs.stringify({
+                opcao: '5',
+                _token: token,
+                idCompra: id,
+        }),
+                headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+
+
+    const deleteCompra = async (id) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/compras/compras`,
+            method: 'DELETE',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '4',
+                _token: token,
+                idCompra: id
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+    const CriarCompra = async (clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC) =>{
+        var token = await this.getToken();
+        console.log(clienteC + ' Cliente');
+        console.log(serieC + ' Serie');
+        console.log(numeroC + ' num');
+        console.log(dataC + ' data');
+        console.log(validadeC + ' val');
+        console.log(referenciaC + ' ref');
+        console.log(vencimentoC + ' ven');
+        console.log(moedaC + ' moeda');
+        console.log(descontoC + ' des');
+        console.log(observacoesC + ' obs');
+        console.log(JSON.stringify(LinhasC) + ' linha');
+        console.log(finalizarDocumentoC + ' fim');
+
+        const stringifiedLinhas = JSON.stringify(LinhasC);
+        return axios({
+            url: `${BASE_URL}/api/compras/compras`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '2',
+                _token: token,
+                fornecedor: clienteC,
+                serie: serieC,
+                numero: 1,
+                moeda: 1,
+                data: dataC,
+                validade: validadeC,
+                referencia: referenciaC,
+                vencimento: vencimentoC,
+                desconto: descontoC,
+                observacoes: observacoesC,
+                finalizarDocumento: finalizarDocumentoC,
+                pagamento: 0,
+                Linhas: stringifiedLinhas,
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+    /*Artigos */
+    const deleteArtigo = async (id) =>{
+        var token = await this.getToken();
+        return axios({
+            url: 'https://demo.gesfaturacao.pt/gesfaturacao/server/webservices/api/tabelas/artigos',
+            method: 'DELETE',
+            timeout: 5000,
+            data : qs.stringify({
+                opcao: '4',
+                _token: token,
+                idArtigo: id
+                }),
+                headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+    /*Analise */
+    const getAnalise = async () =>{
+        var token = await this.getToken();
+        return axios({
+            url: `${BASE_URL}/api/analise`,
+            method: 'GET',
+            timeout: 5000,
+            params: {
+                opcao: '0',
+                _token: token,
+                pag: '0',
+                numRows: '25',
+                //cliente: '1',
+                dataInicio: '02/02/2023',
+                dataFim: '25/02/2023'
+            },
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+    }
+    /**Enviar Email Orcamento */
+    const enviarOrcamento = async (id, mail) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/orcamentos`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '5',
+                _token: token,
+                documento: id,
+                tipo_doc: 'OR',
+                email:mail
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+    /*Enviar Email Proforma */
+    const enviarProforma = async (id, mail) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/orcamentos/proformas`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '5',
+                _token: token,
+                documento: id,
+                tipo_doc: 'PF',
+                email:mail
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+    /*Enviar Email Fatura*/
+    const enviarFatura = async (id, mail) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '7',
+                _token: token,
+                documento: id,
+                tipo_doc: 'FT',
+                email:mail
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+    /*Enviar Email Fat Simp */
+    const enviarFatSimp = async (id, mail) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/vendas/faturas_simplificadas`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '7',
+                _token: token,
+                documento: id,
+                tipo_doc: 'FS',
+                email:mail
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+    /*Enviar Notas Cred*/
+    const enviarNotaCred = async (id, mail) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_credito`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '7',
+                _token: token,
+                documento: id,
+                tipo_doc: 'NC',
+                email:mail
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
+    /*Enviar Notas Deb */
+    const enviarNotaDeb = async (id, mail) =>{
+        var token = await this.getToken();
+
+        return axios({
+            url: `${BASE_URL}/api/vendas/notas_debito`,
+            method: 'POST',
+            timeout: 5000,
+            data: qs.stringify({
+                opcao: '7',
+                _token: token,
+                documento: id,
+                tipo_doc: 'ND',
+                email:mail
+            }),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        });
+    }
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
@@ -828,6 +1380,11 @@ export const AuthProvider = ({children}) => {
             getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes, getFaturasReb,
             getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma,
             getGuiasTransporte, deleteGuiasTransporte, getGuiaTransporteDetalhes, finalizarGuiaTransporte, addGuiasTransporte, atualizarCodigoATGuia, gerarDocumentoGuia
+            getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma, addProforma,
+            getNotasCred, getNotasCredDetalhes,deleteNotaCred, finalizarNotaCred,
+            getNotasDeb,getNotasDebDetalhes,deleteNotaDeb,finalizarNotaDeb, getFornecedores, getFornecedorDetalhes,deleteFornecedor,CriarFornecedor,
+            getComprasFat,getComprasFatDetalhes,finalizarCompra,anularCompra,deleteCompra,CriarCompra,deleteArtigo,getAnalise
+            ,enviarOrcamento,enviarProforma, enviarFatura, enviarFatSimp,enviarNotaDeb,enviarNotaCred
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

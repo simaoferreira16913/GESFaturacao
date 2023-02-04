@@ -1,7 +1,8 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable,
-  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid } from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View, 
+  ScrollView,FlatList,Image, ToastAndroid,Alert, TextInput,Modal,TouchableHighlight } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -12,10 +13,12 @@ import DatePicker from 'react-native-date-picker'
 import { Renderer } from 'phaser';
 import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
-
+import Dialog from "react-native-dialog";
+import Prompt from 'react-native-prompt-android';
 
 export default function DetalhesOrcamento({navigation, route}) {
   const {getArtigoID} = useContext(AuthContext);
+  const {enviarOrcamento} = useContext(AuthContext);
   const {getOrcamentos} = useContext(AuthContext);
   const {deleteOrcamento} = useContext(AuthContext);
   const {estadoOrcamento} = useContext(AuthContext);
@@ -26,8 +29,9 @@ export default function DetalhesOrcamento({navigation, route}) {
   const [aux, setAux] = useState();
   const [aux2, setAux2] = useState();
   const id = route.params.id;
-
-
+  const [modalVisible, setModalVisible] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  
   const mudarEcra = (value) => {
     navigation.navigate('DetalhesOrcamento.js', value);
   }
@@ -92,6 +96,18 @@ export default function DetalhesOrcamento({navigation, route}) {
       ToastAndroid.show("Orçamento Rejeitado",  ToastAndroid.SHORT);
     }
     }
+    const handleButtonEnviar = () =>{
+      console.log("Cheguei")
+      Alert.prompt("OI","NOME:",[{
+        text:"Submit",
+        onPress:(text)=>console.log(text)
+      },
+    {
+      text:"Cancel",
+      onPress:()=>console.log("Cancel")
+    }],"plain-text","Name")
+      
+    }
 
   return (
     <ScrollView>
@@ -139,21 +155,89 @@ export default function DetalhesOrcamento({navigation, route}) {
         />
     ))}
 </Table>
-<View style={styles.marginTOPButton}>
-  <Button color="#d0933f"  title="Enviar Email" onPress={() => { /* código para enviar orçamento */ }} />
-</View>
+
 <View style={styles.marginTOPButton2}>
 
 {orcamentoID.Estado === "Rascunho" ? (
-  <Button color="#d0933f"  title="Finalizar Orçamento" onPress={() => { handleFinalizarOrcamento()}} />
+  <View style={styles.marginTOPButton}>
+    <Button color="#d0933f"  title="Finalizar Orçamento" onPress={() => { handleFinalizarOrcamento()}} />
+  </View>
 ) : (orcamentoID.Estado === "Aberto" ? (
+  
   <View>
-    <Button color="#d0933f" title="Aceitar" onPress={() => { handleEstadoOrcamento(1) }} />
-    <Button color="#d0933f" title="Rejeitar" onPress={() => { handleEstadoOrcamento(0) }} />
+    <View style={styles.marginTOPButton}>
+<Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}>
+        <View style={{ marginTop: 22 }}>
+          <View>
+            
+            <Text style={styles.titleSelect}>Email</Text>
+            <View style={styles.borderMargin}>
+            <TextInput placeholder="Email" value={inputValue} onChangeText={text => setInputValue(text)}/>
+            </View>
+            <View style={{margin: 10}}>
+            <Button color="#488c6c"  title="Enviar" onPress={() => {
+              setModalVisible(!modalVisible);
+                enviarOrcamento(id, inputValue).then((res)=>{
+                  console.log(res);
+                });
+              }} />
+            </View>
+            <View style={{margin: 10}}>
+            <Button color="#d0933f" title="Cancelar" onPress={() => {
+              setModalVisible(!modalVisible);
+
+              }} />
+            </View>
+          </View>
+        </View>
+      </Modal>
+  <Button color="#d0933f"  title="Enviar Email" onPress={()=>setModalVisible(true)} />
+</View>
+    <Button color="#488c6c" title="Aceitar" onPress={() => { handleEstadoOrcamento(1) }} />
+    <Button color="#bf4346" title="Rejeitar" onPress={() => { handleEstadoOrcamento(0) }} />
   </View>
 ) : (
   <View>
-    
+    <View style={styles.marginTOPButton}>
+<Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}>
+        <View style={{ marginTop: 22 }}>
+          <View>
+            
+            <Text style={styles.titleSelect}>Email</Text>
+            <View style={styles.borderMargin}>
+            <TextInput placeholder="Email" value={inputValue} onChangeText={text => setInputValue(text)}/>
+            </View>
+            <View style={{margin: 10}}>
+            <Button color="#488c6c"  title="Enviar" onPress={() => {
+              setModalVisible(!modalVisible);
+                enviarOrcamento(id, inputValue).then((res)=>{
+                  console.log(res);
+                });
+              }} />
+            </View>
+            <View style={{margin: 10}}>
+            <Button color="#d0933f" title="Cancelar" onPress={() => {
+              setModalVisible(!modalVisible);
+
+              }} />
+            </View>
+          </View>
+        </View>
+      </Modal>
+  <Button color="#d0933f"  title="Enviar Email" onPress={()=>setModalVisible(true)} />
+</View>
   </View>
   
 ))}
@@ -232,7 +316,8 @@ const styles = StyleSheet.create({
       color:"#000000"
     },
     marginTOPButton: {
-      margin: 20
+      marginTop: 20,
+      marginBottom: 20
     },
     marginTOPButton2: {
       marginLeft: 20,

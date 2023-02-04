@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable,
-  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid, LogBox,TextInput,Modal,TouchableHighlight  } from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid,LogBox  } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -14,28 +14,27 @@ import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
 
-export default function DetalhesFaturaPro({navigation, route}) {
+export default function DetalhesCompra({navigation, route}) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
   const {getArtigoID} = useContext(AuthContext);
-  const {enviarProforma} = useContext(AuthContext);
-  const {estadoProforma} = useContext(AuthContext);
-  const {finalizarProforma} = useContext(AuthContext);
-  const {getProformaDetalhes} = useContext(AuthContext);
-  const [proformaID, setProformaID] = useState([]);
+  const {finalizarCompra} = useContext(AuthContext);
+  const {getComprasFatDetalhes} = useContext(AuthContext);
+  const [faturaID, setFaturaID] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [aux, setAux] = useState();
   const [aux2, setAux2] = useState();
   const id = route.params.id;
-  const [modalVisible, setModalVisible] = useState(false);
-  const [inputValue, setInputValue] = useState('');
 
-  
 
-  if(proformaID.length == 0){
-    getProformaDetalhes(id).then((res)=>{
+  /*const mudarEcra = (value) => {
+    navigation.navigate('DetalhesOrcamento.js', value);
+  }*/
+
+  if(faturaID.length == 0){
+    getComprasFatDetalhes(id).then((res)=>{
         console.log(res.data.data);
-        setProformaID(res.data.data);
+        setFaturaID(res.data.data);
         setTableData(res.data.data.linhas.map(linha => [linha.artigo, Number(linha.preco).toFixed(2), parseFloat(linha.qtd).toFixed(2),
              linha.imposto, Number(linha.totalLinha).toFixed(2)]));
         setAux(1);   
@@ -63,9 +62,10 @@ export default function DetalhesFaturaPro({navigation, route}) {
     }
     
 
-    function handleFinalizarProforma(){
-      finalizarProforma(id).then((res)=>{
+    function handleFinalizarFatura(){
+      finalizarFatura(id).then((res)=>{
         console.log(res);
+        ToastAndroid.show("Fatura Finalizada",ToastAndroid.SHORT);
       })
       .catch(e => {
         console.log(`Login error ${e}`);
@@ -73,59 +73,45 @@ export default function DetalhesFaturaPro({navigation, route}) {
     navigation.goBack()
     navigation.navigate('GesFaturação');
     //navigation.navigate('GesFaturação-Ver Detalhes',  { id: id });
-    ToastAndroid.show("Proforma Finalizado",ToastAndroid.SHORT);
+    
 
     }
 
-    function handleEstadoProforma(estado){
-      console.log("Tou Aqui",estado)
-      estadoProforma(id, estado).then((res)=>{
-        console.log(res);
-      }).catch(e => {
-        console.log(`Login error ${e}`);
-    });
-    navigation.navigate('GesFaturação');
-    //ToastAndroid.show("Orçamento Aceite");
-    if(estado == 1){
-      ToastAndroid.show("Proforma Aceite ", ToastAndroid.SHORT);
-    }else{
-      ToastAndroid.show("Proforma Rejeitada",  ToastAndroid.SHORT);
-    }
-    }
+    
 
   return (
     <ScrollView>
       <Text style={styles.titleSelect}>Cliente</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{proformaID.Cliente}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.Cliente}</Text>
       </View>
       <Text style={styles.titleSelect}>NIF</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{proformaID.Nif}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.Nif}</Text>
       </View>
       <Text style={styles.titleSelect}>Endereço</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{proformaID.EnderecoCliente}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.EnderecoCliente}</Text>
       </View>
       <Text style={styles.titleSelect}>Série</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{proformaID.Serie}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.Serie}</Text>
       </View>
       <Text style={styles.titleSelect}>Data</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{proformaID.Data}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.Data}</Text>
       </View>
       <Text style={styles.titleSelect}>Data Vencimento</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{proformaID.DataValidade}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.Validade}</Text>
       </View>
       <Text style={styles.titleSelect}>Desconto</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{parseFloat(proformaID.PercentagemDesconto).toFixed(2)}%</Text>
+        <Text style={{marginLeft: 4}}>{parseFloat(faturaID.PercentagemDesconto).toFixed(2)}%</Text>
       </View>
       <Text style={styles.titleSelect}>Moeda</Text>
       <View style={styles.borderMargin}>
-        <Text style={{marginLeft: 4}}>{proformaID.Moeda}</Text>
+        <Text style={{marginLeft: 4}}>{faturaID.Moeda}</Text>
       </View>
       <Text style={styles.titleSelect}>Linhas</Text>
       <Table style={{marginLeft: 10}}>
@@ -139,93 +125,20 @@ export default function DetalhesFaturaPro({navigation, route}) {
         />
     ))}
 </Table>
-
+<View style={styles.marginTOPButton}>
+  <Button color="#d0933f"  title="Enviar Email" onPress={() => { /* código para enviar orçamento */ }} />
+</View>
 <View style={styles.marginTOPButton2}>
 
-{proformaID.Estado === "Rascunho" ? (
-  <Button color="#d0933f"  title="Finalizar Proforma" onPress={() => { handleFinalizarProforma()}} />
-) : (proformaID.Estado === "Aberto" ? (
-  <View>
-    <View style={styles.marginTOPButton}>
-<Modal
-        animationType="slide"
-        transparent={false}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(false);
-        }}>
-        <View style={{ marginTop: 22 }}>
-          <View>
-            
-            <Text style={styles.titleSelect}>Email</Text>
-            <View style={styles.borderMargin}>
-            <TextInput placeholder="Email" value={inputValue} onChangeText={text => setInputValue(text)}/>
-            </View>
-            <View style={{margin: 10}}>
-            <Button color="#488c6c"  title="Enviar" onPress={() => {
-              setModalVisible(!modalVisible);
-                enviarProforma(id, inputValue).then((res)=>{
-                  console.log(res);
-                });
-              }} />
-            </View>
-            <View style={{margin: 10}}>
-            <Button color="#d0933f" title="Cancelar" onPress={() => {
-              setModalVisible(!modalVisible);
-
-              }} />
-            </View>
-          </View>
-        </View>
-      </Modal>
-  <Button color="#d0933f"  title="Enviar Email" onPress={()=>setModalVisible(true)} />
-</View>
-    <Button color="#488c6c" title="Aceitar" onPress={() => { handleEstadoProforma(1) }} />
-    <Button color="#bf4346" title="Rejeitar" onPress={() => { handleEstadoProforma(0) }} />
-  </View>
+{faturaID.Estado === "Rascunho" ? (
+  <Button color="#d0933f"  title="Finalizar Fatura" onPress={() => { handleFinalizarFatura()}} />
 ) : (
-  <View>
-    <View style={styles.marginTOPButton}>
-<Modal
-        animationType="slide"
-        transparent={false}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(false);
-        }}>
-        <View style={{ marginTop: 22 }}>
-          <View>
-            
-            <Text style={styles.titleSelect}>Email</Text>
-            <View style={styles.borderMargin}>
-            <TextInput placeholder="Email" value={inputValue} onChangeText={text => setInputValue(text)}/>
-            </View>
-            <View style={{margin: 10}}>
-            <Button color="#488c6c"  title="Enviar" onPress={() => {
-              setModalVisible(!modalVisible);
-                enviarProforma(id, inputValue).then((res)=>{
-                  console.log(res);
-                });
-              }} />
-            </View>
-            <View style={{margin: 10}}>
-            <Button color="#d0933f" title="Cancelar" onPress={() => {
-              setModalVisible(!modalVisible);
-
-              }} />
-            </View>
-          </View>
-        </View>
-      </Modal>
-  <Button color="#d0933f"  title="Enviar Email" onPress={()=>setModalVisible(true)} />
-</View>
-  </View>
   
-))}
+  <Text></Text>
+)}
 </View>
     </ScrollView>
   );
-
 
 }
 
@@ -298,8 +211,7 @@ const styles = StyleSheet.create({
       color:"#000000"
     },
     marginTOPButton: {
-      marginTop: 20,
-      marginBottom:20
+      margin: 20
     },
     marginTOPButton2: {
       marginLeft: 20,

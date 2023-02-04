@@ -13,11 +13,11 @@ import { Renderer } from 'phaser';
 import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
-export default function MainFatura({navigation}) {
+export default function MainFornecedores({navigation}) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
-  const {getFaturas} = useContext(AuthContext);
-  const {deleteFatura} = useContext(AuthContext);
+  const {getFornecedores} = useContext(AuthContext);
+  const {deleteFornecedor} = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);
   Date.prototype.toDateString = function dtoString() {
     return `${this.getDay}`;
@@ -29,7 +29,7 @@ export default function MainFatura({navigation}) {
   const [datef, setDatef] = useState()
   const [open, setOpen] = useState(false)
   const [openf, setOpenf] = useState(false)
-  const [faturas, setFaturas] = useState([]);
+  const [fornecedores, setFornecedores] = useState([]);
   const [selectedIdCliente, setSelectedIdCliente] = useState(null);
   const opcao = 0;
   const [search, setSearch] = useState("c")
@@ -65,26 +65,20 @@ export default function MainFatura({navigation}) {
     );
   };
   
-  if(!faturas.length){
-    getFaturas().then((res)=>{
-      setFaturas(res.data.aaData);
+  if(!fornecedores.length){
+    getFornecedores().then((res)=>{
+      setFornecedores(res.data.aaData);
       console.log(res.data.aaData);
     }).catch(e =>{
       console.log(`Erro: ${e}`);
   });
   } 
-  if (!dadosClientes.length) {
-    getClientes().then((res) => {
-      console.log(res.data)
-      setDadosClientes(res.data.aaData)
-      
-    });
-  }
-  const columns = ['Nome', 'Preço', 'Estado', , 'Ações'];
+ 
+  const columns = ['Nome', 'Nif' , 'Ações'];
 
-  const data = faturas.map(item => {
+  const data = fornecedores.map(item => {
     let botoes;
-    if (item[8] === 'Rascunho') {
+    
       botoes = (
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[0])}>
@@ -95,142 +89,39 @@ export default function MainFatura({navigation}) {
           </TouchableOpacity >
         </View>
       );
-    } else {
-      botoes = (
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity onPress={() => mudarEcra(item[0])}>
-            <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
-          </TouchableOpacity >
-        </View>
-      );
-    }
-    return [ item[2],parseFloat(item[6]).toFixed(2), item[8], botoes];
+    
+    return [ item[1],item[2],  botoes];
   });
 
   const handleRemove = (id) => {
     console.log(id)
-    deleteFatura(id).then((res)=>{
+    deleteFornecedor(id).then((res)=>{
       console.log(res);
     });
 
-    setFaturas(faturas.filter(item => item[0] !== id));
-    ToastAndroid.show("Fatura Eliminada",ToastAndroid.SHORT);
+    setFornecedores(fornecedores.filter(item => item[0] !== id));
+    ToastAndroid.show("Fornecedores Eliminada",ToastAndroid.SHORT);
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Fatura Detalhes',  { id: value });
+    navigation.navigate('GesFaturação-Fornecedores Detalhes',  { id: value });
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: '#e5e9ec' }}>
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Fatura")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Fornecedores")}>
           <View style={styles.button}>
           
-            <Text style={styles.textfont}>   Nova Fatura</Text>
+            <Text style={styles.textfont}>   Novo Fornecedor</Text>
           </View>
         </TouchableNativeFeedback>
       </View>
 
-      <View > 
-        <TouchableNativeFeedback>
-          <View style={styles.button}>
-          
-            <Text style={styles.textfont}>   Enviar Faturas</Text>
-          </View>
-        </TouchableNativeFeedback>
-      </View> 
 
-      <View> 
-        <Text style={styles.titleSelect}>Cliente</Text>
-        <View style={styles.borderMargin}>
-        <Picker  style={styles.pickerComponent} placeholder="Selecione um cliente" selectedValue={selectedIdCliente} onValueChange={itemValue => setSelectedIdCliente(itemValue)}>
-          {dadosClientes.map(function (object, i) {
-            return <Picker.Item label={object[2]} value={object[0]} key={i} />;
-          })}
-        </Picker>
-        </View>
-      </View>
-      <View> 
-        <Text style={styles.titleSelect}>Estado</Text>
-        <View style={styles.borderMargin}>
-        <Picker style={styles.pickerComponent} 
-              selectedValue={selectedEst}
-              onValueChange={(itemValue, itemIndex) =>
-              setSelectedEst(itemValue)}>
-          
-          <Picker.Item label="Selecione um Estado"  />
-          <Picker.Item label="Rascunho" value="Rascunho" />
-          <Picker.Item label="Aberto" value="Aberto" />
-          <Picker.Item label="Aprovado" value="Aprovado" />
-          <Picker.Item label="Rejeitado" value="Rejeitado" />
-        </Picker>
-        </View>
-      </View>
-      
-      <View> 
-        <Text style={styles.titleSelect}>Data de Início</Text>
-        <View style={styles.borderMargin}>
-        <TouchableOpacity  onPress={() => setOpen(true)} style={styles.touchableO}>
-        <DatePicker
-        modal
-        mode="date"
-        
-        open={open}
-        date={new Date()}
-        onConfirm={(datei) => {
-          setOpen(false)
-          
-          setDatei(datei)
-        }}
-        onCancel={() => {
-          setOpen(false)
-        }}
-      />
-      
-      <Text style={styles.textDate}> {todaiDate = moment(datei).format("DD/MM/YYYY") }</Text>
-         
-      </TouchableOpacity>
-      
-        </View>
-      </View>
-      <View> 
-        <Text style={styles.titleSelect}>Data de Fim</Text>
-        <View style={styles.borderMargin}>
-        <TouchableOpacity  onPress={() => setOpenf(true)} style={styles.touchableO}>
-        <DatePicker
-        modal
-        mode="date"
-        open={openf}
-        date={new Date()}
-        onConfirm={(datef) => {
-          setOpenf(false)
-          
-          setDatef(datef)
-        }}
-        onCancel={() => {
-          setOpenf(false)
-        }}
-      />
-      
-      <Text style={styles.textDate}> {todafDate = moment(datef).format("DD/MM/YYYY") }</Text>
-         
-      </TouchableOpacity>
-      
-        </View>
-      </View>
-      
-      <View  > 
-        <TouchableNativeFeedback onPress={()=> getFaturas(search,numRows,pag)}>
-          <View style={styles.button}>
-
-            <Text style={styles.textfont}>   Pesquisar</Text>
-          </View>
-        </TouchableNativeFeedback>
-      </View> 
-      <Table style={{width: '100%', height: '100%', marginLeft:40}}>
+      <Table style={{width: '100%', height: '100%', marginLeft:70}}>
         <Row data={columns}  textStyle={styles.text}/>
         <Rows data={data} />
       </Table>

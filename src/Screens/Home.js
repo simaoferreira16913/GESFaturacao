@@ -20,6 +20,12 @@ export default function Home({navigation}) {
       <Button title='Faturas' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Faturas")}/>
       <Button title='Faturas Simplificadas' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Faturas Simplificadas")}/>
       <Button title='Proformas' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Proformas")}/>
+      <Button title='Notas de Crédito' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Notas de Créditos")}/>
+      <Button title='Notas de Débito' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Notas de Débito")}/>
+      <Button title='Fornecedores' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Fornecedores")}/>
+      <Button title='Clientes' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Clientes")}/>
+      <Button title='Compras' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Compras")}/>
+      <Button title='Análise' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Analise")}/>
       <Button title='Logout' color='#d0933f' onPress={()=> {logout()}}/>
       
       </View> 

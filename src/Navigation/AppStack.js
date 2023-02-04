@@ -8,7 +8,7 @@ import MainOrcamento from '../Screens/Orcamentos/MainOrcamento';
 import CriarOrcamento from '../Screens/Orcamentos/CriarOrcamento';
 import CriarCliente from '../Screens/Clientes/CriarCliente';
 import CriarArtigo from '../Screens/Artigos/CriarArtigo';
-import MainArtigo from '../Screens/Artigos/MainArtigo';
+import MainArtigos from '../Screens/Artigos/MainArtigos';
 import VerDetalhesOrc from '../Screens/Orcamentos/DetalhesOrcamento';
 import MainFatura from '../Screens/Faturas/MainFatura';
 import DetalhesFatura from '../Screens/Faturas/DetalhesFatura';
@@ -18,6 +18,22 @@ import MainFaturaSimp from '../Screens/FaturasSimplificadas/MainFaturaSimp';
 import MainFaturaRec from '../Screens/FaturaRecibo/MainFaturaRec';
 import MainFaturaPro from '../Screens/FaturasProforma/MainFaturaPro';
 import DetalhesFaturaPro from '../Screens/FaturasProforma/DetalhesFaturaPro';
+import CriarProforma from '../Screens/FaturasProforma/CriarProforma';
+import CriarFaturaSimp from '../Screens/FaturasSimplificadas/CriarFaturaSimp';
+import MainNotaCred from '../Screens/notasCredito/MainNotaCred';
+import DetalhesNotaCred from '../Screens/notasCredito/DetalhesNotaCred';
+import MainNotaDeb from '../Screens/notasDebito/MainNotaDeb';
+import DetalhesNotaDeb from '../Screens/notasDebito/DetalhesNotaDeb';
+import MainFornecedores from '../Screens/Fornecedores/MainFornecedores';
+import DetalhesFornecedor from '../Screens/Fornecedores/DetalhesFornecedores';
+import CriarFornecedores from '../Screens/Fornecedores/CriarFornecedores';
+import DetalhesCliente from '../Screens/Clientes/DetalhesCliente';
+import MainCliente from '../Screens/Clientes/MainCliente';
+import MainCompra from '../Screens/Compras/MainCompra';
+import DetalhesCompra from '../Screens/Compras/DetalhesCompra';
+import CriarCompra from '../Screens/Compras/CriarCompra';
+import DetalhesArtigo from '../Screens/Artigos/DetalhesArtigo';
+import MainAnalise from '../Screens/Analise/MainAnalise';
 
 //Guias
 import MainGuias from '../Screens/Guias/MainGuias';
@@ -42,7 +58,8 @@ const AppStack = () => {
         <Stack.Screen name="GesFaturação-Orçamentos" component={MainOrcamento} />
         <Stack.Screen name='GesFaturação-Criar Orçamento' component={CriarOrcamento}/>
         <Stack.Screen name='GesFaturação-Criar Cliente' component={CriarCliente}/>
-        <Stack.Screen name='GesFaturação-Artigos' component={MainArtigo}/>
+        <Stack.Screen name='GesFaturação-Artigos' component={MainArtigos}/>
+        <Stack.Screen name='GesFaturação-Artigo Detalhes' component={DetalhesArtigo}/>
         <Stack.Screen name='GesFaturação-Criar Artigo' component={CriarArtigo}/>
         <Stack.Screen name='GesFaturação-Ver Detalhes' component={VerDetalhesOrc}/>
         <Stack.Screen name='GesFaturação-Faturas' component={MainFatura}/>
@@ -67,6 +84,21 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação-Guias Transporte' component={MainTransporte}/>
         <Stack.Screen name='GesFaturação-Detalhes Guia Transporte' component={DetalhesTransporte}/>
         
+        <Stack.Screen name='GesFaturação-Criar Proforma' component={CriarProforma}/>
+        <Stack.Screen name='GesFaturação-Criar Fatura Simplificada' component={CriarFaturaSimp}/>
+        <Stack.Screen name='GesFaturação-Notas de Créditos' component={MainNotaCred}/>
+        <Stack.Screen name='GesFaturação-Notas de Créditos Detalhes' component={DetalhesNotaCred}/>
+        <Stack.Screen name='GesFaturação-Notas de Débito' component={MainNotaDeb}/>
+        <Stack.Screen name='GesFaturação-Nota de Débito Detalhes' component={DetalhesNotaDeb}/>
+        <Stack.Screen name='GesFaturação-Fornecedores' component={MainFornecedores}/>
+        <Stack.Screen name='GesFaturação-Fornecedores Detalhes' component={DetalhesFornecedor}/>
+        <Stack.Screen name='GesFaturação-Criar Fornecedores' component={CriarFornecedores}/>
+        <Stack.Screen name='GesFaturação-Clientes' component={MainCliente}/>
+        <Stack.Screen name='GesFaturação-Cliente Detalhes' component={DetalhesCliente}/>
+        <Stack.Screen name='GesFaturação-Compras' component={MainCompra}/>
+        <Stack.Screen name='GesFaturação-Compra Detalhes' component={DetalhesCompra}/>
+        <Stack.Screen name='GesFaturação-Criar Compra' component={CriarCompra}/>
+        <Stack.Screen name='GesFaturação-Analise' component={MainAnalise}/>
       </Stack.Navigator>
     );
 };

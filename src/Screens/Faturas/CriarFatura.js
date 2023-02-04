@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useContext } from 'react';
-import { Button, StyleSheet, Text, Touchable, TouchableNativeFeedback, TouchableOpacity, View, FlatList, TextInput,ScrollView } from 'react-native';
+import { Button, StyleSheet, Text, Touchable, TouchableNativeFeedback, TouchableOpacity, View, FlatList, TextInput,ScrollView,ToastAndroid,LogBox  } from 'react-native';
 import { AuthContext } from "../../Context/AuthContext";
 import { Picker } from '@react-native-picker/picker';
 import { BASE_URL } from '../../config';
@@ -25,8 +25,9 @@ function Item({ item, onPress }) {
 }
 
 
-export default function CriarOrcamento({ navigation }) {
-
+export default function CriarFatura({ navigation }) {
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
   const { getFaturas } = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);
   const { getclienteID } = useContext(AuthContext)
@@ -41,10 +42,10 @@ export default function CriarOrcamento({ navigation }) {
   const [dadosArtigos, setDadosArtigos] = useState([]);
   //const [cliente, setCliente] = useState();
   //const [linhas, setLinhas] = useState([]);
-  const [datei, setDatei] = useState(null);
+  const [datei, setDatei] = useState();
   const [open, setOpen] = useState(false);
 
-  const [datev, setDatev] = useState(null);
+  const [datev, setDatev] = useState();
   const [openv, setOpenV] = useState(false);
 
   const [artigo, setArtigo] = useState();
@@ -119,7 +120,12 @@ export default function CriarOrcamento({ navigation }) {
     console.log(clienteC,"oi")
     CriarFatura(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC).then(response => {
         console.log(response + ' Resposta Criar Orçamento')
+        
+        navigation.navigate('GesFaturação');
+      ToastAndroid.show("Fatura Criada ", ToastAndroid.SHORT);
     });
+   
+    
 }
 
   return (
@@ -215,6 +221,7 @@ export default function CriarOrcamento({ navigation }) {
         <TextInput
           value={vencimentoC}
           onChangeText={(text) => setVencimento(text)}
+          defaultValue={0}
           placeholder="Vencimento"
           keyboardType="numeric"
         // ref={register({name: "quantidade"})} 
@@ -343,7 +350,7 @@ export default function CriarOrcamento({ navigation }) {
           <Item item={item} onPress={() => removeItem(index)} />
         )}
       />
-      <View style={{marginTop: 30, width: 350}}>
+      <View style={{marginTop: 30,marginBottom: 10 ,width: 350}}>
       <Button  title="Criar Fatura" color="#d0933f" onPress={() => handleCreateFatura()} />
       </View>
       </View>

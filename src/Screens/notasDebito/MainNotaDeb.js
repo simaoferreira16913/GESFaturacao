@@ -13,11 +13,11 @@ import { Renderer } from 'phaser';
 import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
-export default function MainFaturaSimp({navigation}) {
+export default function MainNotaDeb({navigation}) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
-  const {getFaturasSimp} = useContext(AuthContext);
-  const {deleteFauratSimp} = useContext(AuthContext);
+  const {getNotasDeb} = useContext(AuthContext);
+  const {deleteNotaDeb} = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);
   Date.prototype.toDateString = function dtoString() {
     return `${this.getDay}`;
@@ -29,7 +29,7 @@ export default function MainFaturaSimp({navigation}) {
   const [datef, setDatef] = useState()
   const [open, setOpen] = useState(false)
   const [openf, setOpenf] = useState(false)
-  const [faturasSimp, setFaturasSimp] = useState([]);
+  const [notasDeb, setNotasDeb] = useState([]);
   const [selectedIdCliente, setSelectedIdCliente] = useState(null);
   const opcao = 0;
   const [search, setSearch] = useState("c")
@@ -65,9 +65,10 @@ export default function MainFaturaSimp({navigation}) {
     );
   };
   
-  if(!faturasSimp.length){
-    getFaturasSimp().then((res)=>{
-      setFaturasSimp(res.data.aaData);
+  if(!notasDeb.length){
+    getNotasDeb().then((res)=>{
+      setNotasDeb(res.data.aaData);
+      console.log("ADAD")
       console.log(res.data.aaData);
     }).catch(e =>{
       console.log(`Erro: ${e}`);
@@ -75,14 +76,14 @@ export default function MainFaturaSimp({navigation}) {
   } 
   if (!dadosClientes.length) {
     getClientes().then((res) => {
-      console.log(res.data)
+      //console.log(res.data)
       setDadosClientes(res.data.aaData)
       
     });
   }
   const columns = ['Nome', 'Preço', 'Estado', , 'Ações'];
 
-  const data = faturasSimp.map(item => {
+  const data = notasDeb.map(item => {
     let botoes;
     if (item[8] === 'Rascunho') {
       botoes = (
@@ -109,16 +110,16 @@ export default function MainFaturaSimp({navigation}) {
 
   const handleRemove = (id) => {
     console.log(id)
-    deleteFauratSimp(id).then((res)=>{
+    deleteNotaDeb(id).then((res)=>{
       console.log(res);
     });
 
-    setFaturasSimp(faturasSimp.filter(item => item[0] !== id));
-    ToastAndroid.show("Fatura Eliminada",ToastAndroid.SHORT);
+    setNotasDeb(notasDeb.filter(item => item[0] !== id));
+    ToastAndroid.show("Nota Eliminada",ToastAndroid.SHORT);
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Fatura Simplificada Detalhes',  { id: value });
+    navigation.navigate('GesFaturação-Nota de Débito Detalhes',  { id: value });
   }
 
   return (
@@ -126,19 +127,26 @@ export default function MainFaturaSimp({navigation}) {
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Fatura Simplificada")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Nota de Crédito")}>
           <View style={styles.button}>
           
-            <Text style={styles.textfont}>Nova Fatura Simplificada</Text>
+            <Text style={styles.textfont}>Nova Nota de Débito</Text>
           </View>
         </TouchableNativeFeedback>
       </View>
-
       <View > 
         <TouchableNativeFeedback>
           <View style={styles.button}>
           
-            <Text style={styles.textfont}>Enviar Faturas Simplificadas</Text>
+            <Text style={styles.textfont}>Integrar Nota de Débito</Text>
+          </View>
+        </TouchableNativeFeedback>
+      </View> 
+      <View > 
+        <TouchableNativeFeedback>
+          <View style={styles.button}>
+          
+            <Text style={styles.textfont}>Enviar Nota de Débito</Text>
           </View>
         </TouchableNativeFeedback>
       </View> 
@@ -164,8 +172,8 @@ export default function MainFaturaSimp({navigation}) {
           <Picker.Item label="Selecione um Estado"  />
           <Picker.Item label="Rascunho" value="Rascunho" />
           <Picker.Item label="Aberto" value="Aberto" />
-          <Picker.Item label="Aprovado" value="Aprovado" />
-          <Picker.Item label="Rejeitado" value="Rejeitado" />
+          <Picker.Item label="Pago" value="Pago" />
+          <Picker.Item label="Anulado" value="Anulado" />
         </Picker>
         </View>
       </View>
@@ -223,7 +231,7 @@ export default function MainFaturaSimp({navigation}) {
       </View>
       
       <View  > 
-        <TouchableNativeFeedback onPress={()=> getFaturasSimp(search,numRows,pag)}>
+        <TouchableNativeFeedback onPress={()=> getNotasDeb(search,numRows,pag)}>
           <View style={styles.button}>
 
             <Text style={styles.textfont}>   Pesquisar</Text>

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useContext } from 'react';
-import { Button, StyleSheet, Text, Touchable, TouchableNativeFeedback, TouchableOpacity, View, FlatList, TextInput,ScrollView } from 'react-native';
+import { Button, StyleSheet, Text, Touchable, TouchableNativeFeedback, TouchableOpacity, View, FlatList, TextInput,ScrollView,ToastAndroid, LogBox  } from 'react-native';
 import { AuthContext } from "../../Context/AuthContext";
 import { Picker } from '@react-native-picker/picker';
 import { BASE_URL } from '../../config';
@@ -25,13 +25,14 @@ function Item({ item, onPress }) {
 }
 
 
-export default function CriarOrcamento({ navigation }) {
-
-  const { getOrcamentos } = useContext(AuthContext);
+export default function CriarProforma({ navigation }) {
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
+  const { getProforma } = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);
   const { getclienteID } = useContext(AuthContext)
   const { getArtigos } = useContext(AuthContext);
-  const {addOrcamentos} = useContext(AuthContext);
+  const {addProforma} = useContext(AuthContext);
   var coisa;
 
   /*const {register, handleSubmit, errors} = useForm({
@@ -55,7 +56,7 @@ export default function CriarOrcamento({ navigation }) {
   const [iva, setIva] = useState(1);
   
 
-    //Dados para addOrçamento
+    //Dados para addProforma
 
     const [clienteC, setCliente] = useState();
     const [serieC, setSerie] = useState(3);
@@ -99,7 +100,7 @@ export default function CriarOrcamento({ navigation }) {
       setDadosClientes(res.data.aaData)
       
     });
-    getOrcamentos().then((res) => {
+    getProforma().then((res) => {
       console.log(res.data);
 
     })
@@ -114,11 +115,13 @@ export default function CriarOrcamento({ navigation }) {
   const [selectedIdCliente, setSelectedIdCliente] = useState(null);
   const [selectedIdArtigo, setSelectedIdArtigo] = useState(null);
 
-  handleCreateOrcamento = () => {
+  handleCreateProforma = () => {
 
-    console.log(clienteC + ' É aqui cepo');
-    addOrcamentos(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC).then(response => {
-        console.log(response + ' Resposta Criar Orçamento')
+    console.log(clienteC);
+    addProforma(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC).then(response => {
+        console.log(response + ' Resposta Criar Proforma');
+        navigation.navigate('GesFaturação');
+        ToastAndroid.show("Proforma Criada ", ToastAndroid.SHORT);
     });
 }
 
@@ -344,7 +347,7 @@ export default function CriarOrcamento({ navigation }) {
         )}
       />
       <View style={{marginTop: 30,marginBottom: 10 ,width: 350}}>
-      <Button  title="Criar Orçamento" color="#d0933f" onPress={() => handleCreateOrcamento()} />
+      <Button  title="Criar Proforma" color="#d0933f" onPress={() => handleCreateProforma()} />
       </View>
       </View>
     </ScrollView>

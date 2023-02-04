@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable,
-  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid, LogBox  } from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid,LogBox  } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -13,11 +13,11 @@ import { Renderer } from 'phaser';
 import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
-export default function MainFaturaSimp({navigation}) {
+export default function MainAnalise({navigation}) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
-  const {getFaturasSimp} = useContext(AuthContext);
-  const {deleteFauratSimp} = useContext(AuthContext);
+  const {getAnalise} = useContext(AuthContext);
+  const {deleteCompra} = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);
   Date.prototype.toDateString = function dtoString() {
     return `${this.getDay}`;
@@ -29,7 +29,7 @@ export default function MainFaturaSimp({navigation}) {
   const [datef, setDatef] = useState()
   const [open, setOpen] = useState(false)
   const [openf, setOpenf] = useState(false)
-  const [faturasSimp, setFaturasSimp] = useState([]);
+  const [analise, setAnalise] = useState([]);
   const [selectedIdCliente, setSelectedIdCliente] = useState(null);
   const opcao = 0;
   const [search, setSearch] = useState("c")
@@ -65,9 +65,9 @@ export default function MainFaturaSimp({navigation}) {
     );
   };
   
-  if(!faturasSimp.length){
-    getFaturasSimp().then((res)=>{
-      setFaturasSimp(res.data.aaData);
+  if(!analise.length){
+    getAnalise().then((res)=>{
+      setAnalise(res.data.aaData);
       console.log(res.data.aaData);
     }).catch(e =>{
       console.log(`Erro: ${e}`);
@@ -80,68 +80,25 @@ export default function MainFaturaSimp({navigation}) {
       
     });
   }
-  const columns = ['Nome', 'Preço', 'Estado', , 'Ações'];
+  const columns = ['Nome', 'Total', 'Liquidado','Débito'];
 
-  const data = faturasSimp.map(item => {
+  const data = analise.map(item => {
     let botoes;
-    if (item[8] === 'Rascunho') {
-      botoes = (
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[0])}>
-            <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
-          </TouchableOpacity >
-          <TouchableOpacity onPress={() => mudarEcra(item[0])}>
-            <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
-          </TouchableOpacity >
-        </View>
-      );
-    } else {
-      botoes = (
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity onPress={() => mudarEcra(item[0])}>
-            <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
-          </TouchableOpacity >
-        </View>
-      );
-    }
-    return [ item[2],parseFloat(item[6]).toFixed(2), item[8], botoes];
+    
+    return [ item[1],item[5], item[6], item[7]];
   });
 
-  const handleRemove = (id) => {
-    console.log(id)
-    deleteFauratSimp(id).then((res)=>{
-      console.log(res);
-    });
-
-    setFaturasSimp(faturasSimp.filter(item => item[0] !== id));
-    ToastAndroid.show("Fatura Eliminada",ToastAndroid.SHORT);
-  }
+  
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Fatura Simplificada Detalhes',  { id: value });
+    navigation.navigate('GesFaturação-Compra Detalhes',  { id: value });
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: '#e5e9ec' }}>
     <View style={styles.container}>
       
-     <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Fatura Simplificada")}>
-          <View style={styles.button}>
-          
-            <Text style={styles.textfont}>Nova Fatura Simplificada</Text>
-          </View>
-        </TouchableNativeFeedback>
-      </View>
-
-      <View > 
-        <TouchableNativeFeedback>
-          <View style={styles.button}>
-          
-            <Text style={styles.textfont}>Enviar Faturas Simplificadas</Text>
-          </View>
-        </TouchableNativeFeedback>
-      </View> 
+     
 
       <View> 
         <Text style={styles.titleSelect}>Cliente</Text>
@@ -223,7 +180,7 @@ export default function MainFaturaSimp({navigation}) {
       </View>
       
       <View  > 
-        <TouchableNativeFeedback onPress={()=> getFaturasSimp(search,numRows,pag)}>
+        <TouchableNativeFeedback onPress={()=> getAnalise(search,numRows,pag)}>
           <View style={styles.button}>
 
             <Text style={styles.textfont}>   Pesquisar</Text>

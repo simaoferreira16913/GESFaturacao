@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useContext } from 'react';
-import { Button, StyleSheet, Text, Touchable, TouchableNativeFeedback, TouchableOpacity, View, FlatList, TextInput,ScrollView } from 'react-native';
+import { Button, StyleSheet, Text, Touchable, TouchableNativeFeedback, TouchableOpacity, View, FlatList, TextInput,ScrollView,ToastAndroid,LogBox  } from 'react-native';
 import { AuthContext } from "../../Context/AuthContext";
 import { Picker } from '@react-native-picker/picker';
 import { BASE_URL } from '../../config';
@@ -18,20 +18,21 @@ function Item({ item, onPress }) {
   })
   return (
     <View>
-      <Text>Artigo: {nomeArtigo} | Preço: {item.preco} € | QTD: {item.qtd} | Total: {Number(item.preco) * Number(item.qtd)} €</Text>
+      <Text>Artigo: {nomeArtigo} | Preço: {Number(item.preco)} € | QTD: {item.qtd} | Total: {Number(item.preco) * Number(item.qtd)} €</Text>
       <Button title="Remover" color="#d0933f" onPress={onPress} />
     </View>
   );
 }
 
 
-export default function CriarOrcamento({ navigation }) {
-
-  const { getOrcamentos } = useContext(AuthContext);
-  const { getClientes } = useContext(AuthContext);
+export default function CriarCompra({ navigation }) {
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
+  const { getComprasFat } = useContext(AuthContext);
+  const { getFornecedores } = useContext(AuthContext);
   const { getclienteID } = useContext(AuthContext)
   const { getArtigos } = useContext(AuthContext);
-  const {addOrcamentos} = useContext(AuthContext);
+  const {CriarCompra} = useContext(AuthContext);
   var coisa;
 
   /*const {register, handleSubmit, errors} = useForm({
@@ -41,10 +42,10 @@ export default function CriarOrcamento({ navigation }) {
   const [dadosArtigos, setDadosArtigos] = useState([]);
   //const [cliente, setCliente] = useState();
   //const [linhas, setLinhas] = useState([]);
-  const [datei, setDatei] = useState(null);
+  const [datei, setDatei] = useState();
   const [open, setOpen] = useState(false);
 
-  const [datev, setDatev] = useState(null);
+  const [datev, setDatev] = useState();
   const [openv, setOpenV] = useState(false);
 
   const [artigo, setArtigo] = useState();
@@ -55,7 +56,7 @@ export default function CriarOrcamento({ navigation }) {
   const [iva, setIva] = useState(1);
   
 
-    //Dados para addOrçamento
+    //Dados para CriarFatura
 
     const [clienteC, setCliente] = useState();
     const [serieC, setSerie] = useState(3);
@@ -94,12 +95,12 @@ export default function CriarOrcamento({ navigation }) {
     });
   }
   if (!dadosClientes.length) {
-    getClientes().then((res) => {
+    getFornecedores().then((res) => {
       console.log(res.data)
       setDadosClientes(res.data.aaData)
       
     });
-    getOrcamentos().then((res) => {
+    getComprasFat().then((res) => {
       console.log(res.data);
 
     })
@@ -109,17 +110,22 @@ export default function CriarOrcamento({ navigation }) {
     setLinhas(LinhasC.filter((_, i) => i !== index));
   }
 
-  console.log(LinhasC);
+  console.log("FJFJ",LinhasC);
 
   const [selectedIdCliente, setSelectedIdCliente] = useState(null);
   const [selectedIdArtigo, setSelectedIdArtigo] = useState(null);
 
-  handleCreateOrcamento = () => {
+  handleCreateFatura = () => {
 
-    console.log(clienteC + ' É aqui cepo');
-    addOrcamentos(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC).then(response => {
+    console.log(clienteC,"oi")
+    CriarCompra(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC).then(response => {
         console.log(response + ' Resposta Criar Orçamento')
+        
+        navigation.navigate('GesFaturação');
+      ToastAndroid.show("Fatura Criada ", ToastAndroid.SHORT);
     });
+   
+    
 }
 
   return (
@@ -127,14 +133,14 @@ export default function CriarOrcamento({ navigation }) {
     <View style={styles.container}>
 
       <View style={{marginTop: 10}}>
-        <Button  title="Novo Cliente" color="#d0933f" onPress={() => navigation.navigate("GesFaturação-Criar Cliente")} />
-        <Text style={styles.titleSelect}>Cliente</Text>
+        <Button  title="Novo Fornecedor" color="#d0933f" onPress={() => navigation.navigate("GesFaturação-Criar Fornecedor")} />
+        <Text style={styles.titleSelect}>Fornecedor</Text>
         <View style={styles.borderMargin}>
-        <Picker  style={styles.pickerComponent} placeholder="Selecione um cliente" selectedValue={selectedIdCliente} onValueChange={itemValue => {
+        <Picker  style={styles.pickerComponent} placeholder="Selecione um Fornecedor" selectedValue={selectedIdCliente} onValueChange={itemValue => {
           setSelectedIdCliente(itemValue); 
           setCliente(itemValue[0]);}}>
           {dadosClientes.map(function (object, i) {
-            return <Picker.Item label={object[2]} value={object[0]} key={i} />;
+            return <Picker.Item label={object[1]} value={object[0]} key={i} />;
           })}
         </Picker>
         </View>
@@ -215,11 +221,13 @@ export default function CriarOrcamento({ navigation }) {
         <TextInput
           value={vencimentoC}
           onChangeText={(text) => setVencimento(text)}
+          defaultValue={0}
           placeholder="Vencimento"
           keyboardType="numeric"
         // ref={register({name: "quantidade"})} 
         />
         </View>
+        
 
         <Text style={styles.titleSelect}>Moeda</Text>
         <View style={styles.borderMargin}>
@@ -344,7 +352,7 @@ export default function CriarOrcamento({ navigation }) {
         )}
       />
       <View style={{marginTop: 30,marginBottom: 10 ,width: 350}}>
-      <Button  title="Criar Orçamento" color="#d0933f" onPress={() => handleCreateOrcamento()} />
+      <Button  title="Criar Fatura de Compra" color="#d0933f" onPress={() => handleCreateFatura()} />
       </View>
       </View>
     </ScrollView>
@@ -395,4 +403,3 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
-
