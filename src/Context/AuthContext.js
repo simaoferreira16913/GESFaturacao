@@ -799,13 +799,35 @@ export const AuthProvider = ({children}) => {
         });
     }
 
+    const atualizarCodigoATGuia = async (idGuiaT, codigoAT) =>{
+        var token = await this.getToken();
+        let aux = idGuiaT + ' ' + codigoAT;
+        console.log("Aqui",aux);
+        axios.patch(`${BASE_URL}/api/guias_transporte`,
+        {_token: token, opcao: '7', idGuia: idGuiaT, codigo_at_guiaCodeAT: codigoAT}).then((res)=>{
+            console.log(res)
+        })
+       
+    }
+
+    const gerarDocumentoGuia = async (idGuiaT) =>{
+        var token = await this.getToken();
+        let aux = idGuiaT;
+        console.log("Aqui",aux);
+        axios.patch(`${BASE_URL}/api/guias_transporte`,
+        {_token: token, opcao: '9', idDocumento: idGuiaT}).then((res)=>{
+            console.log(res)
+        })
+       
+    }
+
     return(
         <AuthContext.Provider value={{login, logout, getOrcamentos,addOrcamentos,criarCliente,deletecliente, estadoOrcamento,
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
             CriarFatura, deleteFatura, getFaturaDetalhes, getFaturas, finalizarFatura,
             getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes, getFaturasReb,
             getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma,
-            getGuiasTransporte, deleteGuiasTransporte, getGuiaTransporteDetalhes, finalizarGuiaTransporte, addGuiasTransporte
+            getGuiasTransporte, deleteGuiasTransporte, getGuiaTransporteDetalhes, finalizarGuiaTransporte, addGuiasTransporte, atualizarCodigoATGuia, gerarDocumentoGuia
         ,isLoading, userToken}}>
             {children}
         </AuthContext.Provider>

@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable,
-  TouchableNativeFeedback, TouchableOpacity, View, ScrollView, Modal, ToastAndroid } from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View, ScrollView, Modal, ToastAndroid, TextInput } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -19,9 +19,11 @@ export default function DetalhesTransporte({navigation, route}) {
   const [modal2Visible, setModal2Visible] = useState(false);
   const [modal3Visible, setModal3Visible] = useState(false);
   const [modal4Visible, setModal4Visible] = useState(false);
+  const [modal5Visible, setModal5Visible] = useState(false);
+  const [codigoAT, setCodigoAT] = useState(null);
   const {getArtigoID} = useContext(AuthContext);
-  const {getGuiasTransporte} = useContext(AuthContext);
-  const {deleteGuiaTransporte} = useContext(AuthContext);
+  const {atualizarCodigoATGuia} = useContext(AuthContext);
+  const {gerarDocumentoGuia} = useContext(AuthContext);
   const {estadoOrcamento} = useContext(AuthContext);
   const {finalizarGuiaTransporte} = useContext(AuthContext);
   const {getGuiaTransporteDetalhes} = useContext(AuthContext);
@@ -75,6 +77,30 @@ export default function DetalhesTransporte({navigation, route}) {
       })
       .catch(e => {
         console.log(`Error ${e}` + 'Finalizar Guia');
+    });
+    navigation.goBack()
+    navigation.navigate('GesFaturação');
+    }
+
+    function handleAtualizarCodigoAT(){
+      atualizarCodigoATGuia(guiaTransporteID.ID_GuiaTransporte, codigoAT).then((res)=>{
+        console.log(JSON.stringify(res));
+        ToastAndroid.show("CódigoAT atualizado",ToastAndroid.SHORT);
+      })
+      .catch(e => {
+        console.log(`Error ${e}` + 'Atualizar Codigo Guia');
+    });
+    navigation.goBack()
+    navigation.navigate('GesFaturação');
+    }
+
+    function handleGerarDocumento(){
+      gerarDocumentoGuia(guiaTransporteID.ID_GuiaTransporte).then((res)=>{
+        console.log(JSON.stringify(res));
+        ToastAndroid.show("Documento Gerado",ToastAndroid.SHORT);
+      })
+      .catch(e => {
+        console.log(`Error ${e}` + 'Gerar Guia');
     });
     navigation.goBack()
     navigation.navigate('GesFaturação');
@@ -378,18 +404,65 @@ export default function DetalhesTransporte({navigation, route}) {
     ))}
 </Table>
 
+<Modal
+        animationType="slide"
+        transparent={false}
+        visible={modal5Visible}
+        onRequestClose={() => setModal5Visible(false)}
+      >
+        <ScrollView>
+        <View>
+
+        <Text style={styles.titleSelect}>CódigoAT</Text>
+        <View style={styles.borderMargin}>
+        <TextInput
+          value={codigoAT}
+          onChangeText={(text) => setCodigoAT(text)}
+          placeholder="CodigoAT"
+          keyboardType="default"
+        />
+        </View>
+          
+
+          <View style={styles.marginTOPButton}>
+          <Button color="#d0933f"
+            title="Aplicar"
+            onPress={() => {setModal5Visible(false), handleAtualizarCodigoAT()}}
+          />
+          </View>
+        </View>
+        </ScrollView>
+      </Modal>
+
 <View style={styles.marginTOPButton}>
   <Button color="#d0933f"  title="Enviar Email" onPress={() => { /* código para enviar orçamento */ console.log(guiaTransporteID)}} />
 </View>
+
+
 <View style={styles.marginTOPButton2}>
+  {guiaTransporteID.Estado === "Rascunho" ? (
+    <Button color="#d0933f"  title="Finalizar Guia" onPress={() => {handleFinalizarGuiaTransporte()}} />
+  ) : guiaTransporteID.Estado === "Aberto" ? (
+  
+    <View style={styles.marginTOPButton}>
+      <Button color="#d0933f"
+        title="Atualizar CódigoAT"
+        onPress={() => setModal5Visible(true)}
+      />
+      </View>
 
-{guiaTransporteID.Estado === "Rascunho" ? (
-  <Button color="#d0933f"  title="Finalizar Guia" onPress={() => {handleFinalizarGuiaTransporte()}} />
-) : (
+  ): (
+    <View></View>
+  )}
+</View>  
 
-  <Text></Text>
-
-)}
+<View style={styles.marginTOPButton2}>
+{guiaTransporteID.Estado !== "Rascunho" ? (
+    <Button color="#d0933f"  title="Gerar Documento" onPress={() => {handleGerarDocumento()}} />
+  ) : (
+    <View>
+    </View>
+  )}
 </View>
     </ScrollView>
   );
