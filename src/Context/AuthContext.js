@@ -70,10 +70,6 @@ export const AuthProvider = ({children}) => {
             }
         }); 
     }
-
-    const getClientes = async ()=> {
-        
-        var token = await this.getToken();
     
 
     const finalizarOrcamento = async (id) =>{
@@ -1378,9 +1374,9 @@ export const AuthProvider = ({children}) => {
             CriarArtigo,getClientes,getclienteID,getArtigos,getArtigoID, deleteOrcamento, getOrcamentosDetalhes, finalizarOrcamento,
             CriarFatura, deleteFatura, getFaturaDetalhes, getFaturas, finalizarFatura,
             getFaturasSimp, finalizarFaturaSimp, deleteFauratSimp, criarFaturaSimp, getFaturaSimpDetalhes, getFaturasReb,
-            getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma,
-            getGuiasTransporte, deleteGuiasTransporte, getGuiaTransporteDetalhes, finalizarGuiaTransporte, addGuiasTransporte, atualizarCodigoATGuia, gerarDocumentoGuia
-            getProforma,getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma, addProforma,
+            getGuiasTransporte, deleteGuiasTransporte, getGuiaTransporteDetalhes, finalizarGuiaTransporte, addGuiasTransporte, atualizarCodigoATGuia, gerarDocumentoGuia,
+
+            getProforma, getProformaDetalhes,deleteProforma, finalizarProforma, estadoProforma, addProforma,
             getNotasCred, getNotasCredDetalhes,deleteNotaCred, finalizarNotaCred,
             getNotasDeb,getNotasDebDetalhes,deleteNotaDeb,finalizarNotaDeb, getFornecedores, getFornecedorDetalhes,deleteFornecedor,CriarFornecedor,
             getComprasFat,getComprasFatDetalhes,finalizarCompra,anularCompra,deleteCompra,CriarCompra,deleteArtigo,getAnalise
