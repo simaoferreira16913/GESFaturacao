@@ -26,6 +26,7 @@ export default function Home({navigation}) {
       <Button title='Clientes' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Clientes")}/>
       <Button title='Compras' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Compras")}/>
       <Button title='Análise' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Analise")}/>
+      <Button title='Bancos' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Bancos")}/>
       <Button title='Logout' color='#d0933f' onPress={()=> {logout()}}/>
       
       </View> 
