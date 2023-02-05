@@ -157,7 +157,7 @@ export default function DetalhesFatura({navigation, route}) {
               }} />
             </View>
             <View style={{margin: 10}}>
-            <Button  title="Cancelar" onPress={() => {
+            <Button color="#d0933f" title="Cancelar" onPress={() => {
               setModalVisible(!modalVisible);
 
               }} />

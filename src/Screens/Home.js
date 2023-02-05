@@ -15,19 +15,19 @@ export default function Home({navigation}) {
      <View style={styles.button}>
       
       <Button title='Orçamentos' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Orçamentos")}/>
-      <Button title='Doc. de Transporte' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Doc. de Transporte")}/>
-      <Button title='Artigos' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Artigos")}/>
-      <Button title='Faturas' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Faturas")}/>
-      <Button title='Faturas Simplificadas' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Faturas Simplificadas")}/>
       <Button title='Proformas' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Proformas")}/>
+      <Button title='Doc. de Transporte' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Doc. de Transporte")}/>  
+      <Button title='Faturas' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Faturas")}/>
+      <Button title='Faturas Simplificadas' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Faturas Simplificadas")}/>   
       <Button title='Notas de Crédito' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Notas de Créditos")}/>
       <Button title='Notas de Débito' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Notas de Débito")}/>
-      <Button title='Fornecedores' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Fornecedores")}/>
-      <Button title='Clientes' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Clientes")}/>
       <Button title='Compras' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Compras")}/>
+      <Button title='Clientes' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Clientes")}/>
+      <Button title='Artigos' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Artigos")}/>
       <Button title='Análise' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Analise")}/>
+      <Button title='Fornecedores' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Fornecedores")}/>  
       <Button title='Bancos' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Bancos")}/>
-      <Button title='Logout' color='#d0933f' onPress={()=> {logout()}}/>
+      <Button title='Logout' color="#bf4346" onPress={()=> {logout()}}/>
       
       </View> 
       
