@@ -222,10 +222,12 @@ export default function CriarArtigo({navigation}) {
           )}
           />
           </View>
+          <View style={{marginLeft: 22,marginTop:10,width: 350}}>
           <Button
           title="Criar Artigo" color='#d0933f'
           onPress={handleSubmit(submitcliente)}
         />
+        </View>
        </View>
        </ScrollView>
       
@@ -239,7 +241,7 @@ export default function CriarArtigo({navigation}) {
     container: {
       flex: 1,
       backgroundColor: '#e5e9ec',
-      alignItems: 'center',
+      
       justifyContent: 'flex-start',
       
     },
