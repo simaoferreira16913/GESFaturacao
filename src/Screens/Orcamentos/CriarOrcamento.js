@@ -19,7 +19,7 @@ function Item({ item, onPress }) {
   return (
     <View>
       <Text>Artigo: {nomeArtigo} | Preço: {item.preco} € | QTD: {item.qtd} | Total: {Number(item.preco) * Number(item.qtd)} €</Text>
-      <Button title="Remover" color="#d0933f" onPress={onPress} />
+      <Button title="Remover" color="#bf4346" onPress={onPress} />
     </View>
   );
 }

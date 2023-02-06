@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View, Image} from 'react-native';
 import { AuthContext } from '../Context/AuthContext';
 
 
@@ -12,6 +12,7 @@ export default function Home({navigation}) {
 
   return (
     <View style={styles.container}>
+     
      <View style={styles.button}>
       
       <Button title='Orçamentos' color='#d0933f' onPress={()=> navigation.navigate("GesFaturação-Orçamentos")}/>
@@ -53,5 +54,22 @@ const styles = StyleSheet.create({
   },
   marginButton:{
     marginTop:5,
-  }
+  },
+  header: {
+    backgroundColor: '#e5e9ec',
+    padding: 12,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  logo: {
+    width: 32,
+    height: 32,
+    marginRight: 10,
+  },
+  headerText: {
+    fontSize: 20,
+  },
+  button: {
+    marginTop: 50,
+  },
 });
