@@ -27,6 +27,8 @@ export default function CriarArtigo({navigation}) {
       return (
       <ScrollView>
        <View style={styles.container}>
+       <Text style={styles.titleSelect}>Nome</Text>
+       <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Nome"
@@ -39,6 +41,9 @@ export default function CriarArtigo({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Código</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Codigo"
@@ -51,6 +56,9 @@ export default function CriarArtigo({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Categoria</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Categoria"
@@ -63,6 +71,9 @@ export default function CriarArtigo({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Tipo</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Tipo"
@@ -75,6 +86,9 @@ export default function CriarArtigo({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Stock</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Stock"
@@ -87,6 +101,9 @@ export default function CriarArtigo({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Unidade</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Unidade"
@@ -99,6 +116,9 @@ export default function CriarArtigo({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>PreçoPVP</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="PrecoPVP"
@@ -111,6 +131,9 @@ export default function CriarArtigo({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>IVA</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="IVA"
@@ -123,6 +146,9 @@ export default function CriarArtigo({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Preço</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="Preco"
@@ -135,6 +161,9 @@ export default function CriarArtigo({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Código de Barras</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="CodigoBarras"
@@ -147,6 +176,9 @@ export default function CriarArtigo({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>SerialNumber</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="SerialNumber"
@@ -159,6 +191,9 @@ export default function CriarArtigo({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Valor Retenção</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="RetencaoValor"
@@ -171,6 +206,9 @@ export default function CriarArtigo({navigation}) {
               />
           )}
           />
+          </View>
+          <Text style={styles.titleSelect}>Descrição Longa</Text>
+          <View style={styles.borderMargin}>
           <Controller 
           control={control}
           name="DescricaoLonga"
@@ -183,9 +221,9 @@ export default function CriarArtigo({navigation}) {
               />
           )}
           />
-          
+          </View>
           <Button
-          title="Criar Cliente" color='#d0933f'
+          title="Criar Artigo" color='#d0933f'
           onPress={handleSubmit(submitcliente)}
         />
        </View>
@@ -205,4 +243,65 @@ export default function CriarArtigo({navigation}) {
       justifyContent: 'flex-start',
       
     },
+    touch: {
+      flex:1,
+      alignItems: 'center',
+      marginTop:10,
+      backgroundColor: '#d0933f',
+  },
+  button: {
+    alignItems:'center',
+    backgroundColor:'#d0933f',
+    marginTop:16,
+    marginBottom:5,
+    width: 300,
+    padding: 10,
+  },
+  icon: {
+    position:'absolute',
+    left:50,
+  },
+  textfont: {
+    fontSize: 25,
+    fontWeight: "bold",
+    color:'#ffffff',
+  },
+  pickerComponent: {
+    width: 350,
+    
+  },
+  textSelect: {
+    fontSize: 20,
+    padding: 10,
+    fontWeight: 'bold'
+  },
+  titleSelect: {
+    fontSize: 20,
+    margin: 10,
+    fontWeight: "bold",
+    color: "#5F5D5C"
+  },
+  borderMargin: {
+    borderWidth: 1,
+    borderColor: 'grey',
+    marginLeft: 10,
+    marginRight: 10
+  },
+  dateComponent: {
+      width: 350
+  },
+  touchableO: {
+    width: 350,
+    height: 55
+  },
+  textDate: {
+    marginLeft:15,
+    marginTop:15,
+    fontSize: 16,
+    color:"#000000"
+  },
+  text: {
+    fontSize: 16,
+    color:"#000000"
+  }
 });

@@ -5,6 +5,7 @@ import {
   View,
   Text,
   StyleSheet,
+  Image
 } from 'react-native';
 import { AuthContext } from '../Context/AuthContext';
 
@@ -15,7 +16,7 @@ const Login = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-
+        <Image source={require('./assets/gesf2.png')} />
       <View style={styles.wrapper}>
         <TextInput
           style={styles.input}
