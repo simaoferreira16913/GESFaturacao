@@ -120,9 +120,7 @@ export default function MainTransporte({navigation}) {
 
     setGuiasTransporte(guiasTransporte.filter(item => item[0] !== id));
   }
-    deleteOrcamento(id).then((res)=>{
-      console.log(res);
-    });
+   
   const showToast = () => {
     ToastAndroid.show('Apenas guias com estado "Rascunho" podem ser apagadas', ToastAndroid.SHORT);
   };
