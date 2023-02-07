@@ -18,7 +18,7 @@ function Item({ item, onPress }) {
   })
   return (
     <View style={{marginTop: 8}}>
-      <Text>Artigo: {nomeArtigo} | Preço: {item.preco} € | QTD: {item.qtd} | Total: {Number(item.preco) * Number(item.qtd)} €</Text>
+      <Text>Artigo: {nomeArtigo} | Preço: {Number(item.preco)} € | QTD: {item.qtd} | Total: {Number(item.preco) * Number(item.qtd)} €</Text>
       <View style={{marginTop: 4}}><Button title="Remover" color="#bf4346" onPress={onPress} /></View>
     </View>
   );
@@ -42,10 +42,10 @@ export default function CriarProforma({ navigation }) {
   const [dadosArtigos, setDadosArtigos] = useState([]);
   //const [cliente, setCliente] = useState();
   //const [linhas, setLinhas] = useState([]);
-  const [datei, setDatei] = useState(null);
+  const [datei, setDatei] = useState();
   const [open, setOpen] = useState(false);
 
-  const [datev, setDatev] = useState(null);
+  const [datev, setDatev] = useState();
   const [openv, setOpenV] = useState(false);
 
   const [artigo, setArtigo] = useState();

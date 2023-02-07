@@ -111,7 +111,7 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação - Notas de Débito' component={MainNotaDeb} options={{headerRight: () => <Logo />}}/>
         <Stack.Screen name='GesFaturação - Nota de Débito Detalhes' component={DetalhesNotaDeb} options={{headerRight: () => <Logo />}}/>
         <Stack.Screen name='GesFaturação - Fornecedores' component={MainFornecedores} options={{headerRight: () => <Logo />}}/>
-        <Stack.Screen name='GesFaturação  -Fornecedores Detalhes' component={DetalhesFornecedor} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Fornecedores Detalhes' component={DetalhesFornecedor} options={{headerRight: () => <Logo />}}/>
         <Stack.Screen name='GesFaturação - Criar Fornecedores' component={CriarFornecedores} options={{headerRight: () => <Logo />}}/>
         <Stack.Screen name='GesFaturação - Clientes' component={MainCliente} options={{headerRight: () => <Logo />}}/>
         <Stack.Screen name='GesFaturação - Cliente Detalhes' component={DetalhesCliente} options={{headerRight: () => <Logo />}}/>

@@ -825,7 +825,7 @@ export const AuthProvider = ({children}) => {
             },
         })
         .then(async res => {
-            console.log(res.data + 'Deu crl')
+            console.log(res.data + 'Deu ')
             //return res.data
         }).catch(e =>{
             console.log(`Erro: ${e}` + ' Grande Erro');

@@ -18,7 +18,7 @@ export default function MainCompra({navigation}) {
   LogBox.ignoreAllLogs();//Ignore all log notifications
   const {getComprasFat} = useContext(AuthContext);
   const {deleteCompra} = useContext(AuthContext);
-  const { getClientes } = useContext(AuthContext);
+  const { getFornecedores } = useContext(AuthContext);
   Date.prototype.toDateString = function dtoString() {
     return `${this.getDay}`;
   }
@@ -74,7 +74,7 @@ export default function MainCompra({navigation}) {
   });
   } 
   if (!dadosClientes.length) {
-    getClientes().then((res) => {
+    getFornecedores().then((res) => {
       console.log(res.data)
       setDadosClientes(res.data.aaData)
       
@@ -155,7 +155,7 @@ export default function MainCompra({navigation}) {
       </View> 
 
       <View> 
-        <Text style={styles.titleSelect}>Cliente</Text>
+        <Text style={styles.titleSelect}>Fornecedor</Text>
         <View style={styles.borderMargin}>
         <Picker  style={styles.pickerComponent} placeholder="Selecione um cliente" selectedValue={selectedIdCliente} onValueChange={itemValue => setSelectedIdCliente(itemValue)}>
           {dadosClientes.map(function (object, i) {

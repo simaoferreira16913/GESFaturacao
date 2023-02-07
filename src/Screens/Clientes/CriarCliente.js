@@ -38,7 +38,7 @@ export default function CriarCliente({navigation}) {
     return (
       <ScrollView>
       <View style={styles.container}>
-       <Text style={styles.titleSelect}>Nome</Text>
+       <Text style={styles.titleSelect}>Nome*</Text>
        <View style={styles.borderMargin}>
           <Controller 
           control={control}
@@ -53,7 +53,7 @@ export default function CriarCliente({navigation}) {
           )}
           />
           </View>
-          <Text style={styles.titleSelect}>NIF</Text>
+          <Text style={styles.titleSelect}>NIF*</Text>
           <View style={styles.borderMargin}>
           <Controller 
           control={control}
