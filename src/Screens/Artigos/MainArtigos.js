@@ -14,8 +14,8 @@ import moment from 'moment/moment';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component'
 
 export default function MainArtigos({navigation}) {
-  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-  LogBox.ignoreAllLogs();//Ignore all log notifications
+  //LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  //LogBox.ignoreAllLogs();//Ignore all log notifications
   
   const {deleteArtigo} = useContext(AuthContext);
   const { getArtigos } = useContext(AuthContext);

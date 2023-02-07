@@ -16,6 +16,8 @@ import { LogBox } from 'react-native';
 
 
 export default function MainTransporte({navigation}) {
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
   const {getGuiasTransporte} = useContext(AuthContext);
   const {deleteGuiasTransporte} = useContext(AuthContext);
   const { getClientes } = useContext(AuthContext);

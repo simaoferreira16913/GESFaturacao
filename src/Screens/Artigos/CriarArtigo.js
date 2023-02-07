@@ -19,7 +19,8 @@ export default function CriarArtigo({navigation}) {
   
   const {CriarArtigo} = useContext(AuthContext);
   function submitcliente(data){
-    
+    console.log("adsa")
+    console.log(data);
     CriarArtigo(data)
   }
 
