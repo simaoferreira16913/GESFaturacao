@@ -102,13 +102,27 @@ export default function MainTransporte({navigation}) {
 
   const handleRemove = (id) => {
     console.log(id)
+    Alert.alert(
+      'Confirmação',
+      'Tem certeza que deseja remover este item?',
+      [
+        {text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Confirmar', onPress: () => removerConfirmar(id)},
+      ],
+      { cancelable: false }
+    )
+  }
+  const removerConfirmar = (id) =>{
+    console.log(id)
     deleteGuiasTransporte(id).then((res)=>{
       console.log(JSON.stringify(res));
     });
 
     setGuiasTransporte(guiasTransporte.filter(item => item[0] !== id));
   }
-
+    deleteOrcamento(id).then((res)=>{
+      console.log(res);
+    });
   const showToast = () => {
     ToastAndroid.show('Apenas guias com estado "Rascunho" podem ser apagadas', ToastAndroid.SHORT);
   };

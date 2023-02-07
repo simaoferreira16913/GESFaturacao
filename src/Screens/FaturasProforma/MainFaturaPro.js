@@ -106,6 +106,18 @@ export default function MainFaturaPro({navigation}) {
 
   const handleRemove = (id) => {
     console.log(id)
+    Alert.alert(
+      'Confirmação',
+      'Tem certeza que deseja remover este item?',
+      [
+        {text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Confirmar', onPress: () => removerConfirmar(id)},
+      ],
+      { cancelable: false }
+    )
+  }
+  const removerConfirmar = (id) =>{
+    console.log(id)
     deleteProforma(id).then((res)=>{
       console.log(res);
     });
@@ -113,7 +125,6 @@ export default function MainFaturaPro({navigation}) {
     setProformas(proformas.filter(item => item[0] !== id));
     ToastAndroid.show("Proforma Eliminada",ToastAndroid.SHORT);
   }
-
   const mudarEcra = (value) => {
     navigation.navigate('GesFaturação - Proformas Detalhes',  { id: value });
   }

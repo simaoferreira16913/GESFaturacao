@@ -109,6 +109,18 @@ export default function MainFaturaSimp({navigation}) {
 
   const handleRemove = (id) => {
     console.log(id)
+    Alert.alert(
+      'Confirmação',
+      'Tem certeza que deseja remover este item?',
+      [
+        {text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Confirmar', onPress: () => removerConfirmar(id)},
+      ],
+      { cancelable: false }
+    )
+  }
+  const removerConfirmar = (id) =>{
+    console.log(id)
     deleteFauratSimp(id).then((res)=>{
       console.log(res);
     });
@@ -116,7 +128,6 @@ export default function MainFaturaSimp({navigation}) {
     setFaturasSimp(faturasSimp.filter(item => item[0] !== id));
     ToastAndroid.show("Fatura Eliminada",ToastAndroid.SHORT);
   }
-
   const mudarEcra = (value) => {
     navigation.navigate('GesFaturação - Fatura Simplificada Detalhes',  { id: value });
   }

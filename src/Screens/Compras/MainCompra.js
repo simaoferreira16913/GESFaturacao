@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable,
-  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid,LogBox  } from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid,LogBox, Alert  } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -109,6 +109,22 @@ export default function MainCompra({navigation}) {
 
   const handleRemove = (id) => {
     console.log(id)
+    Alert.alert(
+      'Confirmação',
+      'Tem certeza que deseja remover este item?',
+      [
+        {text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Confirmar', onPress: () => removerConfirmar(id)},
+      ],
+      { cancelable: false }
+    )
+  }
+
+  const mudarEcra = (value) => {
+    navigation.navigate('GesFaturação - Compra Detalhes',  { id: value });
+  }
+  const removerConfirmar = (id) =>{
+    console.log(id)
     deleteCompra(id).then((res)=>{
       console.log(res);
     });
@@ -116,11 +132,6 @@ export default function MainCompra({navigation}) {
     setFaturas(faturas.filter(item => item[8] !== id));
     ToastAndroid.show("Compra Eliminada",ToastAndroid.SHORT);
   }
-
-  const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação - Compra Detalhes',  { id: value });
-  }
-
   return (
     <ScrollView>
     <View style={styles.container}>

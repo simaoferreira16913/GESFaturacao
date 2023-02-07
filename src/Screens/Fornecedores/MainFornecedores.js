@@ -95,6 +95,18 @@ export default function MainFornecedores({navigation}) {
 
   const handleRemove = (id) => {
     console.log(id)
+    Alert.alert(
+      'Confirmação',
+      'Tem certeza que deseja remover este item?',
+      [
+        {text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Confirmar', onPress: () => removerConfirmar(id)},
+      ],
+      { cancelable: false }
+    )
+  }
+  const removerConfirmar = (id) =>{
+    console.log(id)
     deleteFornecedor(id).then((res)=>{
       console.log(res);
     });
@@ -102,7 +114,6 @@ export default function MainFornecedores({navigation}) {
     setFornecedores(fornecedores.filter(item => item[0] !== id));
     ToastAndroid.show("Fornecedores Eliminada",ToastAndroid.SHORT);
   }
-
   const mudarEcra = (value) => {
     navigation.navigate('GesFaturação - Fornecedores Detalhes',  { id: value });
   }

@@ -110,6 +110,19 @@ export default function MainNotaDeb({navigation}) {
 
   const handleRemove = (id) => {
     console.log(id)
+    Alert.alert(
+      'Confirmação',
+      'Tem certeza que deseja remover este item?',
+      [
+        {text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Confirmar', onPress: () => removerConfirmar(id)},
+      ],
+      { cancelable: false }
+    )
+  }
+
+  const removerConfirmar = (id) =>{
+    console.log(id)
     deleteNotaDeb(id).then((res)=>{
       console.log(res);
     });

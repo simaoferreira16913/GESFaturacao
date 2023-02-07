@@ -110,6 +110,18 @@ export default function MainNotaCred({navigation}) {
 
   const handleRemove = (id) => {
     console.log(id)
+    Alert.alert(
+      'Confirmação',
+      'Tem certeza que deseja remover este item?',
+      [
+        {text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Confirmar', onPress: () => removerConfirmar(id)},
+      ],
+      { cancelable: false }
+    )
+  }
+  const removerConfirmar = (id) =>{
+    console.log(id)
     deleteNotaCred(id).then((res)=>{
       console.log(res);
     });
@@ -117,7 +129,6 @@ export default function MainNotaCred({navigation}) {
     setNotasCredito(notasCredito.filter(item => item[0] !== id));
     ToastAndroid.show("Nota Eliminada",ToastAndroid.SHORT);
   }
-
   const mudarEcra = (value) => {
     navigation.navigate('GesFaturação - Notas de Créditos Detalhes',  { id: value });
   }
