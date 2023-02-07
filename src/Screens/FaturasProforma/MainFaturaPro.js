@@ -130,7 +130,14 @@ export default function MainFaturaPro({navigation}) {
           </View>
         </TouchableNativeFeedback>
       </View>
-
+      <View > 
+        <TouchableNativeFeedback>
+          <View style={styles.button}>
+          
+            <Text style={styles.textfont}> Integrar Proforma</Text>
+          </View>
+        </TouchableNativeFeedback>
+      </View> 
       <View > 
         <TouchableNativeFeedback>
           <View style={styles.button}>

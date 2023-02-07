@@ -133,7 +133,14 @@ export default function MainFatura({navigation}) {
           </View>
         </TouchableNativeFeedback>
       </View>
-
+      <View > 
+        <TouchableNativeFeedback>
+          <View style={styles.button}>
+          
+            <Text style={styles.textfont}> Integrar Fatura</Text>
+          </View>
+        </TouchableNativeFeedback>
+      </View> 
       <View > 
         <TouchableNativeFeedback>
           <View style={styles.button}>
