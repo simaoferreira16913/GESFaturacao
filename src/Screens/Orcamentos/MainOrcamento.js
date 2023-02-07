@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable,
-  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image } from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image,Alert,ToastAndroid } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -86,7 +86,8 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
     });
   }
   const columns = ['Nome', 'Preço', 'Estado', , 'Ações'];
-
+  const [showAlert, setShowAlert] = useState(false);
+  
   const data = orcamentos.map(item => {
     let botoes;
     if (item[7] === 'Rascunho') {
@@ -114,13 +115,29 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
 
   const handleRemove = (id) => {
     console.log(id)
+    Alert.alert(
+      'Confirmação',
+      'Tem certeza que deseja remover este item?',
+      [
+        {text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Confirmar', onPress: () => removerConfirmar(id)},
+      ],
+      { cancelable: false }
+    )
+    /*deleteOrcamento(id).then((res)=>{
+      console.log(res);
+    });*/
+
+    //setOrcamentos(orcamentos.filter(item => item[0] !== id));
+  }
+  const removerConfirmar = (id) =>{
     deleteOrcamento(id).then((res)=>{
       console.log(res);
     });
 
     setOrcamentos(orcamentos.filter(item => item[0] !== id));
+    ToastAndroid.show("Orçamento Eliminado",ToastAndroid.SHORT);
   }
-
   const mudarEcra = (value) => {
     navigation.navigate('GesFaturação - Ver Detalhes',  { id: value });
   }
