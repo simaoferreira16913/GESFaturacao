@@ -394,12 +394,12 @@ export default function DetalhesTransporte({navigation, route}) {
 
       <Text style={styles.titleSelect}>Linhas</Text>
       <Table style={{marginLeft: 10}}>
-    <Row data={["Artigo", "Preço", "QTD", "IVA", "Total"]}/>
+    <Row  textStyle={{fontWeight: "bold"}} data={["Artigo", "Preço", "QTD", "IVA", "Total"]}/>
     {tableData.map((rowData, index) => (
         <Row
             key={index}
             data={rowData}
-            style={[styles.row, index%2 && {backgroundColor: '#f9f9f9'}]}
+            style={[styles.row, {backgroundColor: '#f9f9f9', marginTop: 4,  marginRight: 2, padding:5, backgroundColor: "#e5e9ec"}]}
             textStyle={styles.text}
         />
     ))}
