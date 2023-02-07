@@ -114,7 +114,7 @@ export default function MainTransporte({navigation}) {
   };
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Detalhes Guia Transporte',  { id: value });
+    navigation.navigate('GesFaturação - Detalhes Guia Transporte',  { id: value });
   }
 
   return (
@@ -122,7 +122,7 @@ export default function MainTransporte({navigation}) {
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Guia Transporte")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação - Criar Guia Transporte")}>
           <View style={styles.button}>
           
             <Text style={styles.textfont}>Nova Guia de Transporte</Text>

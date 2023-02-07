@@ -104,7 +104,7 @@ export default function MainCliente({navigation}) {
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Cliente Detalhes',  { id: value });
+    navigation.navigate('GesFaturação - Cliente Detalhes',  { id: value });
   }
 
   return (
@@ -112,7 +112,7 @@ export default function MainCliente({navigation}) {
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Cliente")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação - Criar Cliente")}>
           <View style={styles.button}>
           
             <Text style={styles.textfont}>   Novo Cliente</Text>

@@ -119,7 +119,7 @@ export default function MainNotaCred({navigation}) {
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Notas de Créditos Detalhes',  { id: value });
+    navigation.navigate('GesFaturação - Notas de Créditos Detalhes',  { id: value });
   }
 
   return (
@@ -127,7 +127,7 @@ export default function MainNotaCred({navigation}) {
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Nota de Crédito")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação - Criar Nota de Crédito")}>
           <View style={styles.button}>
           
             <Text style={styles.textfont}>Nova Nota de Crédito</Text>

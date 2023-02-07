@@ -91,7 +91,7 @@ export default function MainAnalise({navigation}) {
   
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Compra Detalhes',  { id: value });
+    navigation.navigate('GesFaturação - Compra Detalhes',  { id: value });
   }
 
   return (

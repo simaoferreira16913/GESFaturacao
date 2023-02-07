@@ -130,7 +130,7 @@ export default function CriarProforma({ navigation }) {
     <View style={styles.container}>
 
       <View style={{marginTop: 10}}>
-        <Button  title="Novo Cliente" color="#d0933f" onPress={() => navigation.navigate("GesFaturação-Criar Cliente")} />
+        <Button  title="Novo Cliente" color="#d0933f" onPress={() => navigation.navigate("GesFaturação - Criar Cliente")} />
         <Text style={styles.titleSelect}>Cliente</Text>
         <View style={styles.borderMargin}>
         <Picker  style={styles.pickerComponent} placeholder="Selecione um cliente" selectedValue={selectedIdCliente} onValueChange={itemValue => {

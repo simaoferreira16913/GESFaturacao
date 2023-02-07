@@ -104,7 +104,7 @@ export default function MainFornecedores({navigation}) {
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Fornecedores Detalhes',  { id: value });
+    navigation.navigate('GesFaturação - Fornecedores Detalhes',  { id: value });
   }
 
   return (
@@ -112,7 +112,7 @@ export default function MainFornecedores({navigation}) {
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Fornecedores")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação - Criar Fornecedores")}>
           <View style={styles.button}>
           
             <Text style={styles.textfont}>   Novo Fornecedor</Text>

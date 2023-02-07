@@ -16,7 +16,8 @@ const Login = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-        <Image source={require('./assets/gesf2.png')} />
+        <Image source={require('./assets/gesf.png')}  style={styles.img}/>
+        <Text style={styles.paddingBottom}>Bem-vindo ao GESFaturação</Text>
       <View style={styles.wrapper}>
         <TextInput
           style={styles.input}
@@ -59,6 +60,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 14,
   },
+  img: {
+    width: '55%', 
+    margin: 20,
+    padding: 10
+  },
+  paddingBottom: {
+    paddingBottom: 30
+  }
 });
 
 export default Login;

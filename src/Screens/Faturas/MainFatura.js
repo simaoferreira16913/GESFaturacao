@@ -118,7 +118,7 @@ export default function MainFatura({navigation}) {
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Fatura Detalhes',  { id: value });
+    navigation.navigate('GesFaturação - Fatura Detalhes',  { id: value });
   }
 
   return (
@@ -126,7 +126,7 @@ export default function MainFatura({navigation}) {
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Fatura")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação - Criar Fatura")}>
           <View style={styles.button}>
           
             <Text style={styles.textfont}>   Nova Fatura</Text>

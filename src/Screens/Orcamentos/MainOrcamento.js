@@ -107,7 +107,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Ver Detalhes',  { id: value });
+    navigation.navigate('GesFaturação - Ver Detalhes',  { id: value });
   }
 
   return (
@@ -115,7 +115,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Orçamento")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação - Criar Orçamento")}>
           <View style={styles.button}>
           
             <Text style={styles.textfont}>   Novo Orçamento</Text>

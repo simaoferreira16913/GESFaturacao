@@ -118,7 +118,7 @@ export default function MainCompra({navigation}) {
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Compra Detalhes',  { id: value });
+    navigation.navigate('GesFaturação - Compra Detalhes',  { id: value });
   }
 
   return (
@@ -126,7 +126,7 @@ export default function MainCompra({navigation}) {
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Compra")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação - Criar Compra")}>
           <View style={styles.button}>
           
             <Text style={styles.textfont}>   Nova Compra</Text>
