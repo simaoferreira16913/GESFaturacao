@@ -150,7 +150,7 @@ export default function DetalhesOrcamento({navigation, route}) {
         <Row
             key={index}
             data={rowData}
-            style={[styles.row, {backgroundColor: '#f9f9f9', marginTop: 4,  marginRight: 2, padding:5}]}
+            style={[styles.row, {backgroundColor: '#f9f9f9', marginTop: 4,  marginRight: 2, padding:5, backgroundColor: "#e5e9ec"}]}
             textStyle={styles.text}
         />
     ))}
