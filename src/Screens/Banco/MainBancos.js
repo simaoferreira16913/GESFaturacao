@@ -104,7 +104,7 @@ export default function MainBancos({navigation}) {
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Banco Detalhes',  { id: value });
+    navigation.navigate('GesFaturação - Banco Detalhes',  { id: value });
   }
 
   return (
@@ -112,7 +112,7 @@ export default function MainBancos({navigation}) {
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Banco")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação - Criar Banco")}>
           <View style={styles.button}>
           
             <Text style={styles.textfont}>   Novo Banco</Text>

@@ -1,7 +1,14 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import {
+  Button,
+  TextInput,
+  View,
+  Text,
+  StyleSheet,
+  Image
+} from 'react-native';
 //substituir pelo authstack e appstack
 import Home from '../Screens/Home';
 import MainOrcamento from '../Screens/Orcamentos/MainOrcamento';
@@ -37,6 +44,8 @@ import MainAnalise from '../Screens/Analise/MainAnalise';
 import MainBancos from '../Screens/Banco/MainBancos';
 import DetalhesBancos from '../Screens/Banco/DetalhesBancos';
 import CriarBanco from '../Screens/Banco/CriarBanco';
+import Tabelas from '../Screens/Tabelas';
+import Vendas from '../Screens/Vendas';
 
 //Guias
 import MainGuias from '../Screens/Guias/MainGuias';
@@ -54,57 +63,67 @@ import DetalhesTransporte from '../Screens/Guias/Transporte/DetalhesTransporte';
 
 const Stack = createNativeStackNavigator();
 
+const Logo = () => (
+  <Image
+  source={require('../Screens/assets/logotipo.png')}
+  style={{ width: 40, height: 40, marginRight: 10}}
+  />
+  );
+
 const AppStack = () => {
+
     return (
       <Stack.Navigator>
-        <Stack.Screen name="GesFaturação" component={Home} />
-        <Stack.Screen name="GesFaturação-Orçamentos" component={MainOrcamento} />
-        <Stack.Screen name='GesFaturação-Criar Orçamento' component={CriarOrcamento}/>
-        <Stack.Screen name='GesFaturação-Criar Cliente' component={CriarCliente}/>
-        <Stack.Screen name='GesFaturação-Artigos' component={MainArtigos}/>
-        <Stack.Screen name='GesFaturação-Artigo Detalhes' component={DetalhesArtigo}/>
-        <Stack.Screen name='GesFaturação-Criar Artigo' component={CriarArtigo}/>
-        <Stack.Screen name='GesFaturação-Ver Detalhes' component={VerDetalhesOrc}/>
-        <Stack.Screen name='GesFaturação-Faturas' component={MainFatura}/>
-        <Stack.Screen name='GesFaturação-Fatura Detalhes' component={DetalhesFatura}/>
-        <Stack.Screen name='GesFaturação-Criar Fatura' component={CriarFatura}/>
-        <Stack.Screen name='GesFaturação-Faturas Simplificadas' component={MainFaturaSimp}/>
-        <Stack.Screen name='GesFaturação-Fatura Simplificada Detalhes' component={DetalhesFaturaSimp}/>
-        <Stack.Screen name='GesFaturação-Fatura Recibo' component={MainFaturaRec}/>
-        <Stack.Screen name='GesFaturação-Proformas' component={MainFaturaPro}/>
-        <Stack.Screen name='GesFaturação-Proformas Detalhes' component={DetalhesFaturaPro}/>
+        <Stack.Screen name="GesFaturação" component={Home} options={{headerLeft: () => <Logo />}}/>
+        <Stack.Screen name="GesFaturação - Orçamentos" component={MainOrcamento} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Orçamento' component={CriarOrcamento} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Cliente' component={CriarCliente} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Artigos' component={MainArtigos} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Artigo Detalhes' component={DetalhesArtigo} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Artigo' component={CriarArtigo} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Ver Detalhes' component={VerDetalhesOrc} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Faturas' component={MainFatura} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Fatura Detalhes' component={DetalhesFatura} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Fatura' component={CriarFatura} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Faturas Simplificadas' component={MainFaturaSimp} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Fatura Simplificada Detalhes' component={DetalhesFaturaSimp} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Fatura Recibo' component={MainFaturaRec} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Proformas' component={MainFaturaPro} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Proformas Detalhes' component={DetalhesFaturaPro} options={{headerRight: () => <Logo />}}/>
 
-        <Stack.Screen name='GesFaturação-Doc. de Transporte' component={MainGuias}/>
-        <Stack.Screen name='GesFaturação-Criar Guia Ativos' component={CriarAtivos}/>
-        <Stack.Screen name='GesFaturação-Guias Ativos' component={MainAtivos}/>
-        <Stack.Screen name='GesFaturação-Criar Guia Consignação' component={CriarConsignacao}/>
-        <Stack.Screen name='GesFaturação-Guias Consignação' component={MainConsignacao}/>
-        <Stack.Screen name='GesFaturação-Criar Guia Devolução' component={CriarDevolucao}/>
-        <Stack.Screen name='GesFaturação-Guias Devolução' component={MainDevolucao}/>
-        <Stack.Screen name='GesFaturação-Criar Guia Remessa' component={CriarRemessa}/>
-        <Stack.Screen name='GesFaturação-Guias Remessa' component={MainRemessa}/>
-        <Stack.Screen name='GesFaturação-Criar Guia Transporte' component={CriarTransporte}/>
-        <Stack.Screen name='GesFaturação-Guias Transporte' component={MainTransporte}/>
-        <Stack.Screen name='GesFaturação-Detalhes Guia Transporte' component={DetalhesTransporte}/>
+        <Stack.Screen name='GesFaturação - Doc. de Transporte' component={MainGuias} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Guia Ativos' component={CriarAtivos} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Guias Ativos' component={MainAtivos} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Guia Consignação' component={CriarConsignacao} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Guias Consignação' component={MainConsignacao} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Guia Devolução' component={CriarDevolucao} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Guias Devolução' component={MainDevolucao} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Guia Remessa' component={CriarRemessa} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Guias Remessa' component={MainRemessa} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Guia Transporte' component={CriarTransporte} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Guias Transporte' component={MainTransporte} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Detalhes Guia Transporte' component={DetalhesTransporte} options={{headerRight: () => <Logo />}}/>
         
-        <Stack.Screen name='GesFaturação-Criar Proforma' component={CriarProforma}/>
-        <Stack.Screen name='GesFaturação-Criar Fatura Simplificada' component={CriarFaturaSimp}/>
-        <Stack.Screen name='GesFaturação-Notas de Créditos' component={MainNotaCred}/>
-        <Stack.Screen name='GesFaturação-Notas de Créditos Detalhes' component={DetalhesNotaCred}/>
-        <Stack.Screen name='GesFaturação-Notas de Débito' component={MainNotaDeb}/>
-        <Stack.Screen name='GesFaturação-Nota de Débito Detalhes' component={DetalhesNotaDeb}/>
-        <Stack.Screen name='GesFaturação-Fornecedores' component={MainFornecedores}/>
-        <Stack.Screen name='GesFaturação-Fornecedores Detalhes' component={DetalhesFornecedor}/>
-        <Stack.Screen name='GesFaturação-Criar Fornecedores' component={CriarFornecedores}/>
-        <Stack.Screen name='GesFaturação-Clientes' component={MainCliente}/>
-        <Stack.Screen name='GesFaturação-Cliente Detalhes' component={DetalhesCliente}/>
-        <Stack.Screen name='GesFaturação-Compras' component={MainCompra}/>
-        <Stack.Screen name='GesFaturação-Compra Detalhes' component={DetalhesCompra}/>
-        <Stack.Screen name='GesFaturação-Criar Compra' component={CriarCompra}/>
-        <Stack.Screen name='GesFaturação-Analise' component={MainAnalise}/>
-        <Stack.Screen name='GesFaturação-Bancos' component={MainBancos}/>
-        <Stack.Screen name='GesFaturação-Criar Banco' component={CriarBanco}/>
-        <Stack.Screen name='GesFaturação-Banco Detalhes' component={DetalhesBancos}/>
+        <Stack.Screen name='GesFaturação - Criar Proforma' component={CriarProforma} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Fatura Simplificada' component={CriarFaturaSimp} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Notas de Créditos' component={MainNotaCred} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Notas de Créditos Detalhes' component={DetalhesNotaCred} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Notas de Débito' component={MainNotaDeb} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Nota de Débito Detalhes' component={DetalhesNotaDeb} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Fornecedores' component={MainFornecedores} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação  -Fornecedores Detalhes' component={DetalhesFornecedor} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Fornecedores' component={CriarFornecedores} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Clientes' component={MainCliente} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Cliente Detalhes' component={DetalhesCliente} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Compras' component={MainCompra} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Compra Detalhes' component={DetalhesCompra} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Compra' component={CriarCompra} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Analise' component={MainAnalise} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Bancos' component={MainBancos} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Banco' component={CriarBanco} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Banco Detalhes' component={DetalhesBancos} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Vendas' component={Vendas} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Tabelas' component={Tabelas} options={{headerRight: () => <Logo />}}/>
       </Stack.Navigator>
     );
 };

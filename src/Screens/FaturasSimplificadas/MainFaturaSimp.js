@@ -118,7 +118,7 @@ export default function MainFaturaSimp({navigation}) {
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Fatura Simplificada Detalhes',  { id: value });
+    navigation.navigate('GesFaturação - Fatura Simplificada Detalhes',  { id: value });
   }
 
   return (
@@ -126,14 +126,21 @@ export default function MainFaturaSimp({navigation}) {
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Fatura Simplificada")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação - Criar Fatura Simplificada")}>
           <View style={styles.button}>
           
             <Text style={styles.textfont}>Nova Fatura Simplificada</Text>
           </View>
         </TouchableNativeFeedback>
       </View>
-
+      <View > 
+        <TouchableNativeFeedback>
+          <View style={styles.button}>
+          
+            <Text style={styles.textfont}> Integrar Fatura Simplificada</Text>
+          </View>
+        </TouchableNativeFeedback>
+      </View> 
       <View > 
         <TouchableNativeFeedback>
           <View style={styles.button}>

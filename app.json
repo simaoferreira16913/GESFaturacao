@@ -1,4 +1,5 @@
 {
   "name": "GesFaturacao",
-  "displayName": "GesFaturacao"
+  "displayName": "GesFaturação",
+  "icon": "./srs/assets/logotipoResized.png"
 }

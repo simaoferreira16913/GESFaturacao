@@ -17,9 +17,9 @@ function Item({ item, onPress }) {
     setNomeArtigo(res.data.data.Nome)
   })
   return (
-    <View>
+    <View style={{marginTop: 8}}>
       <Text>Artigo: {nomeArtigo} | Preço: {item.preco} € | QTD: {item.qtd} | Total: {Number(item.preco) * Number(item.qtd)} €</Text>
-      <Button title="Remover" color="#d0933f" onPress={onPress} />
+      <View><Button  style={{marginTop: 4}} title="Remover" color="#bf4346" onPress={onPress} /></View>
     </View>
   );
 }
@@ -193,7 +193,7 @@ export default function CriarTransporte({ navigation }) {
     <View style={styles.container}>
 
       <View style={{marginTop: 10}}>
-        <Button  title="Novo Cliente" color="#d0933f" onPress={() => navigation.navigate("GesFaturação-Criar Cliente")} />
+        <Button  title="Novo Cliente" color="#d0933f" onPress={() => navigation.navigate("GesFaturação - Criar Cliente")} />
         <Text style={styles.titleSelect}>Cliente</Text>
         <View style={styles.borderMargin}>
         <Picker  style={styles.pickerComponent} placeholder="Selecione um cliente" selectedValue={selectedIdCliente} onValueChange={itemValue => {

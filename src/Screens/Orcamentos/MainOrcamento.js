@@ -87,15 +87,30 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
   }
   const columns = ['Nome', 'Preço', 'Estado', , 'Ações'];
 
-  const data = orcamentos.map(item => [ item[2],parseFloat(item[6]).toFixed(2), item[7], 
-  <View style={{flexDirection: 'row'}}>
-  <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[0])}>
-    <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/></TouchableOpacity >
-  <TouchableOpacity onPress={() => mudarEcra(item[0])}>
-  <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
-  </TouchableOpacity >
-  </View>
-]);
+  const data = orcamentos.map(item => {
+    let botoes;
+    if (item[7] === 'Rascunho') {
+      botoes = (
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity style={{ marginRight:10}} onPress={() => handleRemove(item[0])}>
+            <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
+          </TouchableOpacity >
+          <TouchableOpacity onPress={() => mudarEcra(item[0])}>
+            <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
+          </TouchableOpacity >
+        </View>
+      );
+    } else {
+      botoes = (
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity onPress={() => mudarEcra(item[0])}>
+            <Image source={{uri: "https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png"}} style={{width: 25, height: 25,padding:"2%"}}/>
+          </TouchableOpacity >
+        </View>
+      );
+    }
+    return [ item[2],parseFloat(item[6]).toFixed(2), item[7], botoes];
+  });
 
   const handleRemove = (id) => {
     console.log(id)
@@ -107,7 +122,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Ver Detalhes',  { id: value });
+    navigation.navigate('GesFaturação - Ver Detalhes',  { id: value });
   }
 
   return (
@@ -115,7 +130,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Orçamento")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação - Criar Orçamento")}>
           <View style={styles.button}>
           
             <Text style={styles.textfont}>   Novo Orçamento</Text>

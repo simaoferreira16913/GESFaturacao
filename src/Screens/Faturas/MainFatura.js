@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useState, useEffect,useContext } from 'react';
 import { Button, StyleSheet, Text,Touchable,
-  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid,LogBox  } from 'react-native';
+  TouchableNativeFeedback, TouchableOpacity, View, ScrollView,FlatList,Image, ToastAndroid,LogBox, Alert  } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TestScheduler } from 'jest';
 import { BASE_URL } from '../../config';
@@ -118,7 +118,7 @@ export default function MainFatura({navigation}) {
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Fatura Detalhes',  { id: value });
+    navigation.navigate('GesFaturação - Fatura Detalhes',  { id: value });
   }
 
   return (
@@ -126,14 +126,21 @@ export default function MainFatura({navigation}) {
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Fatura")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação - Criar Fatura")}>
           <View style={styles.button}>
           
             <Text style={styles.textfont}>   Nova Fatura</Text>
           </View>
         </TouchableNativeFeedback>
       </View>
-
+      <View > 
+        <TouchableNativeFeedback>
+          <View style={styles.button}>
+          
+            <Text style={styles.textfont}> Integrar Fatura</Text>
+          </View>
+        </TouchableNativeFeedback>
+      </View> 
       <View > 
         <TouchableNativeFeedback>
           <View style={styles.button}>

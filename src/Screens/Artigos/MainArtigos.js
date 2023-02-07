@@ -104,7 +104,7 @@ export default function MainArtigos({navigation}) {
   }
 
   const mudarEcra = (value) => {
-    navigation.navigate('GesFaturação-Artigo Detalhes',  { id: value });
+    navigation.navigate('GesFaturação - Artigo Detalhes',  { id: value });
   }
 
   return (
@@ -112,7 +112,7 @@ export default function MainArtigos({navigation}) {
     <View style={styles.container}>
       
      <View > 
-        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação-Criar Artigo")}>
+        <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação - Criar Artigo")}>
           <View style={styles.button}>
           
             <Text style={styles.textfont}>   Novo Artigo</Text>

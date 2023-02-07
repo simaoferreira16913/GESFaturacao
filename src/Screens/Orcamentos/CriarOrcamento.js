@@ -17,9 +17,9 @@ function Item({ item, onPress }) {
     setNomeArtigo(res.data.data.Nome)
   })
   return (
-    <View>
-      <Text>Artigo: {nomeArtigo} | Preço: {item.preco} € | QTD: {item.qtd} | Total: {Number(item.preco) * Number(item.qtd)} €</Text>
-      <Button title="Remover" color="#d0933f" onPress={onPress} />
+    <View style={{marginTop: 8}}>
+      <Text>Artigo: {nomeArtigo} | Preço: {Number(item.preco)} € | QTD: {item.qtd} | Total: {Number(item.preco) * Number(item.qtd)} €</Text>
+      <View style={{marginTop: 4}}><Button title="Remover" color="#bf4346" onPress={onPress} /></View>
     </View>
   );
 }
@@ -41,10 +41,10 @@ export default function CriarOrcamento({ navigation }) {
   const [dadosArtigos, setDadosArtigos] = useState([]);
   //const [cliente, setCliente] = useState();
   //const [linhas, setLinhas] = useState([]);
-  const [datei, setDatei] = useState(null);
+  const [datei, setDatei] = useState();
   const [open, setOpen] = useState(false);
 
-  const [datev, setDatev] = useState(null);
+  const [datev, setDatev] = useState();
   const [openv, setOpenV] = useState(false);
 
   const [artigo, setArtigo] = useState();
@@ -119,6 +119,7 @@ export default function CriarOrcamento({ navigation }) {
     console.log(clienteC + ' É aqui cepo');
     addOrcamentos(clienteC, serieC, numeroC, dataC, validadeC, referenciaC, vencimentoC, moedaC, descontoC, observacoesC, LinhasC, finalizarDocumentoC).then(response => {
         console.log(response + ' Resposta Criar Orçamento')
+        navigation.navigate("GesFaturação")
     });
 }
 
@@ -127,7 +128,7 @@ export default function CriarOrcamento({ navigation }) {
     <View style={styles.container}>
 
       <View style={{marginTop: 10}}>
-        <Button  title="Novo Cliente" color="#d0933f" onPress={() => navigation.navigate("GesFaturação-Criar Cliente")} />
+        <Button  title="Novo Cliente" color="#d0933f" onPress={() => navigation.navigate("GesFaturação - Criar Cliente")} />
         <Text style={styles.titleSelect}>Cliente</Text>
         <View style={styles.borderMargin}>
         <Picker  style={styles.pickerComponent} placeholder="Selecione um cliente" selectedValue={selectedIdCliente} onValueChange={itemValue => {
