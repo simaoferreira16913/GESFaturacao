@@ -17,9 +17,9 @@ function Item({ item, onPress }) {
     setNomeArtigo(res.data.data.Nome)
   })
   return (
-    <View>
+    <View style={{marginTop: 8}}>
       <Text>Artigo: {nomeArtigo} | Preço: {Number(item.preco)} € | QTD: {item.qtd} | Total: {Number(item.preco) * Number(item.qtd)} €</Text>
-      <Button title="Remover" color="#bf4346" onPress={onPress} />
+      <View style={{marginTop: 4}}><Button title="Remover" color="#bf4346" onPress={onPress} /></View>
     </View>
   );
 }

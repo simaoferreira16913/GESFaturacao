@@ -51,16 +51,19 @@ export default function Home({navigation}) {
           onPress={() => navigation.navigate("GesFaturação - Tabelas")}>
           <Text style={styles.menuText}>Tabelas</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.menuButton, styles.shadow,styles.vermelho]}
+          onPress={() => {logout()}}>
+          <Text style={styles.menuText}>Logout</Text>
+        </TouchableOpacity>
+       
+      
       </View>
 
       <Image source={require('./assets/logotipoMini.png')}/>
       
-      <View style={styles.logoutContainer}>
-        <TouchableOpacity style={[styles.logoutButton, styles.shadow]}
-          onPress={() => {logout()}}>
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
+    
+      
       
     </View>
   );
@@ -140,5 +143,9 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontSize: 20,
     fontWeight: "bold",
+  },
+  vermelho: {
+    backgroundColor: "#bf4346",
+    marginTop: 20 
   }
 });
