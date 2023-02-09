@@ -122,7 +122,7 @@ export default function CriarFaturaSimp({ navigation }) {
         console.log(response + ' Resposta Criar Orçamento')
         
         navigation.navigate('GesFaturação');
-      ToastAndroid.show("Fatura Criada ", ToastAndroid.SHORT);
+      ToastAndroid.show("Nota Criada ", ToastAndroid.SHORT);
     });
    
     
@@ -351,7 +351,7 @@ export default function CriarFaturaSimp({ navigation }) {
         )}
       />
       <View style={{marginTop: 30,marginBottom: 10 ,width: 350}}>
-      <Button  title="Criar Fatura" color="#d0933f" onPress={() => handleCreateFatura()} />
+      <Button  title="Criar Nota" color="#d0933f" onPress={() => handleCreateFatura()} />
       </View>
       </View>
     </ScrollView>

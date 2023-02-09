@@ -74,7 +74,7 @@ export default function MainArtigos({navigation}) {
   });
   } 
  
-  const columns = ['Nome', 'Nif' , 'Ações'];
+  const columns = ['Nome', 'PVP Preço' , 'Ações'];
 
   const data = artigos.map(item => {
     let botoes;

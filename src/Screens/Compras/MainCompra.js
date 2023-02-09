@@ -140,7 +140,7 @@ export default function MainCompra({navigation}) {
         <TouchableNativeFeedback onPress={()=> navigation.navigate("GesFaturação - Criar Compra")}>
           <View style={styles.button}>
           
-            <Text style={styles.textfont}>   Nova Compra</Text>
+            <Text style={styles.textfont}>Nova Compra</Text>
           </View>
         </TouchableNativeFeedback>
       </View>
@@ -149,7 +149,7 @@ export default function MainCompra({navigation}) {
         <TouchableNativeFeedback>
           <View style={styles.button}>
           
-            <Text style={styles.textfont}>   Enviar Compras</Text>
+            <Text style={styles.textfont}>Enviar Compras</Text>
           </View>
         </TouchableNativeFeedback>
       </View> 
@@ -159,7 +159,7 @@ export default function MainCompra({navigation}) {
         <View style={styles.borderMargin}>
         <Picker  style={styles.pickerComponent} placeholder="Selecione um cliente" selectedValue={selectedIdCliente} onValueChange={itemValue => setSelectedIdCliente(itemValue)}>
           {dadosClientes.map(function (object, i) {
-            return <Picker.Item label={object[2]} value={object[0]} key={i} />;
+            return <Picker.Item label={object[1]} value={object[0]} key={i} />;
           })}
         </Picker>
         </View>

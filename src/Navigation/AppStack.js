@@ -28,8 +28,10 @@ import DetalhesFaturaPro from '../Screens/FaturasProforma/DetalhesFaturaPro';
 import CriarProforma from '../Screens/FaturasProforma/CriarProforma';
 import CriarFaturaSimp from '../Screens/FaturasSimplificadas/CriarFaturaSimp';
 import MainNotaCred from '../Screens/notasCredito/MainNotaCred';
+import CriarNotaCred from '../Screens/notasCredito/CriarNotaCred';
 import DetalhesNotaCred from '../Screens/notasCredito/DetalhesNotaCred';
 import MainNotaDeb from '../Screens/notasDebito/MainNotaDeb';
+import CriarNotaDeb from '../Screens/notasDebito/CriarNotaDeb';
 import DetalhesNotaDeb from '../Screens/notasDebito/DetalhesNotaDeb';
 import MainFornecedores from '../Screens/Fornecedores/MainFornecedores';
 import DetalhesFornecedor from '../Screens/Fornecedores/DetalhesFornecedores';
@@ -107,8 +109,10 @@ const AppStack = () => {
         <Stack.Screen name='GesFaturação - Criar Proforma' component={CriarProforma} options={{headerRight: () => <Logo />}}/>
         <Stack.Screen name='GesFaturação - Criar Fatura Simplificada' component={CriarFaturaSimp} options={{headerRight: () => <Logo />}}/>
         <Stack.Screen name='GesFaturação - Notas de Créditos' component={MainNotaCred} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Nota de Crédito' component={CriarNotaCred} options={{headerRight: () => <Logo />}}/>
         <Stack.Screen name='GesFaturação - Notas de Créditos Detalhes' component={DetalhesNotaCred} options={{headerRight: () => <Logo />}}/>
         <Stack.Screen name='GesFaturação - Notas de Débito' component={MainNotaDeb} options={{headerRight: () => <Logo />}}/>
+        <Stack.Screen name='GesFaturação - Criar Nota de Débito' component={CriarNotaDeb} options={{headerRight: () => <Logo />}}/>
         <Stack.Screen name='GesFaturação - Nota de Débito Detalhes' component={DetalhesNotaDeb} options={{headerRight: () => <Logo />}}/>
         <Stack.Screen name='GesFaturação - Fornecedores' component={MainFornecedores} options={{headerRight: () => <Logo />}}/>
         <Stack.Screen name='GesFaturação - Fornecedores Detalhes' component={DetalhesFornecedor} options={{headerRight: () => <Logo />}}/>
